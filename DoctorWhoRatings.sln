@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoctorWhoRatings.WebClient", "DoctorWhoRatings.WebClient\DoctorWhoRatings.WebClient.csproj", "{458C264F-175D-4B0D-B69A-716009003BF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssetMasters", "AssetMasters", "{FBEDB84B-AA4A-4FC0-93BD-7FB7795272F2}"
+	ProjectSection(SolutionItems) = preProject
+		AssetMasters\tardis-cropped.afphoto = AssetMasters\tardis-cropped.afphoto
+		AssetMasters\tardis.afphoto = AssetMasters\tardis.afphoto
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{458C264F-175D-4B0D-B69A-716009003BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{458C264F-175D-4B0D-B69A-716009003BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{458C264F-175D-4B0D-B69A-716009003BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{458C264F-175D-4B0D-B69A-716009003BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45C8AFB5-3E62-490B-9E0D-35D53C58D2C0}
+	EndGlobalSection
+EndGlobal
