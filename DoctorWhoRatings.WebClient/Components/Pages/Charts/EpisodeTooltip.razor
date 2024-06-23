@@ -1,0 +1,109 @@
+﻿<div class="tooltip">
+    <div class="block">
+        <div class="actor">@Episode.Actor</div>
+
+        <div class="story">@Episode.StoryTitle</div>
+
+        @if (Episode.PartTitle != null)
+        {
+            <div>@Episode.PartTitle</div>
+        }
+
+        <div class="season">@Episode.SeasonFormatDescription @Episode.Season</div>
+    </div>
+
+    <div class="break"></div>
+
+    <div class="block icon-block">
+        <img class="icon" src="images/calendar.svg" alt="Ratings" />
+        <div>
+            <span>Broadcast on </span>
+            <span class="highlighted-value">@FormatDate(Episode.OriginalAirDate).</span>
+        </div>
+    </div>
+
+    <div class="break"></div>
+
+    <div class="block icon-block">
+        <img class="icon" src="images/view.svg" alt="Ratings" />
+        <div>
+            @if (Episode.OvernightRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(Episode.OvernightRatings)</span>
+                    <span> million overnight viewers</span>
+                </div>
+            }
+
+            @if (Episode.ConsolidatedRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(Episode.ConsolidatedRatings)</span>
+                    <span> million viewers after seven days</span>
+                </div>
+            }
+
+            @if (Episode.ExtendedRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(Episode.ExtendedRatings)</span>
+                    <span> million viewers after seven days on all devices</span>
+                </div>
+            }
+
+            @if (Episode.PopulationFactor != 1)
+            {
+                <div class="population-adjusted">Population adjusted</div>
+
+                @if (Episode.PopulationAdjustedOvernightRatings != null)
+                {
+                    <div>
+                        <span class="highlighted-value">@FormatNumber(Episode.PopulationAdjustedOvernightRatings)</span>
+                        <span> million overnight viewers</span>
+                    </div>
+                }
+
+                @if (Episode.PopulationAdjustedConsolidatedRatings != null)
+                {
+                    <div>
+                        <span class="highlighted-value">@FormatNumber(Episode.PopulationAdjustedConsolidatedRatings)</span>
+                        <span> million viewers after seven days</span>
+                    </div>
+                }
+
+                @if (Episode.PopulationAdjustedExtendedRatings != null)
+                {
+                    <div>
+                        <span class="highlighted-value">@FormatNumber(Episode.PopulationAdjustedExtendedRatings)</span>
+                        <span> million viewers after seven days on all devices</span>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    @if (Episode.Note != null)
+    {
+        <div class="break"></div>
+
+        <div class="block icon-block">
+            <img class="icon" src="images/note.svg" alt="Note" />
+            <div>@FormatNote(Episode.Note)</div>
+        </div>
+    }
+</div>
+
+@code {
+
+    [Parameter]
+    public EpisodeDataPoint? DataPoint { get; set; }
+
+    public Episode Episode => DataPoint?.Episode ?? throw new NullReferenceException("DataPoint not set");
+
+    public string FormatNumber(decimal? number) => number?.ToString("0.00") ?? "N/A";
+
+    public string FormatDate(DateTime? date) => date?.ToString("dd MMMM yyyy") ?? "N/A";
+
+    public MarkupString FormatNote(string note) =>
+        new(string.Join("<br />", note.Split("*", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)));
+}

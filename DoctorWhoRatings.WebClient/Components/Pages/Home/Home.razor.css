@@ -1,0 +1,35 @@
+﻿.page-content {
+    position: relative;
+    z-index: 1;
+    margin: 1rem 4rem;
+}
+
+.title-doctor-who {
+    padding-right: 0.8rem;
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+.title-ratings {
+    top: 0.07rem;
+    color: white;
+    font-size: 3.7rem;
+    font-family: Segoe WebFont Light, sans-serif;
+}
+
+.tardis-image {
+    position: absolute;
+    right: 0;
+    bottom: 34px;
+    height: 440px;
+    width: 440px;
+    background-image: url('images/tardis.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+
+.chart-list {
+    list-style: none;
+    padding-left: 6px;
+}

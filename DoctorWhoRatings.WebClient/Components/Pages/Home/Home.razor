@@ -1,0 +1,21 @@
+﻿@page "/"
+
+<PageTitle>Doctor Who Ratings</PageTitle>
+
+<div class="page-content">
+    <div>
+        <span class="title-doctor-who">Doctor Who</span>
+        <span class="title-ratings">RATINGS</span>
+    </div>
+
+    <ul class="chart-list">
+        <li>
+            <ChartNavLink Url="charts/all-episodes"
+                          IconUrl="images/bar-chart.svg"
+                          Title="@AllEpisodesData.Title"
+                          Description="@AllEpisodesData.Description" />
+        </li>
+    </ul>
+</div>
+
+<div class="tardis-image"></div>
