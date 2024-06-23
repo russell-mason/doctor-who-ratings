@@ -1,18 +1,16 @@
-﻿.title {
+﻿.page-content {
     position: relative;
     z-index: 1;
     margin: 1rem 4rem;
 }
 
 .title-doctor-who {
-    position: relative;
     padding-right: 0.8rem;
     font-size: 5rem;
     font-weight: bold;
 }
 
 .title-ratings {
-    position: relative;
     top: 0.07rem;
     color: white;
     font-size: 3.7rem;
@@ -29,4 +27,48 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom right;
+}
+
+.chart-list {
+    list-style: none;
+    padding-left: 6px;
+}
+
+.chart-link {
+    width: 500px;
+    border: 2px solid #909090;
+    border-radius: 5px;
+    color: #ffffff;
+    margin-top: 48px;
+}
+
+.chart-link:hover {
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
+}
+
+.chart-link-header {
+    display: flex;
+    padding: 8px 12px;
+    background-color: #1A2A45;
+}
+
+.chart-link-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.chart-link-title {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: Segoe WebFont Light;
+    line-height: 1.2rem;
+    margin-left: 8px;
+}
+
+.chart-link-description {
+    background-color: #243A64;
+    font-size: 0.8rem;
+    border-radius: 0 0 3px 3px;
+    padding: 6px 12px;
 }

@@ -2,10 +2,25 @@
 
 <PageTitle>Doctor Who Ratings</PageTitle>
 
-<div class="title">
-    <span class="title-doctor-who">Doctor Who</span>
-    <span class="title-ratings">RATINGS</span>
+<div class="page-content">
+    <div>
+        <span class="title-doctor-who">Doctor Who</span>
+        <span class="title-ratings">RATINGS</span>
+    </div>
+
+    <ul class="chart-list">
+        <li>
+            <NavLink href="charts/all-episodes" Match="NavLinkMatch.All">
+                <div class="chart-link">
+                    <div class="chart-link-header">
+                        <img class="chart-link-icon" src="images/bar-chart.svg" alt="Chart"/>
+                        <div class="chart-link-title">@AllEpisodesData.Title</div>
+                    </div>
+                    <div class="chart-link-description">@AllEpisodesData.Description</div>
+                </div>
+            </NavLink>
+        </li>
+    </ul>
 </div>
 
 <div class="tardis-image"></div>
-

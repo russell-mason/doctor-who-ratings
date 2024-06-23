@@ -7,6 +7,10 @@ body {
     color: #ffffff;
 }
 
+a {
+    text-decoration: none;
+}
+
 h1:focus {
     outline: none;
 }
@@ -45,4 +49,9 @@ h1:focus {
 @font-face {
     font-family: 'Segoe WebFont Light';
     src: URL('fonts/segoeuil.woff');
+}
+
+@font-face {
+    font-family: 'Segoe WebFont Bold';
+    src: URL('fonts/segoeuib.woff');
 }

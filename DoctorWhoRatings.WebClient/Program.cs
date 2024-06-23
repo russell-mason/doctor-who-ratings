@@ -1,15 +1,10 @@
-using DoctorWhoRatings.Data;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
+       .AddDoctorWhoCharting()
        .AddRazorComponents()
        .AddInteractiveServerComponents();
-
-builder.Services.AddSingleton<IExcelSpreadsheetReader, ExcelSpreadsheetReader>();
-builder.Services.AddSingleton<IDoctorWhoDataReader, DoctorWhoDataReader>();
-builder.Services.AddSingleton<IDoctorWhoDataProvider, DoctorWhoDataProvider>();
 
 var app = builder.Build();
 
@@ -30,9 +25,5 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
    .AddInteractiveServerRenderMode();
-
-// TODO: Remove - for manual testing only
-var dataProvider = app.Services.GetRequiredService<IDoctorWhoDataProvider>();
-var dataSet = dataProvider.DoctorWhoData;
 
 app.Run();
