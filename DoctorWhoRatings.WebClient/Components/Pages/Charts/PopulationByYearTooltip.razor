@@ -1,0 +1,35 @@
+﻿<div class="tooltip">
+    <div class="block">
+        <div class="year">@DataPoint.Year</div>
+    </div>
+    
+    <div class="break"></div>
+
+    <div class="block icon-block">
+        <img class="icon" src="images/people.svg" alt="Ratings" />
+        <div>
+            <div>
+                <span class="highlighted-value">@FormatNumber(DataPoint.Population)</span>
+                <span> people</span>
+            </div>
+        </div>
+    </div>
+
+    @if (DataPoint.Note != null)
+    {
+        <div class="break"></div>
+
+        <div class="block icon-block">
+            <img class="icon" src="images/note.svg" alt="Note" />
+            <div>@DataPoint.Note</div>
+        </div>
+    }
+</div>
+
+@code {
+
+    [Parameter]
+    public required PopulationByYearDataPoint DataPoint { get; set; }
+
+    public string FormatNumber(int number) => number.ToString("00,000,000");
+}

@@ -1,0 +1,37 @@
+﻿.tooltip {
+    border-radius: 5px;
+    color: #707070;
+    background-color: #ffffff;
+}
+
+.block {
+    padding: 12px 16px;
+}
+
+.icon-block {
+    display: flex;
+}
+
+.break {
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.year {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-family: Segoe WebFont Bold, sans-serif;
+    font-weight: bold;
+    color: #507dd7;
+}
+
+.icon {
+    height: 16px;
+    width: 16px;
+    filter: invert(48%) sepia(2%) saturate(9%) hue-rotate(331deg) brightness(90%) contrast(91%);
+    margin-right: 12px;
+}
+
+.highlighted-value {
+    font-weight: bold;
+    color: #505050;
+}

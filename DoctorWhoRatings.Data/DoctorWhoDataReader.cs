@@ -11,10 +11,12 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         using var spreadsheetDocument = spreadsheetReader.OpenSpreadsheetDocument(path);
 
         var episodes = ReadEpisodes().ToList().AsReadOnly();
+        var populations = ReadPopulation().ToList().AsReadOnly();
 
         var doctorWhoData = new DoctorWhoData
         {
-            Episodes = episodes
+            Episodes = episodes,
+            Populations = populations
         };
 
         return doctorWhoData;
@@ -24,16 +26,16 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
     {
         var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Episodes).ToList();
         var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
-        var episodeRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(2));
+        var episodeRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
 
         var episodes = episodeRows.Select(episodeRow => CreateEpisode(episodeRow, columnMappings));
         
         return episodes;
     }
 
-    private Episode CreateEpisode(Row episodeRow, IReadOnlyList<ExcelColumnMapping> columnMappings)
+    private Episode CreateEpisode(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
     {
-        var cellReader = spreadsheetReader.CreateCellReader(episodeRow, columnMappings);
+        var cellReader = spreadsheetReader.CreateCellReader(row, columnMappings);
 
         var episode = new Episode
         {
@@ -63,5 +65,30 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         };
 
         return episode;
+    }
+
+    private IEnumerable<YearPopulation> ReadPopulation()
+    {
+        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Populations).ToList();
+        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
+        var populationRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
+
+        var populations = populationRows.Select(populationRow => CreateYearPopulation(populationRow, columnMappings));
+
+        return populations;
+    }
+
+    private YearPopulation CreateYearPopulation(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
+    {
+        var cellReader = spreadsheetReader.CreateCellReader(row, columnMappings);
+
+        var yearPopulation = new YearPopulation
+        {
+            Year = cellReader.Read<int>(nameof(YearPopulation.Year)),
+            Population = cellReader.Read<int>(nameof(YearPopulation.Population)),
+            Note = cellReader.Read<string?>(nameof(YearPopulation.Note))
+        };
+
+        return yearPopulation;
     }
 }

@@ -1,0 +1,25 @@
+﻿.page-container {
+    margin: 24px;
+}
+
+.title-block {
+    margin-bottom: 24px;
+}
+
+.title {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-family: Segoe WebFont Light, sans-serif;
+    font-weight: bold;
+}
+
+.chart-container {
+    height: 600px;
+    background: #f0f0f0;
+    color: #000000;
+    border-radius: 5px;
+    padding: 16px;
+    margin-bottom: 24px;
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
+    font-family: Helvetica, Arial, sans-serif;
+}

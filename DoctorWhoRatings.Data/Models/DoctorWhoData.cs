@@ -9,4 +9,9 @@ public record DoctorWhoData
     /// Gets a collection of all episodes, specials, and movies.
     /// </summary>
     public IReadOnlyList<Episode> Episodes { get; init; } = [];
+
+    /// <summary>
+    /// Gets a collection of population details by year.
+    /// </summary>
+    public IReadOnlyList<YearPopulation> Populations { get; init; } = [];
 }

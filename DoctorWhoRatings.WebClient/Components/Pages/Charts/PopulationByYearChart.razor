@@ -1,0 +1,59 @@
+﻿@page "/charts/population"
+@inject IPopulationByYearDataGenerator PopulationByYearDataGenerator
+
+<NavBar />
+
+<div class="page-container">
+    <div class="title-block">
+        <div class="title">@PopulationByYearData.Title</div>
+        <div>@PopulationByYearData.Description</div>
+    </div>
+
+    <div class="chart-container ">
+        <ApexChart TItem="PopulationByYearDataPoint"
+                   Title="@PopulationByYearData.YAxisTitle"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
+
+            <ApexPointTooltip>
+                <PopulationByYearTooltip DataPoint="@context.DataPoint.Items.First()" />
+            </ApexPointTooltip>
+
+            <ChildContent>
+                <ApexPointSeries TItem="PopulationByYearDataPoint"
+                                 Items="DataSource.DataPoints"
+                                 Name="@PopulationByYearData.SeriesTitles[0]"
+                                 SeriesType="SeriesType.Area"
+                                 XValue="dp => dp.Year"
+                                 YValue="dp => dp.Population" />
+            </ChildContent>
+        </ApexChart>
+    </div>
+</div>
+
+@code {
+    private PopulationByYearData DataSource { get; set; } = default!;
+    private ApexChartOptions<PopulationByYearDataPoint> ChartOptions { get; } = new();
+
+    protected override void OnInitialized()
+    {
+        DataSource = PopulationByYearDataGenerator.Generate();
+
+        ChartOptions.Stroke = new Stroke
+        {
+            Curve = new CurveSelections(Curve.MonotoneCubic)
+        };
+
+        ChartOptions.Yaxis =
+        [
+            new YAxis
+            {
+                Labels = new YAxisLabels
+                {
+                    Formatter = "function(value) { return Math.round(value / 1000000, 0); }"
+                }
+            }
+        ];
+    }
+}
