@@ -8,6 +8,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDoctorWhoDataReader, DoctorWhoDataReader>();
         services.AddSingleton<IDoctorWhoDataProvider, DoctorWhoDataProvider>();
         services.AddSingleton<IAllEpisodesDataGenerator, AllEpisodesDataGenerator>();
+        services.AddSingleton<IAverageByDoctorDataGenerator, AverageByDoctorDataGenerator>();
 
         return services;
     }

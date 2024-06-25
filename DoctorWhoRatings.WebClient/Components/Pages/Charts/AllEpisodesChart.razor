@@ -23,7 +23,7 @@
             <ChildContent>
                 <ApexPointSeries TItem="EpisodeDataPoint"
                                  Items="DataSource.DataPoints"
-                                 Name="AllEpisodes"
+                                 Name="@AllEpisodesData.SeriesTitles[0]"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dp => dp.Episode.Id"
                                  YValue="dp => dp.Episode.OvernightRatings" />
@@ -36,7 +36,7 @@
     private ApexChartOptions<EpisodeDataPoint> Options { get; } = 
         ChartOptionDefaults.ForBarChart<EpisodeDataPoint>(AllEpisodesData.XAxisTitle);
     
-    private AllEpisodesData DataSource { get; set; } = null!;
+    private AllEpisodesData DataSource { get; set; } = default!;
 
     protected override void OnInitialized()
     {

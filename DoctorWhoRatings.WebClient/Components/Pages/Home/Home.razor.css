@@ -31,5 +31,6 @@
 
 .chart-list {
     list-style: none;
+    margin-top: 48px;
     padding-left: 6px;
 }

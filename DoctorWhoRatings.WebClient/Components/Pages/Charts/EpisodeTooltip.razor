@@ -96,7 +96,7 @@
 @code {
 
     [Parameter]
-    public EpisodeDataPoint? DataPoint { get; set; }
+    public required EpisodeDataPoint? DataPoint { get; set; }
 
     public Episode Episode => DataPoint?.Episode ?? throw new NullReferenceException("DataPoint not set");
 

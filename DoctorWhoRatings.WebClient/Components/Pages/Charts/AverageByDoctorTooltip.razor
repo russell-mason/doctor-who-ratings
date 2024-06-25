@@ -1,0 +1,127 @@
+﻿<div class="tooltip">
+    <div class="block">
+        <div class="actor">@DataPoint.Actor</div>
+        
+        <div class="episodes">
+            <span class="highlighted-value">@DataPoint.EpisodeCount</span>
+            <span>
+                @if (DataPoint.EpisodeCount == 1)
+                {
+                    <text>episode</text>
+                }
+                else
+                {
+                    <text>episodes</text>
+                }
+            </span>
+        </div>
+    </div>
+
+    <div class="break"></div>
+
+    <div class="block icon-block">
+        <img class="icon" src="images/calculator.svg" alt="Calculation method" />
+        <div class="calculation-method">@(DataOptions.CalculationMethod.ToString())</div>
+    </div>
+
+    <div class="break"></div>
+    
+    @if (SeriesIndex != 0)
+    {
+        <div class="block icon-block">
+            @{
+                var excess = SeriesIndex == 1
+                    ? DataPoint.CalculatedConsolidatedExcessRatings
+                    : DataPoint.CalculatedExtendedExcessRatings;
+
+                var adjustedExcess = SeriesIndex == 1
+                    ? DataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings
+                    : DataPoint.CalculatedPopulationAdjustedExtendedExcessRatings;
+            }
+
+            <img class="icon" src="images/target.svg" alt="Ratings"/>
+            <div>
+                <div>
+
+                    <span class="highlighted-value">@FormatNumber(excess)</span>
+                    <span> additional viewers</span>
+                </div>
+
+                <div class="population-adjusted">Population adjusted</div>
+
+                <div>
+                    <span class="highlighted-value">@FormatNumber(adjustedExcess)</span>
+                    <span> additional viewers</span>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="block icon-block">
+        <img class="icon" src="images/view.svg" alt="Ratings" />
+        <div>
+            @if (DataPoint.CalculatedOvernightRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedOvernightRatings)</span>
+                    <span> million overnight viewers</span>
+                </div>
+            }
+
+            @if (DataPoint.CalculatedConsolidatedRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedConsolidatedRatings)</span>
+                    <span> million viewers after seven days</span>
+                </div>
+            }
+
+            @if (DataPoint.CalculatedExtendedRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedExtendedRatings)</span>
+                    <span> million viewers after seven days on all devices</span>
+                </div>
+            }
+
+            <div class="population-adjusted">Population adjusted</div>
+
+            @if (DataPoint.CalculatedPopulationAdjustedOvernightRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedPopulationAdjustedOvernightRatings)</span>
+                    <span> million overnight viewers</span>
+                </div>
+            }
+
+            @if (DataPoint.CalculatedPopulationAdjustedConsolidatedRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedPopulationAdjustedConsolidatedRatings)</span>
+                    <span> million viewers after seven days</span>
+                </div>
+            }
+
+            @if (DataPoint.CalculatedPopulationAdjustedExtendedRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedPopulationAdjustedExtendedRatings)</span>
+                    <span> million viewers after seven days on all devices</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required AverageByDoctorDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required int SeriesIndex { get; set; }
+
+    [Parameter]
+    public required AverageByDoctorDataOptions DataOptions { get; set; }
+
+    public string FormatNumber(decimal? number) => number?.ToString("0.00") ?? "N/A";
+}

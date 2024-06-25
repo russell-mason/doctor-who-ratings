@@ -10,5 +10,7 @@ public class AllEpisodesData
 
     public const string YAxisTitle = "Ratings (millions)";
 
+    public static readonly string[] SeriesTitles = ["Overnight viewers"];
+
     public IReadOnlyList<EpisodeDataPoint> DataPoints { get; set; } = [];
 }

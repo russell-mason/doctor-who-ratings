@@ -5,7 +5,7 @@ public class AllEpisodesDataGenerator(IDoctorWhoDataProvider dataProvider) : IAl
     public AllEpisodesData Generate()
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
-                                     .Select(CreateDataPoint)
+                                     .Select(episode => new EpisodeDataPoint(episode))
                                      .ToList()
                                      .AsReadOnly();
 
@@ -15,12 +15,5 @@ public class AllEpisodesDataGenerator(IDoctorWhoDataProvider dataProvider) : IAl
         };
 
         return allEpisodesData;
-    }
-
-    private static EpisodeDataPoint CreateDataPoint(Episode episode)
-    {
-        var dataPoint = new EpisodeDataPoint(episode);
-
-        return dataPoint;
     }
 }
