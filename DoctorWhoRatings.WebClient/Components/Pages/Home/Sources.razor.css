@@ -1,0 +1,37 @@
+﻿.page-container {
+    margin: 24px;
+}
+
+.title-block {
+    margin-bottom: 24px;
+}
+
+    .title-block:nth-child(n+2) {
+        margin-top: 64px;
+    }
+
+.title {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-family: Segoe WebFont Light, sans-serif;
+    font-weight: bold;
+}
+
+.website-block {
+    margin-top: 36px;
+}
+
+.website {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-family: Segoe WebFont Light, sans-serif;
+    font-weight: bold;
+}
+
+a {
+    color: #ffffff;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }

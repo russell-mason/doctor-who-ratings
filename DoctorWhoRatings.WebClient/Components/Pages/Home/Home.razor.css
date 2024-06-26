@@ -34,3 +34,15 @@
     margin-top: 48px;
     padding-left: 6px;
 }
+
+.sources {
+    margin: 64px 0 0 6px;
+}
+
+    .sources a {
+        color: #ffffff;
+    }
+
+    .sources a:hover {
+        text-decoration: underline;
+    }
