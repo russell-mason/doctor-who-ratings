@@ -30,11 +30,11 @@
     {
         <div class="block icon-block">
             @{
-                var excess = SeriesIndex == 1
+                var excess = SeriesIndex == ConsolidatedSeriesIndex
                     ? DataPoint.CalculatedConsolidatedExcessRatings
                     : DataPoint.CalculatedExtendedExcessRatings;
 
-                var adjustedExcess = SeriesIndex == 1
+                var adjustedExcess = SeriesIndex == ConsolidatedSeriesIndex
                     ? DataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings
                     : DataPoint.CalculatedPopulationAdjustedExtendedExcessRatings;
             }
@@ -114,6 +114,8 @@
 </div>
 
 @code {
+    private const int ConsolidatedSeriesIndex = 1;
+
     [Parameter]
     public required AverageByDoctorDataPoint DataPoint { get; set; }
 
@@ -123,5 +125,5 @@
     [Parameter]
     public required AverageByDoctorDataOptions DataOptions { get; set; }
 
-    public string FormatNumber(decimal? number) => number?.ToString("0.00") ?? "N/A";
+    private string FormatNumber(decimal? number) => number?.ToString("0.00") ?? "N/A";
 }

@@ -2,7 +2,7 @@
     <div class="block">
         <div class="year">@DataPoint.Year</div>
     </div>
-    
+
     <div class="break"></div>
 
     <div class="block icon-block">
@@ -27,9 +27,8 @@
 </div>
 
 @code {
-
     [Parameter]
     public required PopulationByYearDataPoint DataPoint { get; set; }
 
-    public string FormatNumber(int number) => number.ToString("00,000,000");
+    private string FormatNumber(int number) => number.ToString("00,000,000");
 }

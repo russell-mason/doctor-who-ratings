@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoctorWhoRatings.WebClient"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssetMasters", "AssetMasters", "{FBEDB84B-AA4A-4FC0-93BD-7FB7795272F2}"
 	ProjectSection(SolutionItems) = preProject
+		AssetMasters\Icons.afdesign = AssetMasters\Icons.afdesign
 		AssetMasters\tardis-cropped.afphoto = AssetMasters\tardis-cropped.afphoto
 		AssetMasters\tardis.afphoto = AssetMasters\tardis.afphoto
 	EndProjectSection

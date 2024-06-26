@@ -94,16 +94,15 @@
 </div>
 
 @code {
-
     [Parameter]
     public required EpisodeDataPoint DataPoint { get; set; }
 
-    public Episode Episode => DataPoint?.Episode ?? throw new NullReferenceException("DataPoint not set");
+    private Episode Episode => DataPoint?.Episode ?? throw new NullReferenceException("DataPoint not set");
 
-    public string FormatNumber(decimal? number) => number?.ToString("0.00") ?? "N/A";
+    private string FormatNumber(decimal? number) => number?.ToString("0.00") ?? "N/A";
 
-    public string FormatDate(DateTime? date) => date?.ToString("dd MMMM yyyy") ?? "N/A";
+    private string FormatDate(DateTime? date) => date?.ToString("dd MMMM yyyy") ?? "N/A";
 
-    public MarkupString FormatNote(string note) =>
+    private MarkupString FormatNote(string note) =>
         new(string.Join("<br />", note.Split("*", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)));
 }

@@ -10,7 +10,7 @@ public class AverageByDoctorData
 
     public const string YAxisTitle = "Ratings (millions)";
 
-    public static readonly string[] SeriesTitles = [ "Overnight viewers", "Additional viewers after seven days", "Additional viewers on all devices"];
+    public static readonly string[] SeriesTitles = ["Overnight viewers", "Additional viewers after seven days", "Additional viewers on all devices"];
 
     public IReadOnlyList<AverageByDoctorDataPoint> DataPoints { get; set; } = [];
 }

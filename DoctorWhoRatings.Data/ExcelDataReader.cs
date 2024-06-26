@@ -34,10 +34,10 @@ public partial class ExcelSpreadsheetReader() : IExcelSpreadsheetReader
             throw new InvalidOperationException("SpreadsheetDocument is not open");
         }
 
-        var sheet = SpreadsheetDocument.WorkbookPart!.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name == sheetName) 
+        var sheet = SpreadsheetDocument.WorkbookPart!.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name == sheetName)
                     ?? throw new ArgumentException($"Sheet '{sheetName}' not found", nameof(sheetName));
 
-        var sheetId = sheet.Id?.Value 
+        var sheetId = sheet.Id?.Value
                       ?? throw new InvalidOperationException($"Sheet '{sheetName}' does not contain the required Id");
 
         if (SpreadsheetDocument.WorkbookPart.GetPartById(sheetId) is not WorksheetPart worksheetPart)
@@ -69,13 +69,13 @@ public partial class ExcelSpreadsheetReader() : IExcelSpreadsheetReader
 
     public T GetCellValue<T>(Row row, IEnumerable<ExcelColumnMapping> columnMappings, string key)
     {
-        var columnMapping = columnMappings.FirstOrDefault(c => c.Key == key) 
+        var columnMapping = columnMappings.FirstOrDefault(c => c.Key == key)
                             ?? throw new ArgumentException($"Column '{key}' not found", nameof(key));
-        
+
         var cellReference = $"{columnMapping.ColumnReference}{row.RowIndex}";
         var cell = row.Elements<Cell>().FirstOrDefault(c => c.CellReference == cellReference);
         var cellText = GetCellText(cell);
-        
+
         var dataType = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
         var cellValue = string.IsNullOrEmpty(cellText) ? default(T) : Convert.ChangeType(cellText, dataType);
         var value = (T) cellValue!;
@@ -123,12 +123,12 @@ public partial class ExcelSpreadsheetReader() : IExcelSpreadsheetReader
 
     private static string GetColumnReference(Cell cell)
     {
-        var cellReference = cell.CellReference?.Value 
+        var cellReference = cell.CellReference?.Value
                             ?? throw new InvalidOperationException("Cell does not contain a reference");
 
         var match = CellReferenceRegex().Match(cellReference);
         var columnValue = match.Groups["column"].Value;
-        
+
         return columnValue;
     }
 }

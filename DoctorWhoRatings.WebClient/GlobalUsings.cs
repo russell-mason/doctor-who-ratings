@@ -6,3 +6,4 @@ global using DoctorWhoRatings.Data.Charting.PopulationByYear;
 global using DoctorWhoRatings.Data.Models;
 global using DoctorWhoRatings.WebClient.Components;
 global using DoctorWhoRatings.WebClient.Extensions;
+global using System.Diagnostics;

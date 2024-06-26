@@ -8,6 +8,6 @@ public record YearPopulation
     public int Year { get; init; }
 
     public int Population { get; init; }
-    
+
     public string? Note { get; init; }
 }

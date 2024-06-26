@@ -29,7 +29,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         var episodeRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
 
         var episodes = episodeRows.Select(episodeRow => CreateEpisode(episodeRow, columnMappings));
-        
+
         return episodes;
     }
 

@@ -35,13 +35,41 @@
 </div>
 
 @code {
-    private ApexChartOptions<EpisodeDataPoint> Options { get; } = 
-        ChartOptionDefaults.ForBarChart<EpisodeDataPoint>(AllEpisodesData.XAxisTitle);
-    
+    private ApexChartOptions<EpisodeDataPoint> Options { get; } = CreateChartOptions();
+
     private AllEpisodesData DataSource { get; set; } = default!;
 
     protected override void OnInitialized()
     {
         DataSource = AllEpisodesDataGenerator.Generate();
+    }
+
+    private static ApexChartOptions<EpisodeDataPoint> CreateChartOptions()
+    {
+        ApexChartOptions<EpisodeDataPoint> chartOptions = new()
+            {
+                PlotOptions = new PlotOptions
+                {
+                    Bar = new PlotOptionsBar
+                    {
+                        ColumnWidth = "90%"
+                    }
+                },
+                Xaxis = new XAxis
+                {
+                    Title = new AxisTitle
+                    {
+                        Text = AllEpisodesData.XAxisTitle,
+                        OffsetY = -6
+                    },
+                    Labels = new XAxisLabels
+                    {
+                        Show = false
+                    },
+                    TickPlacement = TickPlacement.On
+                }
+            };
+
+        return chartOptions;
     }
 }
