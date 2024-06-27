@@ -20,8 +20,9 @@ if (!app.Environment.IsDevelopment())
 // Cert removed from website, currently only supports HTTP
 // app.UseHttpsRedirection();
 
-app.UseStaticFiles();
-app.UseAntiforgery();
+app.UseStaticFiles()
+   .UseAntiforgery()
+   .UseDoctorWhoCharting();
 
 app.MapRazorComponents<App>()
    .AddInteractiveServerRenderMode();

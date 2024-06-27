@@ -16,7 +16,12 @@ public class DoctorWhoDataProvider : IDoctorWhoDataProvider
 
     public DoctorWhoData DoctorWhoData => _doctorWhoData.Value;
 
-    public DoctorWhoData GetDoctorWhoData()
+    public void Load()
+    {
+        _ = DoctorWhoData;  // Use consistent access to ensure lazy loading if invoked
+    }
+
+    private DoctorWhoData GetDoctorWhoData()
     {
         var excelFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data", "DoctorWhoRatings.xlsx");
         var doctorWhoData = _doctorWhoDataReader.Read(excelFilePath);
