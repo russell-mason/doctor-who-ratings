@@ -68,7 +68,7 @@
     private AllEpisodesData DataSource { get; set; } = default!;
 
     private AllEpisodesDataOptions DataOptions { get; } = new();
-
+    
     protected override void OnInitialized()
     {
         DataSource = AllEpisodesDataGenerator.Generate();
@@ -78,7 +78,9 @@
     {
         DataSource = AllEpisodesDataGenerator.Generate();
 
-        await Chart.RenderAsync();
+        StateHasChanged();
+
+        await Chart.UpdateSeriesAsync();
     }
 
     private async Task AdjustForPopulationChanged(bool adjust)

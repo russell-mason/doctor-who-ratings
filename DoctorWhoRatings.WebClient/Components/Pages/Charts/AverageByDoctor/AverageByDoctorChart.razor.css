@@ -45,3 +45,8 @@
     vertical-align: middle;
     margin-top: -0.1rem;
 }
+
+input,
+label {
+    cursor: pointer;
+}

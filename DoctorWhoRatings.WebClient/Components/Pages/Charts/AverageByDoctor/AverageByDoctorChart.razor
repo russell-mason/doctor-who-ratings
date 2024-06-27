@@ -98,7 +98,9 @@
     {
         DataSource = AverageByDoctorDataGenerator.Generate(DataOptions);
 
-        await Chart.RenderAsync();
+        StateHasChanged();
+
+        await Chart.UpdateSeriesAsync();
     }
 
     private async Task AdjustForPopulationChanged(bool adjust)
