@@ -19,11 +19,6 @@ public class AllEpisodesDataGenerator(IDoctorWhoDataProvider dataProvider) : IAl
 
     private static AllEpisodesDataPoint CreateDataPoint(Episode episode)
     {
-        var consolidatedExcessRatings = episode.ConsolidatedRatings - episode.OvernightRatings;
-        var extendedExcessRatings = episode.ExtendedRatings - episode.ConsolidatedRatings;
-        var adjustedConsolidatedExcess = episode.PopulationAdjustedConsolidatedRatings - episode.PopulationAdjustedOvernightRatings;
-        var adjustedExtendedExcess = episode.PopulationAdjustedExtendedRatings - episode.PopulationAdjustedConsolidatedRatings;
-
         var dataPoint = new AllEpisodesDataPoint
         {
             Id = episode.Id,
@@ -35,14 +30,14 @@ public class AllEpisodesDataGenerator(IDoctorWhoDataProvider dataProvider) : IAl
             OriginalAirDate = episode.OriginalAirDate,
             OvernightRatings = episode.OvernightRatings,
             ConsolidatedRatings = episode.ConsolidatedRatings,
-            ConsolidatedExcessRatings = consolidatedExcessRatings,
+            ConsolidatedExcessRatings = episode.ConsolidatedExcessRatings,
             ExtendedRatings = episode.ExtendedRatings,
-            ExtendedExcessRatings = extendedExcessRatings,
+            ExtendedExcessRatings = episode.ExtendedExcessRatings,
             PopulationAdjustedOvernightRatings = episode.PopulationAdjustedOvernightRatings,
             PopulationAdjustedConsolidatedRatings = episode.PopulationAdjustedConsolidatedRatings,
             PopulationAdjustedExtendedRatings = episode.PopulationAdjustedExtendedRatings,
-            PopulationAdjustedConsolidatedExcessRatings = adjustedConsolidatedExcess,
-            PopulationAdjustedExtendedExcessRatings = adjustedExtendedExcess,
+            PopulationAdjustedConsolidatedExcessRatings = episode.PopulationAdjustedConsolidatedExcessRatings,
+            PopulationAdjustedExtendedExcessRatings = episode.PopulationAdjustedExtendedExcessRatings,
             PopulationFactor = episode.PopulationFactor,
             Note = episode.Note
         };

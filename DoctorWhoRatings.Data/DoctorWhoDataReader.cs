@@ -56,9 +56,6 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
             OvernightRatings = cellReader.Read<decimal?>(nameof(Episode.OvernightRatings)),
             ConsolidatedRatings = cellReader.Read<decimal?>(nameof(Episode.ConsolidatedRatings)),
             ExtendedRatings = cellReader.Read<decimal?>(nameof(Episode.ExtendedRatings)),
-            PopulationAdjustedOvernightRatings = cellReader.Read<decimal?>(nameof(Episode.PopulationAdjustedOvernightRatings)),
-            PopulationAdjustedConsolidatedRatings = cellReader.Read<decimal?>(nameof(Episode.PopulationAdjustedConsolidatedRatings)),
-            PopulationAdjustedExtendedRatings = cellReader.Read<decimal?>(nameof(Episode.PopulationAdjustedExtendedRatings)),
             Population = cellReader.Read<int>(nameof(Episode.Population)),
             PopulationFactor = cellReader.Read<decimal>(nameof(Episode.PopulationFactor)),
             Note = cellReader.Read<string>(nameof(Episode.Note))

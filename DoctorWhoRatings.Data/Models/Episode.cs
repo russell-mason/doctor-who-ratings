@@ -16,19 +16,19 @@ public record Episode
 
     public int Doctor { get; init; }
 
-    public string Actor { get; init; } = string.Empty;
+    public required string Actor { get; init; }
 
     public int? Season { get; init; }
 
     public int SeasonFormatId { get; init; }
 
-    public string SeasonFormatDescription { get; init; } = string.Empty;
+    public required string SeasonFormatDescription { get; init; }
 
     public int Story { get; init; }
 
     public int? StoryInSeason { get; init; }
 
-    public string StoryTitle { get; init; } = string.Empty;
+    public required string StoryTitle { get; init; }
 
     public int PartInStory { get; init; }
 
@@ -47,24 +47,44 @@ public record Episode
     public decimal? ConsolidatedRatings { get; init; }
 
     /// <summary>
+    /// Difference between the consolidated figure and the overnight figure (in millions).
+    /// </summary>
+    public decimal? ConsolidatedExcessRatings => ConsolidatedRatings - OvernightRatings;
+
+    /// <summary>
     /// Viewers after seven days on all devices (in millions).
     /// </summary>
     public decimal? ExtendedRatings { get; init; }
 
     /// <summary>
-    /// Adjusted relative to the UK population at the time of airing and the current population.
+    /// Difference between the extended figure and the consolidated figure (in millions).
     /// </summary>
-    public decimal? PopulationAdjustedOvernightRatings { get; init; }
+    public decimal? ExtendedExcessRatings => ExtendedRatings - ConsolidatedRatings;
 
     /// <summary>
     /// Adjusted relative to the UK population at the time of airing and the current population.
     /// </summary>
-    public decimal? PopulationAdjustedConsolidatedRatings { get; init; }
+    public decimal? PopulationAdjustedOvernightRatings => OvernightRatings * PopulationFactor;
 
     /// <summary>
     /// Adjusted relative to the UK population at the time of airing and the current population.
     /// </summary>
-    public decimal? PopulationAdjustedExtendedRatings { get; init; }
+    public decimal? PopulationAdjustedConsolidatedRatings => ConsolidatedRatings * PopulationFactor;
+
+    /// <summary>
+    /// Adjusted relative to the UK population at the time of airing and the current population.
+    /// </summary>
+    public decimal? PopulationAdjustedExtendedRatings => ExtendedRatings * PopulationFactor;
+
+    /// <summary>
+    /// Adjusted relative to the UK population at the time of airing and the current population.
+    /// </summary>
+    public decimal? PopulationAdjustedConsolidatedExcessRatings => PopulationAdjustedConsolidatedRatings - PopulationAdjustedOvernightRatings;
+
+    /// <summary>
+    /// Adjusted relative to the UK population at the time of airing and the current population.
+    /// </summary>
+    public decimal? PopulationAdjustedExtendedExcessRatings => PopulationAdjustedExtendedRatings - PopulationAdjustedConsolidatedRatings;
 
     /// <summary>
     /// UK population at the time of airing.
