@@ -14,7 +14,7 @@
 }
 
 .chart-container {
-    height: 540px;
+    height: 560px;
     background: #f0f0f0;
     color: #000000;
     border-radius: 5px;
@@ -31,6 +31,11 @@
     filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
 }
 
+.options {
+    display: inline-block;
+    padding: 8px 32px;
+}
+
 .radio {
     vertical-align: middle;
     margin-top: -0.1rem;
@@ -39,9 +44,4 @@
 .checkbox {
     vertical-align: middle;
     margin-top: -0.1rem;
-}
-
-.options {
-    display: inline-block;
-    padding: 8px 32px;
 }

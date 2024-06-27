@@ -2,8 +2,6 @@
 
 public class AverageByDoctorDataPoint
 {
-    public int Doctor { get; init; }
-
     public required string Actor { get; init; }
 
     public int EpisodeCount { get; init; }

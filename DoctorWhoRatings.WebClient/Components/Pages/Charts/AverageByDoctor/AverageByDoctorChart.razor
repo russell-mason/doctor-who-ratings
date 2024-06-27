@@ -57,14 +57,14 @@
             <input class="radio" id="average" type="radio" name="midpointOption"
                    value="@CalculationMethod.Mean"
                    checked="@(DataOptions.CalculationMethod == CalculationMethod.Mean)"
-                   @onchange="() => HandleCalculationMethodChange(CalculationMethod.Mean)" />
+                   @onchange="() => CalculationMethodChanged(CalculationMethod.Mean)" />
 
             <label for="average">@CalculationMethod.Mean.ToString()</label>
 
             <input class="radio" id="median" type="radio" name="midpointOption"
                    value="@CalculationMethod.Median"
                    checked="@(DataOptions.CalculationMethod == CalculationMethod.Median)"
-                   @onchange="() => HandleCalculationMethodChange(CalculationMethod.Median)" />
+                   @onchange="() => CalculationMethodChanged(CalculationMethod.Median)" />
 
             <label for="median">@CalculationMethod.Median.ToString()</label>
 
@@ -73,7 +73,7 @@
         <div class="options">
             <input class="checkbox" id="population" type="checkbox" name="adjustForPopulation"
                    checked="@(DataOptions.AdjustForCurrentPopulation)"
-                   @onchange="(e) => HandleAdjustForPopulationChange(Convert.ToBoolean(e.Value))" />
+                   @onchange="(e) => AdjustForPopulationChanged(Convert.ToBoolean(e.Value))" />
 
             <label for="population">Adjust relative to current population</label>
         </div>
@@ -101,14 +101,14 @@
         await Chart.RenderAsync();
     }
 
-    private async Task HandleAdjustForPopulationChange(bool adjust)
+    private async Task AdjustForPopulationChanged(bool adjust)
     {
         DataOptions.AdjustForCurrentPopulation = adjust;
 
         await Refresh();
     }
 
-    private async Task HandleCalculationMethodChange(CalculationMethod calculationMethod)
+    private async Task CalculationMethodChanged(CalculationMethod calculationMethod)
     {
         DataOptions.CalculationMethod = calculationMethod;
 

@@ -12,41 +12,85 @@
     </div>
 
     <div class="chart-container ">
-        <ApexChart TItem="EpisodeDataPoint"
+        <ApexChart @ref="Chart" 
+                   TItem="AllEpisodesDataPoint"
                    Title="@AllEpisodesData.YAxisTitle"
                    Options="Options"
                    Height="@("100%")"
                    Width="@("100%")">
 
             <ApexPointTooltip>
-                <EpisodeTooltip DataPoint="@context.DataPoint.Items.First()" />
+                <AllEpisodeTooltip DataPoint="@context.DataPoint.Items.First()"
+                                   SeriesIndex="@context.SeriesIndex" />
             </ApexPointTooltip>
 
             <ChildContent>
-                <ApexPointSeries TItem="EpisodeDataPoint"
+                <ApexPointSeries TItem="AllEpisodesDataPoint"
                                  Items="DataSource.DataPoints"
                                  Name="@AllEpisodesData.SeriesTitles[0]"
                                  SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Episode.Id"
-                                 YValue="dp => dp.Episode.OvernightRatings" />
+                                 XValue="dp => dp.Id"
+                                 YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.PopulationAdjustedOvernightRatings : dp.OvernightRatings" />
+                
+                <ApexPointSeries TItem="AllEpisodesDataPoint"
+                                 Items="DataSource.DataPoints"
+                                 Name="@AllEpisodesData.SeriesTitles[1]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dp => dp.Id"
+                                 YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.PopulationAdjustedConsolidatedExcessRatings: dp.ConsolidatedExcessRatings" />
+                
+                <ApexPointSeries TItem="AllEpisodesDataPoint"
+                                 Items="DataSource.DataPoints"
+                                 Name="@AllEpisodesData.SeriesTitles[2]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dp => dp.Id"
+                                 YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.PopulationAdjustedExtendedExcessRatings : dp.ExtendedExcessRatings" />
             </ChildContent>
         </ApexChart>
+    </div>
+    
+    <div class="options-container">
+        <div class="options">
+            <input class="checkbox" id="population" type="checkbox" name="adjustForPopulation"
+                   checked="@(DataOptions.AdjustForCurrentPopulation)"
+                   @onchange="(e) => AdjustForPopulationChanged(Convert.ToBoolean(e.Value))" />
+
+            <label for="population">Adjust relative to current population</label>
+        </div>
     </div>
 </div>
 
 @code {
-    private ApexChartOptions<EpisodeDataPoint> Options { get; } = CreateChartOptions();
+    private ApexChart<AllEpisodesDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<AllEpisodesDataPoint> Options { get; } = CreateChartOptions();
 
     private AllEpisodesData DataSource { get; set; } = default!;
+
+    private AllEpisodesDataOptions DataOptions { get; } = new();
 
     protected override void OnInitialized()
     {
         DataSource = AllEpisodesDataGenerator.Generate();
     }
 
-    private static ApexChartOptions<EpisodeDataPoint> CreateChartOptions()
+    private async Task Refresh()
     {
-        ApexChartOptions<EpisodeDataPoint> chartOptions = new()
+        DataSource = AllEpisodesDataGenerator.Generate();
+
+        await Chart.RenderAsync();
+    }
+
+    private async Task AdjustForPopulationChanged(bool adjust)
+    {
+        DataOptions.AdjustForCurrentPopulation = adjust;
+
+        await Refresh();
+    }
+
+    private static ApexChartOptions<AllEpisodesDataPoint> CreateChartOptions()
+    {
+        ApexChartOptions<AllEpisodesDataPoint> chartOptions = new()
             {
                 PlotOptions = new PlotOptions
                 {
@@ -67,6 +111,20 @@
                         Show = false
                     },
                     TickPlacement = TickPlacement.On
+                },
+                Yaxis =
+                [
+                    new YAxis
+                    {
+                        Labels = new YAxisLabels
+                        {
+                            Formatter = "function(value) { return value.toFixed(2); }"
+                        }
+                    }
+                ],
+                Chart =
+                {
+                    Stacked = true
                 }
             };
 
