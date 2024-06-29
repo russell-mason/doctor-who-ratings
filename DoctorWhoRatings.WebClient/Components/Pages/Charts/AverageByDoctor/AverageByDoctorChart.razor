@@ -55,18 +55,18 @@
             <span>Calculate using</span>
 
             <input class="radio" id="average" type="radio" name="midpointOption"
-                   value="@CalculationMethod.Mean"
-                   checked="@(DataOptions.CalculationMethod == CalculationMethod.Mean)"
-                   @onchange="() => CalculationMethodChanged(CalculationMethod.Mean)" />
+                   value="@AverageByDoctorCalculationMethod.Mean"
+                   checked="@(DataOptions.CalculationMethod == AverageByDoctorCalculationMethod.Mean)"
+                   @onchange="() => CalculationMethodChanged(AverageByDoctorCalculationMethod.Mean)" />
 
-            <label for="average">@CalculationMethod.Mean.ToString()</label>
+            <label for="average">@AverageByDoctorCalculationMethod.Mean.ToString()</label>
 
             <input class="radio" id="median" type="radio" name="midpointOption"
-                   value="@CalculationMethod.Median"
-                   checked="@(DataOptions.CalculationMethod == CalculationMethod.Median)"
-                   @onchange="() => CalculationMethodChanged(CalculationMethod.Median)" />
+                   value="@AverageByDoctorCalculationMethod.Median"
+                   checked="@(DataOptions.CalculationMethod == AverageByDoctorCalculationMethod.Median)"
+                   @onchange="() => CalculationMethodChanged(AverageByDoctorCalculationMethod.Median)" />
 
-            <label for="median">@CalculationMethod.Median.ToString()</label>
+            <label for="median">@AverageByDoctorCalculationMethod.Median.ToString()</label>
 
         </div>
 
@@ -110,7 +110,7 @@
         await Refresh();
     }
 
-    private async Task CalculationMethodChanged(CalculationMethod calculationMethod)
+    private async Task CalculationMethodChanged(AverageByDoctorCalculationMethod calculationMethod)
     {
         DataOptions.CalculationMethod = calculationMethod;
 

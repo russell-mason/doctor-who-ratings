@@ -26,36 +26,22 @@
 
     @if (SeriesIndex != 0)
     {
-        <div class="block icon-block">
+        <div class="block icon-block series-target">
             @{
                 var excess = SeriesIndex == ConsolidatedSeriesIndex
                     ? DataPoint.ConsolidatedExcessRatings
                     : DataPoint.ExtendedExcessRatings;
-
-                var adjustedExcess = SeriesIndex == ConsolidatedSeriesIndex
-                    ? DataPoint.PopulationAdjustedConsolidatedExcessRatings
-                    : DataPoint.PopulationAdjustedExtendedExcessRatings;
             }
 
             <img class="icon" src="images/target.svg" alt="Ratings" />
             <div>
                 <div>
-
                     <span class="highlighted-value">@FormatNumber(excess)</span>
-                    <span> million additional viewers</span>
-                </div>
-
-                <div class="population-adjusted">Population adjusted</div>
-
-                <div>
-                    <span class="highlighted-value">@FormatNumber(adjustedExcess)</span>
                     <span> million additional viewers</span>
                 </div>
             </div>
         </div>
     }
-
-    <div class="break"></div>
 
     <div class="block icon-block">
         <img class="icon" src="images/view.svg" alt="Ratings" />
@@ -70,7 +56,7 @@
 
             @if (DataPoint.ConsolidatedRatings != null)
             {
-                <div>
+                <div class="line-space">
                     <span class="highlighted-value">@FormatNumber(DataPoint.ConsolidatedRatings)</span>
                     <span> million viewers after seven days</span>
                 </div>
@@ -78,39 +64,10 @@
 
             @if (DataPoint.ExtendedRatings != null)
             {
-                <div>
+                <div class="line-space">
                     <span class="highlighted-value">@FormatNumber(DataPoint.ExtendedRatings)</span>
                     <span> million viewers after seven days on all devices</span>
                 </div>
-            }
-
-            @if (DataPoint.PopulationFactor != 1)
-            {
-                <div class="population-adjusted">Population adjusted</div>
-
-                @if (DataPoint.PopulationAdjustedOvernightRatings != null)
-                {
-                    <div>
-                        <span class="highlighted-value">@FormatNumber(DataPoint.PopulationAdjustedOvernightRatings)</span>
-                        <span> million overnight viewers</span>
-                    </div>
-                }
-
-                @if (DataPoint.PopulationAdjustedConsolidatedRatings != null)
-                {
-                    <div>
-                        <span class="highlighted-value">@FormatNumber(DataPoint.PopulationAdjustedConsolidatedRatings)</span>
-                        <span> million viewers after seven days</span>
-                    </div>
-                }
-
-                @if (DataPoint.PopulationAdjustedExtendedRatings != null)
-                {
-                    <div>
-                        <span class="highlighted-value">@FormatNumber(DataPoint.PopulationAdjustedExtendedRatings)</span>
-                        <span> million viewers after seven days on all devices</span>
-                    </div>
-                }
             }
         </div>
     </div>
@@ -124,6 +81,58 @@
             <div>@FormatNote(DataPoint.Note)</div>
         </div>
     }
+</div>
+
+<div class="tooltip secondary">
+    <div class="population-adjusted">Population adjusted</div>
+    
+    @if (SeriesIndex != 0)
+    {
+        <div class="block icon-block series-target">
+            @{
+                var adjustedExcess = SeriesIndex == ConsolidatedSeriesIndex
+                    ? DataPoint.PopulationAdjustedConsolidatedExcessRatings
+                    : DataPoint.PopulationAdjustedExtendedExcessRatings;
+            }
+
+            <img class="icon" src="images/target.svg" alt="Ratings"/>
+            <div>
+                <div>
+                    <span class="highlighted-value">@FormatNumber(adjustedExcess)</span>
+                    <span> million additional viewers</span>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="block icon-block">
+        <img class="icon" src="images/view.svg" alt="Ratings" />
+        <div>
+            @if (DataPoint.PopulationAdjustedOvernightRatings != null)
+            {
+                <div>
+                    <span class="highlighted-value">@FormatNumber(DataPoint.PopulationAdjustedOvernightRatings)</span>
+                    <span> million overnight viewers</span>
+                </div>
+            }
+
+            @if (DataPoint.PopulationAdjustedConsolidatedRatings != null)
+            {
+                <div class="line-space">
+                    <span class="highlighted-value">@FormatNumber(DataPoint.PopulationAdjustedConsolidatedRatings)</span>
+                    <span> million viewers after seven days</span>
+                </div>
+            }
+
+            @if (DataPoint.PopulationAdjustedExtendedRatings != null)
+            {
+                <div class="line-space">
+                    <span class="highlighted-value">@FormatNumber(DataPoint.PopulationAdjustedExtendedRatings)</span>
+                    <span> million viewers after seven days on all devices</span>
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
 @code {

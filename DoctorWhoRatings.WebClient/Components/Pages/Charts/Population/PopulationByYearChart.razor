@@ -47,22 +47,26 @@
     private static ApexChartOptions<PopulationByYearDataPoint> CreateChartOptions()
     {
         var option = new ApexChartOptions<PopulationByYearDataPoint>
+        {
+            Markers = new Markers
             {
-                Stroke = new Stroke
+                Size = 3
+            },
+            Stroke = new Stroke
+            {
+                Curve = new CurveSelections(Curve.MonotoneCubic)
+            },
+            Yaxis =
+            [
+                new YAxis
                 {
-                    Curve = new CurveSelections(Curve.MonotoneCubic)
-                },
-                Yaxis =
-                [
-                    new YAxis
+                    Labels = new YAxisLabels
                     {
-                        Labels = new YAxisLabels
-                        {
-                            Formatter = "function(value) { return Math.round(value / 1000000, 0); }"
-                        }
+                        Formatter = "function(value) { return Math.round(value / 1000000, 0); }"
                     }
-                ]
-            };
+                }
+            ]
+        };
 
         return option;
     }

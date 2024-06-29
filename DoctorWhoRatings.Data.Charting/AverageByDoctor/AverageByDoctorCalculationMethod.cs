@@ -1,6 +1,6 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.AverageByDoctor;
 
-public enum CalculationMethod
+public enum AverageByDoctorCalculationMethod
 {
     Mean,
     Median

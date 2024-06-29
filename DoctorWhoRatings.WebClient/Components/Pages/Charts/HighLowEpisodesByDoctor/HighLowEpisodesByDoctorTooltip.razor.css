@@ -38,8 +38,19 @@
     color: #505050;
 }
 
-.season {
-    margin-top: 0.4rem;
+.episodes {
+    margin-top: 3px;
+}
+
+.high-low {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-family: Segoe WebFont Light, sans-serif;
+    margin-bottom: 2px;
+}
+
+.calculation-method {
+    text-transform: uppercase;
 }
 
 .population-adjusted {

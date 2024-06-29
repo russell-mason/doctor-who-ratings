@@ -61,8 +61,8 @@ public class AverageByDoctorDataGenerator(IDoctorWhoDataProvider dataProvider) :
         return result;
     }
 
-    private static decimal? Calculate(List<decimal> values, CalculationMethod calculationMethod) =>
-        calculationMethod == CalculationMethod.Mean ? AverageOf(values) : MedianOf(values);
+    private static decimal? Calculate(List<decimal> values, AverageByDoctorCalculationMethod calculationMethod) =>
+        calculationMethod == AverageByDoctorCalculationMethod.Mean ? AverageOf(values) : MedianOf(values);
 
     private static decimal? AverageOf(List<decimal> values) => values.Count > 0 ? values.Average() : null;
 

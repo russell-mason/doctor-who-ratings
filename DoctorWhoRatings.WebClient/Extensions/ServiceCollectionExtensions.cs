@@ -9,6 +9,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDoctorWhoDataProvider, DoctorWhoDataProvider>();
         services.AddSingleton<IAllEpisodesDataGenerator, AllEpisodesDataGenerator>();
         services.AddSingleton<IAverageByDoctorDataGenerator, AverageByDoctorDataGenerator>();
+        services.AddSingleton<IHighLowEpisodesByDoctorDataGenerator, HighLowEpisodesByDoctorDataGenerator>();
         services.AddSingleton<IPopulationByYearDataGenerator, PopulationByYearDataGenerator>();
 
         return services;

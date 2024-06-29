@@ -4,5 +4,5 @@ public class AverageByDoctorDataOptions
 {
     public bool AdjustForCurrentPopulation { get; set; } = false;
 
-    public CalculationMethod CalculationMethod { get; set; } = CalculationMethod.Mean;
+    public AverageByDoctorCalculationMethod CalculationMethod { get; set; } = AverageByDoctorCalculationMethod.Mean;
 }

@@ -16,6 +16,19 @@
             </span>
         </div>
     </div>
+    
+    <div class="break"></div>
+
+    <div class="block">
+        <div class="high-low">@(IsHigh ? "Highest rated episode" : "Lowest rated episode")</div>
+
+        <div class="story">@HighLowDataPoint.StoryTitle</div>
+
+        @if (HighLowDataPoint.StoryPartTitle != null)
+        {
+            <div>@HighLowDataPoint.StoryPartTitle</div>
+        }
+    </div>
 
     <div class="break"></div>
 
@@ -26,16 +39,18 @@
 
     <div class="break"></div>
     
-    @if (SeriesIndex != 0)
+    <div class="break"></div>
+
+    @if (IsExcess)
     {
         <div class="block icon-block series-target">
             @{
-                var excess = SeriesIndex == ConsolidatedSeriesIndex
-                    ? DataPoint.CalculatedConsolidatedExcessRatings
-                    : DataPoint.CalculatedExtendedExcessRatings;
+                var excess = IsConsolidatedExcess
+                    ? HighLowDataPoint.ConsolidatedExcessRatings
+                    : HighLowDataPoint.ExtendedExcessRatings;
             }
 
-            <img class="icon" src="images/target.svg" alt="Ratings"/>
+            <img class="icon" src="images/target.svg" alt="Ratings" />
             <div>
                 <div>
                     <span class="highlighted-value">@FormatNumber(excess)</span>
@@ -48,26 +63,26 @@
     <div class="block icon-block">
         <img class="icon" src="images/view.svg" alt="Ratings" />
         <div>
-            @if (DataPoint.CalculatedOvernightRatings != null)
+            @if (HighLowDataPoint.OvernightRatings != null)
             {
                 <div>
-                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedOvernightRatings)</span>
+                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.OvernightRatings)</span>
                     <span> million overnight viewers</span>
                 </div>
             }
 
-            @if (DataPoint.CalculatedConsolidatedRatings != null)
+            @if (HighLowDataPoint.ConsolidatedRatings != null)
             {
                 <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedConsolidatedRatings)</span>
+                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.ConsolidatedRatings)</span>
                     <span> million viewers after seven days</span>
                 </div>
             }
 
-            @if (DataPoint.CalculatedExtendedRatings != null)
+            @if (HighLowDataPoint.ExtendedRatings != null)
             {
                 <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedExtendedRatings)</span>
+                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.ExtendedRatings)</span>
                     <span> million viewers after seven days on all devices</span>
                 </div>
             }
@@ -77,17 +92,17 @@
 
 <div class="tooltip secondary">
     <div class="population-adjusted">Population adjusted</div>
-    
-    @if (SeriesIndex != 0)
+
+    @if (IsExcess)
     {
         <div class="block icon-block series-target">
             @{
-                var adjustedExcess = SeriesIndex == ConsolidatedSeriesIndex
-                    ? DataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings
-                    : DataPoint.CalculatedPopulationAdjustedExtendedExcessRatings;
+                var adjustedExcess = IsConsolidatedExcess
+                    ? HighLowDataPoint.PopulationAdjustedConsolidatedExcessRatings
+                    : HighLowDataPoint.PopulationAdjustedExtendedExcessRatings;
             }
 
-            <img class="icon" src="images/target.svg" alt="Ratings"/>
+            <img class="icon" src="images/target.svg" alt="Ratings" />
             <div>
                 <div>
                     <span class="highlighted-value">@FormatNumber(adjustedExcess)</span>
@@ -98,46 +113,55 @@
     }
 
     <div class="block icon-block">
-        <img class="icon" src="images/view.svg" alt="Ratings"/>
+        <img class="icon" src="images/view.svg" alt="Ratings" />
         <div>
-            @if (DataPoint.CalculatedPopulationAdjustedOvernightRatings != null)
+            @if (HighLowDataPoint.PopulationAdjustedOvernightRatings != null)
             {
                 <div>
-                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedPopulationAdjustedOvernightRatings)</span>
+                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.PopulationAdjustedOvernightRatings)</span>
                     <span> million overnight viewers</span>
                 </div>
             }
 
-            @if (DataPoint.CalculatedPopulationAdjustedConsolidatedRatings != null)
+            @if (HighLowDataPoint.PopulationAdjustedConsolidatedRatings != null)
             {
                 <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedPopulationAdjustedConsolidatedRatings)</span>
+                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.PopulationAdjustedConsolidatedRatings)</span>
                     <span> million viewers after seven days</span>
                 </div>
             }
 
-            @if (DataPoint.CalculatedPopulationAdjustedExtendedRatings != null)
+            @if (HighLowDataPoint.PopulationAdjustedExtendedRatings != null)
             {
                 <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(DataPoint.CalculatedPopulationAdjustedExtendedRatings)</span>
+                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.PopulationAdjustedExtendedRatings)</span>
                     <span> million viewers after seven days on all devices</span>
                 </div>
             }
         </div>
-    </div>        
+    </div>
 </div>
 
 @code {
     private const int ConsolidatedSeriesIndex = 1;
+    private const int SeriesPerDataPoint = 3;
 
     [Parameter]
-    public required AverageByDoctorDataPoint DataPoint { get; set; }
+    public required HighLowEpisodesByDoctorDataPoint DataPoint { get; set; }
 
     [Parameter]
     public required int SeriesIndex { get; set; }
 
     [Parameter]
-    public required AverageByDoctorDataOptions DataOptions { get; set; }
+    public required HighLowEpisodesByDoctorDataOptions DataOptions { get; set; }
+
+    private bool IsHigh => SeriesIndex / SeriesPerDataPoint == 0;
+
+    private bool IsExcess => SeriesIndex % SeriesPerDataPoint != 0;
+
+    private bool IsConsolidatedExcess => SeriesIndex % SeriesPerDataPoint == 1;
+
+    private HighLowEpisodeByDoctorDataPoint HighLowDataPoint => IsHigh ? DataPoint.HighEpisodeDataPoint : DataPoint.LowEpisodeDataPoint;
 
     private string FormatNumber(decimal? number) => number?.ToString("0.00") ?? "N/A";
 }
