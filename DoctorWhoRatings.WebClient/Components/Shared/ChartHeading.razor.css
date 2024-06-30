@@ -4,7 +4,7 @@
 
 .title {
     text-transform: uppercase;
-    font-family: Segoe WebFont Light;
+    font-family: segoe-light, sans-serif;
     font-size: 1.3rem;
 }
 

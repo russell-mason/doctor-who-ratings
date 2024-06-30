@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe WebFont Regular', sans-serif;
+    font-family: segoe-regular, sans-serif;
     font-size: 16px;
     margin: 0;
     padding: 0;
@@ -42,16 +42,16 @@ h1:focus {
 }
 
 @font-face {
-    font-family: 'Segoe WebFont Regular';
-    src: URL('fonts/segoeui.woff');
+    font-family: segoe-regular;
+    src: url("fonts/segoeui.woff");
 }
 
 @font-face {
-    font-family: 'Segoe WebFont Light';
-    src: URL('fonts/segoeuil.woff');
+    font-family: segoe-light;
+    src: url("fonts/segoeuil.woff");
 }
 
 @font-face {
-    font-family: 'Segoe WebFont Bold';
-    src: URL('fonts/segoeuib.woff');
+    font-family: segoe-bold;
+    src: url("fonts/segoeuib.woff");
 }

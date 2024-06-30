@@ -19,7 +19,7 @@
 .year {
     text-transform: uppercase;
     font-size: 0.8rem;
-    font-family: Segoe WebFont Bold, sans-serif;
+    font-family: segoe-bold, sans-serif;
     font-weight: bold;
     color: #507dd7;
 }

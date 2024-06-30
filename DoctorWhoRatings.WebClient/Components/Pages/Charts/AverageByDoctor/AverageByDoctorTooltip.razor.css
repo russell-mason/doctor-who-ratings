@@ -27,7 +27,7 @@
 .actor {
     text-transform: uppercase;
     font-size: 0.8rem;
-    font-family: Segoe WebFont Bold, sans-serif;
+    font-family: segoe-bold, sans-serif;
     font-weight: bold;
     color: #507dd7;
 }
@@ -43,7 +43,7 @@
 .population-adjusted {
     text-transform: uppercase;
     font-size: 0.7rem;
-    font-family: Segoe WebFont Light, sans-serif;
+    font-family: segoe-light, sans-serif;
     padding: 12px 0 0 16px;
 }
 
