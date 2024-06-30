@@ -6,14 +6,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    @if (Env.IsDevelopment())
-    {
-        <base href="/" />
+    @{
+        var baseHref = Env.IsDevelopment() ? "/" : "/doctor-who-ratings/";
     }
-    else
-    {
-        <base href="/doctor-who-ratings/" />
-    }
+    <base href="@baseHref" />
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="apexcharts-overrides.css" />
     <link rel="stylesheet" href="DoctorWhoRatings.WebClient.styles.css" />
