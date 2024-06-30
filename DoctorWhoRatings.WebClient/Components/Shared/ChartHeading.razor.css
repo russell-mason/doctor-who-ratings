@@ -1,0 +1,13 @@
+﻿section {
+    margin-bottom: 24px;
+}
+
+.title {
+    text-transform: uppercase;
+    font-family: Segoe WebFont Light;
+    font-size: 1.3rem;
+}
+
+.description {
+    font-size: 0.85rem;
+}

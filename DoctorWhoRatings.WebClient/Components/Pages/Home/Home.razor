@@ -1,4 +1,5 @@
 ﻿@page "/"
+@layout HomeLayout
 
 <PageTitle>Doctor Who Ratings</PageTitle>
 
@@ -10,28 +11,28 @@
 
     <ul class="chart-list">
         <li>
-            <ChartNavLink Url="charts/all-episodes"
-                          IconUrl="images/bar-chart.svg"
-                          Title="@AllEpisodesData.Title"
-                          Description="@AllEpisodesData.Description" />
+            <ChartSelectionNavLink Url="charts/all-episodes"
+                                   IconUrl="images/bar-chart.svg"
+                                   Title="@AllEpisodesData.Title"
+                                   Description="@AllEpisodesData.Description" />
         </li>
         <li>
-            <ChartNavLink Url="charts/average-by-doctor"
-                          IconUrl="images/bar-chart.svg"
-                          Title="@AverageByDoctorData.Title"
-                          Description="@AverageByDoctorData.Description" />
+            <ChartSelectionNavLink Url="charts/average-by-doctor"
+                                   IconUrl="images/bar-chart.svg"
+                                   Title="@AverageByDoctorData.Title"
+                                   Description="@AverageByDoctorData.Description" />
         </li>
         <li>
-            <ChartNavLink Url="charts/high-low-by-doctor"
-                          IconUrl="images/bar-chart.svg"
-                          Title="@HighLowEpisodesByDoctorData.Title"
-                          Description="@HighLowEpisodesByDoctorData.Description" />
+            <ChartSelectionNavLink Url="charts/high-low-by-doctor"
+                                   IconUrl="images/bar-chart.svg"
+                                   Title="@HighLowEpisodesByDoctorData.Title"
+                                   Description="@HighLowEpisodesByDoctorData.Description" />
         </li>
         <li>
-            <ChartNavLink Url="charts/population"
-                          IconUrl="images/line-chart.svg"
-                          Title="@PopulationByYearData.Title"
-                          Description="@PopulationByYearData.Description" />
+            <ChartSelectionNavLink Url="charts/population"
+                                   IconUrl="images/line-chart.svg"
+                                   Title="@PopulationByYearData.Title"
+                                   Description="@PopulationByYearData.Description" />
         </li>
     </ul>
 

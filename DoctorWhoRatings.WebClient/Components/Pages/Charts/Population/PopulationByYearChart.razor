@@ -3,36 +3,30 @@
 
 <PageTitle>UK Population - Doctor Who Ratings</PageTitle>
 
-<NavBar />
+<ChartHeading Title="@PopulationByYearData.Title"
+              Description="@PopulationByYearData.Description" />
 
-<div class="page-container">
-    <div class="title-block">
-        <div class="title">@PopulationByYearData.Title</div>
-        <div>@PopulationByYearData.Description</div>
-    </div>
+<Chart>
+    <ApexChart TItem="PopulationByYearDataPoint"
+               Title="@PopulationByYearData.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
 
-    <div class="chart-container ">
-        <ApexChart TItem="PopulationByYearDataPoint"
-                   Title="@PopulationByYearData.YAxisTitle"
-                   Options="ChartOptions"
-                   Height="@("100%")"
-                   Width="@("100%")">
+        <ApexPointTooltip>
+            <PopulationByYearTooltip DataPoint="@context.DataPoint.Items.First()" />
+        </ApexPointTooltip>
 
-            <ApexPointTooltip>
-                <PopulationByYearTooltip DataPoint="@context.DataPoint.Items.First()" />
-            </ApexPointTooltip>
-
-            <ChildContent>
-                <ApexPointSeries TItem="PopulationByYearDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@PopulationByYearData.SeriesTitles[0]"
-                                 SeriesType="SeriesType.Area"
-                                 XValue="dp => dp.Year"
-                                 YValue="dp => dp.Population" />
-            </ChildContent>
-        </ApexChart>
-    </div>
-</div>
+        <ChildContent>
+            <ApexPointSeries TItem="PopulationByYearDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@PopulationByYearData.SeriesTitles[0]"
+                             SeriesType="SeriesType.Area"
+                             XValue="dp => dp.Year"
+                             YValue="dp => dp.Population" />
+        </ChildContent>
+    </ApexChart>   
+</Chart>
 
 @code {
     private ApexChartOptions<PopulationByYearDataPoint> ChartOptions { get; } = CreateChartOptions();

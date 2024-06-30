@@ -3,62 +3,56 @@
 
 <PageTitle>All Episodes - Doctor Who Ratings</PageTitle>
 
-<NavBar />
+<ChartHeading Title="@AllEpisodesData.Title"
+              Description="@AllEpisodesData.Description" />
 
-<div class="page-container">
-    <div class="title-block">
-        <div class="title">@AllEpisodesData.Title</div>
-        <div>@AllEpisodesData.Description</div>
-    </div>
+<Chart>
+    <ApexChart @ref="Chart" 
+               TItem="AllEpisodesDataPoint"
+               Title="@AllEpisodesData.YAxisTitle"
+               Options="Options"
+               Height="@("100%")"
+               Width="@("100%")">
 
-    <div class="chart-container ">
-        <ApexChart @ref="Chart" 
-                   TItem="AllEpisodesDataPoint"
-                   Title="@AllEpisodesData.YAxisTitle"
-                   Options="Options"
-                   Height="@("100%")"
-                   Width="@("100%")">
+        <ApexPointTooltip>
+            <AllEpisodeTooltip DataPoint="@context.DataPoint.Items.First()"
+                               SeriesIndex="@context.SeriesIndex" />
+        </ApexPointTooltip>
 
-            <ApexPointTooltip>
-                <AllEpisodeTooltip DataPoint="@context.DataPoint.Items.First()"
-                                   SeriesIndex="@context.SeriesIndex" />
-            </ApexPointTooltip>
-
-            <ChildContent>
-                <ApexPointSeries TItem="AllEpisodesDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@AllEpisodesData.SeriesTitles[0]"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Id"
-                                 YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.PopulationAdjustedOvernightRatings : dp.OvernightRatings" />
-                
-                <ApexPointSeries TItem="AllEpisodesDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@AllEpisodesData.SeriesTitles[1]"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Id"
-                                 YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.PopulationAdjustedConsolidatedExcessRatings: dp.ConsolidatedExcessRatings" />
-                
-                <ApexPointSeries TItem="AllEpisodesDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@AllEpisodesData.SeriesTitles[2]"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Id"
-                                 YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.PopulationAdjustedExtendedExcessRatings : dp.ExtendedExcessRatings" />
-            </ChildContent>
-        </ApexChart>
-    </div>
+        <ChildContent>
+            <ApexPointSeries TItem="AllEpisodesDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@AllEpisodesData.SeriesTitles[0]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Id"
+                             YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.PopulationAdjustedOvernightRatings : dp.OvernightRatings" />
+            
+            <ApexPointSeries TItem="AllEpisodesDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@AllEpisodesData.SeriesTitles[1]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Id"
+                             YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.PopulationAdjustedConsolidatedExcessRatings: dp.ConsolidatedExcessRatings" />
+            
+            <ApexPointSeries TItem="AllEpisodesDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@AllEpisodesData.SeriesTitles[2]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Id"
+                             YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.PopulationAdjustedExtendedExcessRatings : dp.ExtendedExcessRatings" />
+        </ChildContent>
+    </ApexChart>
+</Chart>
     
-    <div class="options-container">
-        <div class="options">
-            <input class="checkbox" id="population" type="checkbox" name="adjustForPopulation"
-                   checked="@(DataOptions.AdjustForCurrentPopulation)"
-                   @onchange="(e) => AdjustForPopulationChanged(Convert.ToBoolean(e.Value))" />
+<ChartOptions>
+    <ChartOptionsSet>
+        <input class="checkbox" id="population" type="checkbox" name="adjustForPopulation"
+               checked="@(DataOptions.AdjustForCurrentPopulation)"
+               @onchange="(e) => AdjustForPopulationChanged(Convert.ToBoolean(e.Value))"/>
 
-            <label for="population">Adjust relative to current population</label>
-        </div>
-    </div>
-</div>
+        <label for="population">Adjust relative to current population</label>
+    </ChartOptionsSet>
+</ChartOptions>
 
 @code {
     private ApexChart<AllEpisodesDataPoint> Chart { get; set; } = default!;

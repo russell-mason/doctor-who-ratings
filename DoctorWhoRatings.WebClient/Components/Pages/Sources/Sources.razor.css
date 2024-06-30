@@ -13,20 +13,19 @@
 
 .title {
     text-transform: uppercase;
-    font-size: 1.2rem;
-    font-family: Segoe WebFont Light, sans-serif;
-    font-weight: bold;
+    font-size: 1.3rem;
+    font-family: Segoe WebFont Light;
+    font-weight: normal;
 }
 
 .website-block {
-    margin-top: 36px;
+    margin-top: 24px;
 }
 
 .website {
     text-transform: uppercase;
     font-size: 1rem;
-    font-family: Segoe WebFont Light, sans-serif;
-    font-weight: bold;
+    font-family: Segoe WebFont Light;
 }
 
 a {

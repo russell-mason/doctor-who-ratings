@@ -3,115 +3,109 @@
 
 <PageTitle>High/Low by Doctor - Doctor Who Ratings</PageTitle>
 
-<NavBar />
+<ChartHeading Title="@HighLowEpisodesByDoctorData.Title"
+              Description="@HighLowEpisodesByDoctorData.Description" />
 
-<div class="page-container">
-    <div class="title-block">
-        <div class="title">@HighLowEpisodesByDoctorData.Title</div>
-        <div>@HighLowEpisodesByDoctorData.Description</div>
-    </div>
-
-    <div class="chart-container ">
-        <ApexChart @ref="Chart"
-                   TItem="HighLowEpisodesByDoctorDataPoint"
-                   Title="@HighLowEpisodesByDoctorData.YAxisTitle"
-                   Options="ChartOptions"
-                   Height="@("100%")"
-                   Width="@("100%")">
+<Chart>
+    <ApexChart @ref="Chart"
+               TItem="HighLowEpisodesByDoctorDataPoint"
+               Title="@HighLowEpisodesByDoctorData.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
             
-            <ApexPointTooltip>
-                <HighLowEpisodesByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
-                                                SeriesIndex="@context.SeriesIndex"
-                                                DataOptions="DataOptions" />
-            </ApexPointTooltip>
-            
-            <ChildContent>
-                <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@HighLowEpisodesByDoctorData.SeriesTitles[0]"
-                                 Group="High"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Actor"
-                                 YValue="dp => dp.HighEpisodeDataPoint.CalculatedOvernightRatings ?? 0"/>
+        <ApexPointTooltip>
+            <HighLowEpisodesByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
+                                            SeriesIndex="@context.SeriesIndex"
+                                            DataOptions="DataOptions" />
+        </ApexPointTooltip>
+        
+        <ChildContent>
+            <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[0]"
+                             Group="High"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Actor"
+                             YValue="dp => dp.HighEpisodeDataPoint.CalculatedOvernightRatings ?? 0"/>
 
-                <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@HighLowEpisodesByDoctorData.SeriesTitles[1]"
-                                 Group="High"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Actor"
-                                 YValue="dp => dp.HighEpisodeDataPoint.CalculatedConsolidatedExcessRatings ?? 0" />
+            <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[1]"
+                             Group="High"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Actor"
+                             YValue="dp => dp.HighEpisodeDataPoint.CalculatedConsolidatedExcessRatings ?? 0" />
 
-                <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@HighLowEpisodesByDoctorData.SeriesTitles[2]"
-                                 Group="High"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Actor"
-                                 YValue="dp => dp.HighEpisodeDataPoint.CalculatedExtendedExcessRatings ?? 0" />
+            <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[2]"
+                             Group="High"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Actor"
+                             YValue="dp => dp.HighEpisodeDataPoint.CalculatedExtendedExcessRatings ?? 0" />
 
-                <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@HighLowEpisodesByDoctorData.SeriesTitles[3]"
-                                 Group="Low"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Actor"
-                                 YValue="dp => dp.LowEpisodeDataPoint.CalculatedOvernightRatings ?? 0"/>
+            <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[3]"
+                             Group="Low"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Actor"
+                             YValue="dp => dp.LowEpisodeDataPoint.CalculatedOvernightRatings ?? 0"/>
 
-                <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@HighLowEpisodesByDoctorData.SeriesTitles[4]"
-                                 Group="Low"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Actor"
-                                 YValue="dp => dp.LowEpisodeDataPoint.CalculatedConsolidatedExcessRatings ?? 0" />
+            <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[4]"
+                             Group="Low"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Actor"
+                             YValue="dp => dp.LowEpisodeDataPoint.CalculatedConsolidatedExcessRatings ?? 0" />
 
-                <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@HighLowEpisodesByDoctorData.SeriesTitles[5]"
-                                 Group="Low"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Actor"
-                                 YValue="dp => dp.LowEpisodeDataPoint.CalculatedExtendedExcessRatings ?? 0" />
-            </ChildContent>
-        </ApexChart>
-    </div>
+            <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[5]"
+                             Group="Low"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Actor"
+                             YValue="dp => dp.LowEpisodeDataPoint.CalculatedExtendedExcessRatings ?? 0" />
+        </ChildContent>
+    </ApexChart>
+</Chart>
 
-    <div class="options-container">
-        <div class="options">
-            <span>Calculate using</span>
+<ChartOptions>
+    <ChartOptionsSet>
+        <span>Calculate using</span>
 
-            <input class="radio" id="overnight" type="radio" name="ratingsOption"
-                   value="@HighLowEpisodesCalculationMethod.Overnight"
-                   checked="@(DataOptions.CalculationMethod == HighLowEpisodesCalculationMethod.Overnight)"
-                   @onchange="() => CalculationMethodChanged(HighLowEpisodesCalculationMethod.Overnight)" />
+        <input class="radio" id="overnight" type="radio" name="ratingsOption"
+               value="@HighLowEpisodesCalculationMethod.Overnight"
+               checked="@(DataOptions.CalculationMethod == HighLowEpisodesCalculationMethod.Overnight)"
+               @onchange="() => CalculationMethodChanged(HighLowEpisodesCalculationMethod.Overnight)" />
 
-            <label for="overnight">@HighLowEpisodesCalculationMethod.Overnight.ToString()</label>
+        <label for="overnight">@HighLowEpisodesCalculationMethod.Overnight.ToString()</label>
 
-            <input class="radio" id="consolidated" type="radio" name="ratingsOption"
-                   value="@HighLowEpisodesCalculationMethod.Consolidated"
-                   checked="@(DataOptions.CalculationMethod == HighLowEpisodesCalculationMethod.Consolidated)"
-                   @onchange="() => CalculationMethodChanged(HighLowEpisodesCalculationMethod.Consolidated)" />
+        <input class="radio" id="consolidated" type="radio" name="ratingsOption"
+               value="@HighLowEpisodesCalculationMethod.Consolidated"
+               checked="@(DataOptions.CalculationMethod == HighLowEpisodesCalculationMethod.Consolidated)"
+               @onchange="() => CalculationMethodChanged(HighLowEpisodesCalculationMethod.Consolidated)" />
 
-            <label for="consolidated">@HighLowEpisodesCalculationMethod.Consolidated.ToString()</label>
-            
-            <input class="radio" id="extended" type="radio" name="ratingsOption"
-                   value="@HighLowEpisodesCalculationMethod.Extended"
-                   checked="@(DataOptions.CalculationMethod == HighLowEpisodesCalculationMethod.Extended)"
-                   @onchange="() => CalculationMethodChanged(HighLowEpisodesCalculationMethod.Extended)" />
+        <label for="consolidated">@HighLowEpisodesCalculationMethod.Consolidated.ToString()</label>
+        
+        <input class="radio" id="extended" type="radio" name="ratingsOption"
+               value="@HighLowEpisodesCalculationMethod.Extended"
+               checked="@(DataOptions.CalculationMethod == HighLowEpisodesCalculationMethod.Extended)"
+               @onchange="() => CalculationMethodChanged(HighLowEpisodesCalculationMethod.Extended)" />
 
-            <label for="extended">@HighLowEpisodesCalculationMethod.Extended.ToString()</label>
-        </div>
+        <label for="extended">@HighLowEpisodesCalculationMethod.Extended.ToString()</label>
+    </ChartOptionsSet>
 
-        <div class="options">
-            <input class="checkbox" id="population" type="checkbox" name="adjustForPopulation"
-                   checked="@(DataOptions.AdjustForCurrentPopulation)"
-                   @onchange="(e) => AdjustForPopulationChanged(Convert.ToBoolean(e.Value))"/>
+    <ChartOptionsSet>
+        <input class="checkbox" id="population" type="checkbox" name="adjustForPopulation"
+               checked="@(DataOptions.AdjustForCurrentPopulation)"
+               @onchange="(e) => AdjustForPopulationChanged(Convert.ToBoolean(e.Value))"/>
 
-            <label for="population">Adjust relative to current population</label>
-        </div>
-    </div>
-</div>
+        <label for="population">Adjust relative to current population</label>
+    </ChartOptionsSet>
+</ChartOptions>
 
 @code {
     private ApexChart<HighLowEpisodesByDoctorDataPoint> Chart { get; set; } = default!;

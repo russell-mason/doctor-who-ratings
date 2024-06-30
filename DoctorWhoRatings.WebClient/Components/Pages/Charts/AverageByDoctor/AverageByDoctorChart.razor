@@ -3,82 +3,75 @@
 
 <PageTitle>Average by Doctor - Doctor Who Ratings</PageTitle>
 
-<NavBar />
+<ChartHeading Title="@AverageByDoctorData.Title"
+              Description="@AverageByDoctorData.Description" />
 
-<div class="page-container">
-    <div class="title-block">
-        <div class="title">@AverageByDoctorData.Title</div>
-        <div>@AverageByDoctorData.Description</div>
-    </div>
+<Chart>
+    <ApexChart @ref="Chart"
+               TItem="AverageByDoctorDataPoint"
+               Title="@AverageByDoctorData.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
 
-    <div class="chart-container ">
-        <ApexChart @ref="Chart"
-                   TItem="AverageByDoctorDataPoint"
-                   Title="@AverageByDoctorData.YAxisTitle"
-                   Options="ChartOptions"
-                   Height="@("100%")"
-                   Width="@("100%")">
+        <ApexPointTooltip>
+            <AverageByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
+                                    SeriesIndex="@context.SeriesIndex"
+                                    DataOptions="DataOptions" />
+        </ApexPointTooltip>
 
-            <ApexPointTooltip>
-                <AverageByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
-                                        SeriesIndex="@context.SeriesIndex"
-                                        DataOptions="DataOptions" />
-            </ApexPointTooltip>
+        <ChildContent>
+            <ApexPointSeries TItem="AverageByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@AverageByDoctorData.SeriesTitles[0]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Actor"
+                             YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.CalculatedPopulationAdjustedOvernightRatings : dp.CalculatedOvernightRatings" />
 
-            <ChildContent>
-                <ApexPointSeries TItem="AverageByDoctorDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@AverageByDoctorData.SeriesTitles[0]"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Actor"
-                                 YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.CalculatedPopulationAdjustedOvernightRatings : dp.CalculatedOvernightRatings" />
+            <ApexPointSeries TItem="AverageByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@AverageByDoctorData.SeriesTitles[1]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Actor"
+                             YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.CalculatedPopulationAdjustedConsolidatedExcessRatings : dp.CalculatedConsolidatedExcessRatings" />
 
-                <ApexPointSeries TItem="AverageByDoctorDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@AverageByDoctorData.SeriesTitles[1]"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Actor"
-                                 YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.CalculatedPopulationAdjustedConsolidatedExcessRatings : dp.CalculatedConsolidatedExcessRatings" />
+            <ApexPointSeries TItem="AverageByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@AverageByDoctorData.SeriesTitles[2]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dp => dp.Actor"
+                             YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.CalculatedPopulationAdjustedExtendedExcessRatings : dp.CalculatedExtendedExcessRatings" />
+        </ChildContent>
+    </ApexChart>
+</Chart>
 
-                <ApexPointSeries TItem="AverageByDoctorDataPoint"
-                                 Items="DataSource.DataPoints"
-                                 Name="@AverageByDoctorData.SeriesTitles[2]"
-                                 SeriesType="SeriesType.Bar"
-                                 XValue="dp => dp.Actor"
-                                 YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.CalculatedPopulationAdjustedExtendedExcessRatings : dp.CalculatedExtendedExcessRatings" />
-            </ChildContent>
-        </ApexChart>
-    </div>
+<ChartOptions>
+    <ChartOptionsSet>
+        <span>Calculate using</span>
 
-    <div class="options-container">
-        <div class="options">
-            <span>Calculate using</span>
+        <input class="radio" id="average" type="radio" name="midpointOption"
+               value="@AverageByDoctorCalculationMethod.Mean"
+               checked="@(DataOptions.CalculationMethod == AverageByDoctorCalculationMethod.Mean)"
+               @onchange="() => CalculationMethodChanged(AverageByDoctorCalculationMethod.Mean)"/>
 
-            <input class="radio" id="average" type="radio" name="midpointOption"
-                   value="@AverageByDoctorCalculationMethod.Mean"
-                   checked="@(DataOptions.CalculationMethod == AverageByDoctorCalculationMethod.Mean)"
-                   @onchange="() => CalculationMethodChanged(AverageByDoctorCalculationMethod.Mean)" />
+        <label for="average">@AverageByDoctorCalculationMethod.Mean.ToString()</label>
 
-            <label for="average">@AverageByDoctorCalculationMethod.Mean.ToString()</label>
+        <input class="radio" id="median" type="radio" name="midpointOption"
+               value="@AverageByDoctorCalculationMethod.Median"
+               checked="@(DataOptions.CalculationMethod == AverageByDoctorCalculationMethod.Median)"
+               @onchange="() => CalculationMethodChanged(AverageByDoctorCalculationMethod.Median)"/>
 
-            <input class="radio" id="median" type="radio" name="midpointOption"
-                   value="@AverageByDoctorCalculationMethod.Median"
-                   checked="@(DataOptions.CalculationMethod == AverageByDoctorCalculationMethod.Median)"
-                   @onchange="() => CalculationMethodChanged(AverageByDoctorCalculationMethod.Median)" />
+        <label for="median">@AverageByDoctorCalculationMethod.Median.ToString()</label>
+    </ChartOptionsSet>
 
-            <label for="median">@AverageByDoctorCalculationMethod.Median.ToString()</label>
+    <ChartOptionsSet>
+        <input class="checkbox" id="population" type="checkbox" name="adjustForPopulation"
+               checked="@(DataOptions.AdjustForCurrentPopulation)"
+               @onchange="(e) => AdjustForPopulationChanged(Convert.ToBoolean(e.Value))"/>
 
-        </div>
-
-        <div class="options">
-            <input class="checkbox" id="population" type="checkbox" name="adjustForPopulation"
-                   checked="@(DataOptions.AdjustForCurrentPopulation)"
-                   @onchange="(e) => AdjustForPopulationChanged(Convert.ToBoolean(e.Value))" />
-
-            <label for="population">Adjust relative to current population</label>
-        </div>
-    </div>
-</div>
+        <label for="population">Adjust relative to current population</label>
+    </ChartOptionsSet>
+</ChartOptions>
 
 @code {
     private ApexChart<AverageByDoctorDataPoint> Chart { get; set; } = default!;

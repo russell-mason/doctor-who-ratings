@@ -1,0 +1,12 @@
+﻿<section>
+    <div class="title">@Title</div>
+    <div class="description">@Description</div>
+</section>
+
+@code {
+    [Parameter]
+    public required string Title { get; set; }
+
+    [Parameter]
+    public required string Description { get; set; }
+}
