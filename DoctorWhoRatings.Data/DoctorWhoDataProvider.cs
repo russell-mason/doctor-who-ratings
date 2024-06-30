@@ -18,7 +18,7 @@ public class DoctorWhoDataProvider : IDoctorWhoDataProvider
 
     public void Load()
     {
-        _ = DoctorWhoData;  // Use consistent access to ensure lazy loading if invoked
+        _ = DoctorWhoData;  // Use consistent access to ensure lazy loading is invoked
     }
 
     private DoctorWhoData GetDoctorWhoData()

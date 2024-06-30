@@ -3,6 +3,8 @@
 public enum HighLowEpisodesCalculationMethod
 {
     Overnight,
+
     Consolidated,
+    
     Extended
 }

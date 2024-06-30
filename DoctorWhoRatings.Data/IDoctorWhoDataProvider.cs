@@ -11,7 +11,7 @@ public interface IDoctorWhoDataProvider
     DoctorWhoData DoctorWhoData { get; }
 
     /// <summary>
-    /// Loads the root dataset. Can be used for preloading, otherwise that dataset will be loaded when the
+    /// Loads the root dataset. Can be used for preloading, otherwise the dataset will be loaded when the
     /// DoctorWhoData property is accessed.
     /// </summary>
     void Load();

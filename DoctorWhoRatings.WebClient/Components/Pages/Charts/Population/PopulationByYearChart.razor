@@ -39,14 +39,10 @@
 
     private PopulationByYearData DataSource { get; set; } = default!;
 
-    protected override void OnInitialized()
-    {
-        DataSource = PopulationByYearDataGenerator.Generate();
-    }
+    protected override void OnInitialized() => DataSource = PopulationByYearDataGenerator.Generate();
 
-    private static ApexChartOptions<PopulationByYearDataPoint> CreateChartOptions()
-    {
-        var option = new ApexChartOptions<PopulationByYearDataPoint>
+    private static ApexChartOptions<PopulationByYearDataPoint> CreateChartOptions() =>
+        new()
         {
             Markers = new Markers
             {
@@ -67,7 +63,4 @@
                 }
             ]
         };
-
-        return option;
-    }
 }

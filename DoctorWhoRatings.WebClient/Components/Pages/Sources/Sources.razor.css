@@ -4,6 +4,7 @@
 
 .title-block {
     margin-bottom: 24px;
+    line-height: 140%
 }
 
     .title-block:nth-child(n+2) {

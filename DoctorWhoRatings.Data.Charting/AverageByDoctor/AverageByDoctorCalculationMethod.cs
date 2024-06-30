@@ -3,5 +3,6 @@
 public enum AverageByDoctorCalculationMethod
 {
     Mean,
+
     Median
 }

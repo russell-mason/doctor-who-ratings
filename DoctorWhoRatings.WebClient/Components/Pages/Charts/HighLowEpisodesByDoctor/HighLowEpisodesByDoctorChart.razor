@@ -122,10 +122,7 @@
 
     private HighLowEpisodesByDoctorDataOptions DataOptions { get; } = new();
 
-    protected override void OnInitialized()
-    {
-        DataSource = HighLowEpisodesByDoctorDataGenerator.Generate(DataOptions);
-    }
+    protected override void OnInitialized() => DataSource = HighLowEpisodesByDoctorDataGenerator.Generate(DataOptions);
 
     private async Task Refresh()
     {
@@ -150,9 +147,8 @@
         await Refresh();
     }
 
-    private static ApexChartOptions<HighLowEpisodesByDoctorDataPoint> CreateChartOptions()
-    {
-        var option = new ApexChartOptions<HighLowEpisodesByDoctorDataPoint>
+    private static ApexChartOptions<HighLowEpisodesByDoctorDataPoint> CreateChartOptions() =>
+        new()
         {
             PlotOptions = new PlotOptions
             {
@@ -176,7 +172,4 @@
                 Stacked = true
             }
         };
-
-        return option;
-    }
 }

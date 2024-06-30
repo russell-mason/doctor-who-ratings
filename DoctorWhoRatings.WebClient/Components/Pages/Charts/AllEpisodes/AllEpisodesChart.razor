@@ -69,10 +69,7 @@
 
     private AllEpisodesDataOptions DataOptions { get; } = new();
 
-    protected override void OnInitialized()
-    {
-        DataSource = AllEpisodesDataGenerator.Generate();
-    }
+    protected override void OnInitialized() => DataSource = AllEpisodesDataGenerator.Generate();
 
     private async Task Refresh()
     {
@@ -90,9 +87,8 @@
         await Refresh();
     }
 
-    private static ApexChartOptions<AllEpisodesDataPoint> CreateChartOptions()
-    {
-        ApexChartOptions<AllEpisodesDataPoint> chartOptions = new()
+    private static ApexChartOptions<AllEpisodesDataPoint> CreateChartOptions() =>
+        new()
         {
             PlotOptions = new PlotOptions
             {
@@ -106,7 +102,10 @@
                 Labels = new XAxisLabels
                 {
                     Formatter = "function(value) { return '' }",
-                    Style = new AxisLabelStyle { FontSize = "0" }
+                    Style = new AxisLabelStyle
+                    {
+                        FontSize = "0"
+                    }
                 },
                 TickPlacement = TickPlacement.On
             },
@@ -125,7 +124,4 @@
                 Stacked = true
             }
         };
-
-        return chartOptions;
-    }
 }

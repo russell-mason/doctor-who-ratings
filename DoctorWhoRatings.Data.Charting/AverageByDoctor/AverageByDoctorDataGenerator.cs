@@ -10,7 +10,7 @@ public class AverageByDoctorDataGenerator(IDoctorWhoDataProvider dataProvider) :
                                      .ToList()
                                      .AsReadOnly();
 
-        var averageByDoctorData = new AverageByDoctorData()
+        var averageByDoctorData = new AverageByDoctorData
         {
             DataPoints = dataPoints
         };

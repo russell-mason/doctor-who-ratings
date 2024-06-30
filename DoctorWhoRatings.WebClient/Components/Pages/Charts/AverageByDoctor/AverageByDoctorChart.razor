@@ -89,10 +89,7 @@
 
     private AverageByDoctorDataOptions DataOptions { get; } = new();
 
-    protected override void OnInitialized()
-    {
-        DataSource = AverageByDoctorDataGenerator.Generate(DataOptions);
-    }
+    protected override void OnInitialized() => DataSource = AverageByDoctorDataGenerator.Generate(DataOptions);
 
     private async Task Refresh()
     {
@@ -117,9 +114,8 @@
         await Refresh();
     }
 
-    private static ApexChartOptions<AverageByDoctorDataPoint> CreateChartOptions()
-    {
-        var options = new ApexChartOptions<AverageByDoctorDataPoint>
+    private static ApexChartOptions<AverageByDoctorDataPoint> CreateChartOptions() =>
+        new()
         {
             PlotOptions = new PlotOptions
             {
@@ -143,7 +139,4 @@
                 Stacked = true
             }
         };
-
-        return options;
-    }
 }
