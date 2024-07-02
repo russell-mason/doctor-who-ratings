@@ -1,0 +1,45 @@
+﻿@typeparam T
+
+<input class="radio" id="@Id" type="radio" name="@Group"
+       value="@Value" checked="@Value?.Equals(CheckedValue)" @onchange="OnChanged" />
+
+@if (!string.IsNullOrWhiteSpace(Label))
+{
+    <label for="@Id">@Label</label>
+}
+
+@code {
+    [Parameter]
+    public required string Id { get; set; }
+
+    [Parameter]
+    public required string Group { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public T? CheckedValue { get; set; }
+
+    [Parameter]
+    public T? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<T> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback AfterChanged { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Label ??= CheckedValue?.ToString() ?? string.Empty;
+
+        base.OnInitialized();
+    }
+
+    private async Task OnChanged()
+    {
+        await ValueChanged.InvokeAsync(CheckedValue);
+        await AfterChanged.InvokeAsync();
+    }
+}

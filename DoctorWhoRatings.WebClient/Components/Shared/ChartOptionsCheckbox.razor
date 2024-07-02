@@ -1,0 +1,39 @@
+﻿<input class="checkbox" id="@Id" type="checkbox" 
+       value="@Value.ToString()" checked="@Value" @onchange="OnChanged" />
+
+@if (!string.IsNullOrWhiteSpace(Label))
+{
+    <label for="@Id">@Label</label>
+}
+
+@code {
+    [Parameter]
+    public required string Id { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public bool Value { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback AfterChanged { get; set; }
+
+    private async Task OnChanged(ChangeEventArgs eventArgs)
+    {
+        var success = bool.TryParse(eventArgs.Value?.ToString(), out var result);
+
+        if (!success)
+        {
+            return;
+        }
+
+        Value = result;
+
+        await ValueChanged.InvokeAsync(result);
+        await AfterChanged.InvokeAsync();
+    }
+}

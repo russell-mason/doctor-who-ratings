@@ -22,39 +22,16 @@
                              Items="DataSource.DataPoints"
                              Name="@PopulationByYearData.SeriesTitles[0]"
                              SeriesType="SeriesType.Area"
-                             XValue="dp => dp.Year"
-                             YValue="dp => dp.Population" />
+                             XValue="dataPoint => dataPoint.Year"
+                             YValue="dataPoint => dataPoint.Population" />
         </ChildContent>
     </ApexChart>   
 </Chart>
 
 @code {
-    private ApexChartOptions<PopulationByYearDataPoint> ChartOptions { get; } = CreateChartOptions();
+    private ApexChartOptions<PopulationByYearDataPoint> ChartOptions { get; } = PopulationByYearChartOptions.Defaults;
 
     private PopulationByYearData DataSource { get; set; } = default!;
 
     protected override void OnInitialized() => DataSource = PopulationByYearDataGenerator.Generate();
-
-    private static ApexChartOptions<PopulationByYearDataPoint> CreateChartOptions() =>
-        new()
-        {
-            Markers = new Markers
-            {
-                Size = 3
-            },
-            Stroke = new Stroke
-            {
-                Curve = new CurveSelections(Curve.MonotoneCubic)
-            },
-            Yaxis =
-            [
-                new YAxis
-                {
-                    Labels = new YAxisLabels
-                    {
-                        Formatter = "function(value) { return Math.round(value / 1000000, 0); }"
-                    }
-                }
-            ]
-        };
 }

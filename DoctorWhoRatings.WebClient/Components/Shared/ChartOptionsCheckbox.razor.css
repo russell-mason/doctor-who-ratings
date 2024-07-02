@@ -1,0 +1,9 @@
+﻿input,
+label {
+    cursor: pointer;
+}
+
+.checkbox {
+    vertical-align: middle;
+    margin: -0.1rem 0.45rem 0 0.25rem;
+}

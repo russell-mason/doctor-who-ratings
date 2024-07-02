@@ -25,22 +25,22 @@
                              Items="DataSource.DataPoints"
                              Name="@AverageByDoctorData.SeriesTitles[0]"
                              SeriesType="SeriesType.Bar"
-                             XValue="dp => dp.Actor"
-                             YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.CalculatedPopulationAdjustedOvernightRatings : dp.CalculatedOvernightRatings" />
+                             XValue="dataPoint => dataPoint.Actor"
+                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />
 
             <ApexPointSeries TItem="AverageByDoctorDataPoint"
                              Items="DataSource.DataPoints"
                              Name="@AverageByDoctorData.SeriesTitles[1]"
                              SeriesType="SeriesType.Bar"
-                             XValue="dp => dp.Actor"
-                             YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.CalculatedPopulationAdjustedConsolidatedExcessRatings : dp.CalculatedConsolidatedExcessRatings" />
+                             XValue="dataPoint => dataPoint.Actor"
+                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings : dataPoint.CalculatedConsolidatedExcessRatings" />
 
             <ApexPointSeries TItem="AverageByDoctorDataPoint"
                              Items="DataSource.DataPoints"
                              Name="@AverageByDoctorData.SeriesTitles[2]"
                              SeriesType="SeriesType.Bar"
-                             XValue="dp => dp.Actor"
-                             YValue="dp => DataOptions.AdjustForCurrentPopulation ? dp.CalculatedPopulationAdjustedExtendedExcessRatings : dp.CalculatedExtendedExcessRatings" />
+                             XValue="dataPoint => dataPoint.Actor"
+                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedExtendedExcessRatings : dataPoint.CalculatedExtendedExcessRatings" />
         </ChildContent>
     </ApexChart>
 </Chart>
@@ -48,43 +48,40 @@
 <ChartOptions>
     <ChartOptionsSet>
         <span>Calculate using</span>
-
-        <input class="radio" id="average" type="radio" name="midpointOption"
-               value="@AverageByDoctorCalculationMethod.Mean"
-               checked="@(DataOptions.CalculationMethod == AverageByDoctorCalculationMethod.Mean)"
-               @onchange="() => CalculationMethodChanged(AverageByDoctorCalculationMethod.Mean)"/>
-
-        <label for="average">@AverageByDoctorCalculationMethod.Mean.ToString()</label>
-
-        <input class="radio" id="median" type="radio" name="midpointOption"
-               value="@AverageByDoctorCalculationMethod.Median"
-               checked="@(DataOptions.CalculationMethod == AverageByDoctorCalculationMethod.Median)"
-               @onchange="() => CalculationMethodChanged(AverageByDoctorCalculationMethod.Median)"/>
-
-        <label for="median">@AverageByDoctorCalculationMethod.Median.ToString()</label>
+        
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="mean" Group="midpointOption"
+                           CheckedValue="@AverageByDoctorCalculationMethod.Mean"
+                           AfterChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+        
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="median" Group="midpointOption"
+                           CheckedValue="@AverageByDoctorCalculationMethod.Median"
+                           AfterChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
     </ChartOptionsSet>
-
+    
     <ChartOptionsSet>
-        <input class="checkbox" id="population" type="checkbox" name="adjustForPopulation"
-               checked="@(DataOptions.AdjustForCurrentPopulation)"
-               @onchange="(e) => AdjustForPopulationChanged(Convert.ToBoolean(e.Value))"/>
-
-        <label for="population">Adjust relative to current population</label>
+        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                              Id="population" Label="Adjust relative to current population"
+                              AfterChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
     </ChartOptionsSet>
 </ChartOptions>
 
 @code {
     private ApexChart<AverageByDoctorDataPoint> Chart { get; set; } = default!;
 
-    private ApexChartOptions<AverageByDoctorDataPoint> ChartOptions { get; } = CreateChartOptions();
+    private ApexChartOptions<AverageByDoctorDataPoint> ChartOptions { get; } = AverageByDoctorChartOptions.Defaults; 
 
-    private AverageByDoctorData DataSource { get; set; } = null!;
+    private AverageByDoctorData DataSource { get; set; } = default!;
 
     private AverageByDoctorDataOptions DataOptions { get; } = new();
 
     protected override void OnInitialized() => DataSource = AverageByDoctorDataGenerator.Generate(DataOptions);
 
-    private async Task Refresh()
+    private async Task AfterOptionChanged()
     {
         DataSource = AverageByDoctorDataGenerator.Generate(DataOptions);
 
@@ -92,44 +89,4 @@
 
         await Chart.UpdateSeriesAsync();
     }
-
-    private async Task AdjustForPopulationChanged(bool adjust)
-    {
-        DataOptions.AdjustForCurrentPopulation = adjust;
-
-        await Refresh();
-    }
-
-    private async Task CalculationMethodChanged(AverageByDoctorCalculationMethod calculationMethod)
-    {
-        DataOptions.CalculationMethod = calculationMethod;
-
-        await Refresh();
-    }
-
-    private static ApexChartOptions<AverageByDoctorDataPoint> CreateChartOptions() =>
-        new()
-        {
-            PlotOptions = new PlotOptions
-            {
-                Bar = new PlotOptionsBar
-                {
-                    ColumnWidth = "90%"
-                }
-            },
-            Yaxis =
-            [
-                new YAxis
-                {
-                    Labels = new YAxisLabels
-                    {
-                        Formatter = "function(value) { return value.toFixed(2); }"
-                    }
-                }
-            ],
-            Chart =
-            {
-                Stacked = true
-            }
-        };
 }

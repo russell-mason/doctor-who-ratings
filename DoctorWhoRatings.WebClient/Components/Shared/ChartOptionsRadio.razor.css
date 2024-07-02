@@ -1,0 +1,9 @@
+﻿input,
+label {
+    cursor: pointer;
+}
+
+.radio {
+    vertical-align: middle;
+    margin-top: -0.1rem;
+}

@@ -1,3 +1,4 @@
+global using ApexCharts;
 global using DoctorWhoRatings.Data;
 global using DoctorWhoRatings.Data.Charting.AllEpisodes;
 global using DoctorWhoRatings.Data.Charting.AverageByDoctor;
