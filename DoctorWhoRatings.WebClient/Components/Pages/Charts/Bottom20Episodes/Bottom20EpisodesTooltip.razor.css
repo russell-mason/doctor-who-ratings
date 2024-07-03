@@ -1,0 +1,70 @@
+﻿.tooltip {
+    border-radius: 5px;
+    color: #707070;
+    background-color: #ffffff;
+}
+
+    .tooltip.secondary {
+        margin-top: 6px
+    }
+
+.block {
+    padding: 12px 16px;
+}
+
+.icon-block {
+    display: flex;
+}
+
+.series-target {
+    padding-bottom: 0;
+}
+
+.break {
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.actor {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-family: segoe-bold, sans-serif;
+    font-weight: bold;
+    color: #507dd7;
+}
+
+.story {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #505050;
+}
+
+.season {
+    margin-top: 0.4rem;
+}
+
+.calculation-method {
+    text-transform: uppercase;
+}
+
+.population-adjusted {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-family: segoe-light, sans-serif;
+    padding: 12px 0 0 16px;
+}
+
+.icon {
+    height: 16px;
+    width: 16px;
+    filter: invert(48%) sepia(2%) saturate(9%) hue-rotate(331deg) brightness(90%) contrast(91%);
+    margin-right: 12px;
+}
+
+.highlighted-value {
+    font-weight: bold;
+    color: #505050;
+}
+
+.line-space {
+    margin-top: 5px;
+}

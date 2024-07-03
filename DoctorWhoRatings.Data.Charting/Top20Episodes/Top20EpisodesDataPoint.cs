@@ -1,6 +1,6 @@
-﻿namespace DoctorWhoRatings.Data.Charting.AllEpisodes;
+﻿namespace DoctorWhoRatings.Data.Charting.Top20Episodes;
 
-public class AllEpisodesDataPoint
+public class Top20EpisodesDataPoint
 {
     public int Id { get; init; }
 
@@ -35,6 +35,14 @@ public class AllEpisodesDataPoint
     public decimal? PopulationAdjustedConsolidatedExcessRatings { get; init; }
 
     public decimal? PopulationAdjustedExtendedExcessRatings { get; init; }
-    
-    public string? Note { get; init; }
+
+    public decimal? CalculatedOvernightRatings { get; set; }
+
+    public decimal? CalculatedConsolidatedRatings { get; set; }
+
+    public decimal? CalculatedConsolidatedExcessRatings { get; init; }
+
+    public decimal? CalculatedExtendedRatings { get; set; }
+
+    public decimal? CalculatedExtendedExcessRatings { get; init; }
 }

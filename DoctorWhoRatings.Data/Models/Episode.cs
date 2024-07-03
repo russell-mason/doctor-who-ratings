@@ -36,6 +36,8 @@ public record Episode
 
     public DateTime OriginalAirDate { get; init; }
 
+    public int Runtime { get; init; }
+
     /// <summary>
     /// Overnight viewers (in millions).
     /// </summary>
@@ -59,7 +61,7 @@ public record Episode
     /// <summary>
     /// Difference between the extended figure and the consolidated figure (in millions).
     /// </summary>
-    public decimal? ExtendedExcessRatings => ExtendedRatings - ConsolidatedRatings;
+    public decimal? ExtendedExcessRatings => ExtendedRatings - (ConsolidatedRatings ?? OvernightRatings);
 
     /// <summary>
     /// Adjusted relative to the UK population at the time of airing and the current population.
@@ -84,7 +86,7 @@ public record Episode
     /// <summary>
     /// Adjusted relative to the UK population at the time of airing and the current population.
     /// </summary>
-    public decimal? PopulationAdjustedExtendedExcessRatings => PopulationAdjustedExtendedRatings - PopulationAdjustedConsolidatedRatings;
+    public decimal? PopulationAdjustedExtendedExcessRatings => PopulationAdjustedExtendedRatings - (PopulationAdjustedConsolidatedRatings ?? PopulationAdjustedOvernightRatings);
 
     /// <summary>
     /// UK population at the time of airing.

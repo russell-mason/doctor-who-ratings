@@ -38,7 +38,6 @@ public class AllEpisodesDataGenerator(IDoctorWhoDataProvider dataProvider) : IAl
             PopulationAdjustedExtendedRatings = episode.PopulationAdjustedExtendedRatings,
             PopulationAdjustedConsolidatedExcessRatings = episode.PopulationAdjustedConsolidatedExcessRatings,
             PopulationAdjustedExtendedExcessRatings = episode.PopulationAdjustedExtendedExcessRatings,
-            PopulationFactor = episode.PopulationFactor,
             Note = episode.Note
         };
 

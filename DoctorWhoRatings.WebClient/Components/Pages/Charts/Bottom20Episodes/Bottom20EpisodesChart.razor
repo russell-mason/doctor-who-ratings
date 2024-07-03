@@ -1,0 +1,105 @@
+﻿@page "/charts/bottom-20-episodes"
+@inject IBottom20EpisodesDataGenerator Bottom20EpisodesDataGenerator
+
+<PageTitle>Bottom 20 Episodes - Doctor Who Ratings</PageTitle>
+
+<ChartHeading Title="@Bottom20EpisodesData.Title"
+              Description="@Bottom20EpisodesData.Description" />
+
+<Chart>
+    <ApexChart @ref="Chart"
+               TItem="Bottom20EpisodesDataPoint"
+               Title="@Bottom20EpisodesData.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
+
+        <ApexPointTooltip>
+            <Bottom20EpisodesTooltip DataPoint="@context.DataPoint.Items.First()"
+                                     SeriesIndex="@context.SeriesIndex"
+                                     DataOptions="DataOptions" />
+        </ApexPointTooltip>
+
+        <ChildContent>
+            <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@Bottom20EpisodesData.SeriesTitles[0]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => dataPoint.Actor"
+                             YValue="dataPoint => dataPoint.CalculatedOvernightRatings" />
+
+            <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@Bottom20EpisodesData.SeriesTitles[1]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => dataPoint.Actor"
+                             YValue="dataPoint => dataPoint.CalculatedConsolidatedExcessRatings" />
+
+            <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@Bottom20EpisodesData.SeriesTitles[2]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => dataPoint.Actor"
+                             YValue="dataPoint => dataPoint.CalculatedExtendedExcessRatings" />
+        </ChildContent>
+    </ApexChart>
+</Chart>
+
+<ChartOptions>
+    <ChartOptionsSet>
+        <span>Calculate using</span>
+        
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="overnight" Group="ratingsOption"
+                           CheckedValue="@Bottom20EpisodesCalculationMethod.Overnight"
+                           AfterChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="consolidated" Group="ratingsOption"
+                           CheckedValue="@Bottom20EpisodesCalculationMethod.Consolidated"
+                           AfterChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="extended" Group="ratingsOption"
+                           CheckedValue="@Bottom20EpisodesCalculationMethod.Extended"
+                           AfterChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+    </ChartOptionsSet>
+    
+    <ChartOptionsSet>
+        <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeSpecials"
+                              Id="specials" Label="Include specials/movie"
+                              AfterChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
+    </ChartOptionsSet>
+
+    <ChartOptionsSet>
+        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                              Id="population" Label="Adjust relative to current population"
+                              AfterChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
+    </ChartOptionsSet>
+</ChartOptions>
+
+@code {
+    private ApexChart<Bottom20EpisodesDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<Bottom20EpisodesDataPoint> ChartOptions { get; } = Bottom20EpisodesChartOptions.Defaults;
+
+    private Bottom20EpisodesData DataSource { get; set; } = default!;
+
+    private Bottom20EpisodesDataOptions DataOptions { get; } = new();
+
+    protected override void OnInitialized() => DataSource = Bottom20EpisodesDataGenerator.Generate(DataOptions);
+
+    private async Task AfterOptionChanged()
+    {
+        DataSource = Bottom20EpisodesDataGenerator.Generate(DataOptions);
+
+        StateHasChanged();
+
+        await Chart.UpdateSeriesAsync();
+    }
+}

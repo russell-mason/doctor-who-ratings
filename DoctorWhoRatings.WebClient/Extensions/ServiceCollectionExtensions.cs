@@ -11,6 +11,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IAverageByDoctorDataGenerator, AverageByDoctorDataGenerator>();
         services.AddSingleton<IHighLowEpisodesByDoctorDataGenerator, HighLowEpisodesByDoctorDataGenerator>();
         services.AddSingleton<IPopulationByYearDataGenerator, PopulationByYearDataGenerator>();
+        services.AddSingleton<ITop20EpisodesDataGenerator, Top20EpisodesDataGenerator>();
+        services.AddSingleton<IBottom20EpisodesDataGenerator, Bottom20EpisodesDataGenerator>();
 
         return services;
     }
