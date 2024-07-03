@@ -1,4 +1,6 @@
 ﻿section {
+    position: relative;
+    z-index: 0;
     background: #f0f0f0;
     color: #000000;
     border-radius: 5px;
