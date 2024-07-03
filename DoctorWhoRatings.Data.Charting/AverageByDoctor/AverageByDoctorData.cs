@@ -2,7 +2,7 @@
 
 public class AverageByDoctorData
 {
-    public const string Title = "Average By Doctor";
+    public const string Title = "Average (by Doctor)";
 
     public const string Description = "Shows average ratings across all episodes for each doctor.";
 

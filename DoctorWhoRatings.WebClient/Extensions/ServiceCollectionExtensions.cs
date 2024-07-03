@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IPopulationByYearDataGenerator, PopulationByYearDataGenerator>();
         services.AddSingleton<ITop20EpisodesDataGenerator, Top20EpisodesDataGenerator>();
         services.AddSingleton<IBottom20EpisodesDataGenerator, Bottom20EpisodesDataGenerator>();
+        services.AddSingleton<ITotalHoursWatchedByDoctorDataGenerator, TotalHoursWatchedByDoctorDataGenerator>();
 
         return services;
     }

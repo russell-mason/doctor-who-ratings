@@ -1,7 +1,7 @@
 ﻿@page "/charts/average-by-doctor"
 @inject IAverageByDoctorDataGenerator AverageByDoctorDataGenerator
 
-<PageTitle>Average by Doctor - Doctor Who Ratings</PageTitle>
+<PageTitle>@AverageByDoctorData.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@AverageByDoctorData.Title"
               Description="@AverageByDoctorData.Description" />

@@ -1,7 +1,7 @@
 ﻿@page "/charts/population"
 @inject IPopulationByYearDataGenerator PopulationByYearDataGenerator
 
-<PageTitle>UK Population - Doctor Who Ratings</PageTitle>
+<PageTitle>@PopulationByYearData.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@PopulationByYearData.Title"
               Description="@PopulationByYearData.Description" />

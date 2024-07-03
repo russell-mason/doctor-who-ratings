@@ -1,7 +1,7 @@
 ﻿@page "/charts/top-20-episodes"
 @inject ITop20EpisodesDataGenerator Top20EpisodesDataGenerator
 
-<PageTitle>Top 20 Episodes - Doctor Who Ratings</PageTitle>
+<PageTitle>@Top20EpisodesData.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@Top20EpisodesData.Title"
               Description="@Top20EpisodesData.Description" />

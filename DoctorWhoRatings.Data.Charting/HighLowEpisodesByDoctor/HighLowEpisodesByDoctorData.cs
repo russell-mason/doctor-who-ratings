@@ -2,7 +2,7 @@
 
 public class HighLowEpisodesByDoctorData
 {
-    public const string Title = "High/Low Episodes By Doctor";
+    public const string Title = "High/Low Episodes (by Doctor)";
 
     public const string Description = "Shows highest and lowest rated episodes for each doctor.";
 

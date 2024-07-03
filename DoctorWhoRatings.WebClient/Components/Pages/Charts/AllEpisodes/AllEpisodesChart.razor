@@ -1,7 +1,7 @@
 ﻿@page "/charts/all-episodes"
 @inject IAllEpisodesDataGenerator AllEpisodesDataGenerator
 
-<PageTitle>All Episodes - Doctor Who Ratings</PageTitle>
+<PageTitle>@AllEpisodesData.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@AllEpisodesData.Title"
               Description="@AllEpisodesData.Description" />

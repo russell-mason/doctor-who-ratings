@@ -1,7 +1,7 @@
 ﻿@page "/charts/bottom-20-episodes"
 @inject IBottom20EpisodesDataGenerator Bottom20EpisodesDataGenerator
 
-<PageTitle>Bottom 20 Episodes - Doctor Who Ratings</PageTitle>
+<PageTitle>@Bottom20EpisodesData.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@Bottom20EpisodesData.Title"
               Description="@Bottom20EpisodesData.Description" />

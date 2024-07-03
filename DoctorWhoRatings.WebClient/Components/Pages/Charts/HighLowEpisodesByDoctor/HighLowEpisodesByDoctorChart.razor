@@ -1,7 +1,7 @@
 ﻿@page "/charts/high-low-by-doctor"
 @inject IHighLowEpisodesByDoctorDataGenerator HighLowEpisodesByDoctorDataGenerator
 
-<PageTitle>High/Low by Doctor - Doctor Who Ratings</PageTitle>
+<PageTitle>@HighLowEpisodesByDoctorData.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@HighLowEpisodesByDoctorData.Title"
               Description="@HighLowEpisodesByDoctorData.Description" />

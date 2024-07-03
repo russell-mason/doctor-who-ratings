@@ -1,0 +1,26 @@
+﻿.radio {
+    vertical-align: middle;
+    margin-top: -0.1rem;
+}
+
+.checkbox {
+    vertical-align: middle;
+    margin-top: -0.1rem;
+}
+
+input,
+label {
+    cursor: pointer;
+}
+
+.note {
+    font-size: 0.8rem;
+}
+
+a {
+    color: #ffffff;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }

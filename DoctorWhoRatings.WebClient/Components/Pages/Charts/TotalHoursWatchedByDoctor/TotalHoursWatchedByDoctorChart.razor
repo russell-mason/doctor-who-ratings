@@ -1,0 +1,95 @@
+﻿@page "/charts/total-hours-watched-by-doctor"
+@inject ITotalHoursWatchedByDoctorDataGenerator TotalHoursWatchedByDoctorDataGenerator
+
+<PageTitle>@TotalHoursWatchedByDoctorData.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@TotalHoursWatchedByDoctorData.Title"
+              Description="@(TotalHoursWatchedByDoctorData.Description + " *")" />
+
+<Chart>
+    <ApexChart @ref="Chart"
+               TItem="TotalHoursWatchedByDoctorDataPoint"
+               Title="@TotalHoursWatchedByDoctorData.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
+
+        <ApexPointTooltip>
+            <TotalHoursWatchedByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
+                                              DataOptions="DataOptions"
+                                              PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
+        </ApexPointTooltip>
+
+        <ChildContent>
+            <ApexPointSeries TItem="TotalHoursWatchedByDoctorDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@TotalHoursWatchedByDoctorData.SeriesTitles[0]"
+                             SeriesType="SeriesType.Pie"
+                             XValue="dataPoint => dataPoint.Actor"
+                             YValue="dataPoint => dataPoint.CalculatedTotalHoursWatched"
+                             ShowDataLabels />
+        </ChildContent>
+    </ApexChart>
+</Chart>
+
+<ChartOptions>
+    <ChartOptionsSet>
+        <span>Calculate using</span>
+        
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="overnight" Group="ratingsOption"
+                           CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Overnight"
+                           AfterChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="consolidated" Group="ratingsOption"
+                           CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Consolidated"
+                           AfterChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="extended" Group="ratingsOption"
+                           CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Extended"
+                           AfterChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+    </ChartOptionsSet>
+</ChartOptions>
+
+<div>
+    <p class="note">
+        * Ratings are based on "views", which can be as little as 3 minutes.
+        Beyond that, it's impossible to know how much of an episode someone actually watched, so this is a simple 
+        calculation based on <strong>ratings * episode length</strong>.
+    </p>
+    <a href="https://www.radiotimes.com/tv/entertainment/how-do-uk-tv-viewing-figures-and-overnight-ratings-work/" target="_blank">Source</a>
+</div>
+
+@code {
+    private ApexChart<TotalHoursWatchedByDoctorDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<TotalHoursWatchedByDoctorDataPoint> ChartOptions { get; } = TotalHoursWatchedByDoctorChartOptions.Defaults;
+
+    private TotalHoursWatchedByDoctorData DataSource { get; set; } = default!;
+
+    private TotalHoursWatchedByDoctorDataOptions DataOptions { get; } = new();
+
+    private decimal GetPercentageShare(TotalHoursWatchedByDoctorDataPoint currentDataPoint)
+    {
+        var total = DataSource.DataPoints.Sum(dataPoint => dataPoint.CalculatedTotalHoursWatched);
+        var percent = currentDataPoint.CalculatedTotalHoursWatched / total * 100;
+        
+        return percent;
+    }
+
+    protected override void OnInitialized() => DataSource = TotalHoursWatchedByDoctorDataGenerator.Generate(DataOptions);
+
+    private async Task AfterOptionChanged()
+    {
+        DataSource = TotalHoursWatchedByDoctorDataGenerator.Generate(DataOptions);
+
+        StateHasChanged();
+
+        await Chart.UpdateSeriesAsync();
+    }
+}
