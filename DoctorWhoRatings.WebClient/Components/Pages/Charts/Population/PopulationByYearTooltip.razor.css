@@ -28,7 +28,7 @@
     height: 16px;
     width: 16px;
     filter: invert(48%) sepia(2%) saturate(9%) hue-rotate(331deg) brightness(90%) contrast(91%);
-    margin-right: 12px;
+    margin: 2px 12px 0 0;
 }
 
 .highlighted-value {
