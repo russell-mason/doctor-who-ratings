@@ -3,60 +3,62 @@
 
 <PageTitle>Doctor Who Ratings</PageTitle>
 
-<div class="page-content">
-    <div>
+<main>
+    <header>
         <span class="title-doctor-who">Doctor Who</span>
         <span class="title-ratings">RATINGS</span>
-    </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li>
+                <ChartSelectionNavLink Url="charts/all-episodes"
+                                       IconUrl="images/bar-chart.svg"
+                                       Title="@AllEpisodesData.Title"
+                                       Description="@AllEpisodesData.Description" />
+            </li>
+            <li>
+                <ChartSelectionNavLink Url="charts/average-by-doctor"
+                                       IconUrl="images/bar-chart.svg"
+                                       Title="@AverageByDoctorData.Title"
+                                       Description="@AverageByDoctorData.Description" />
+            </li>
+            <li>
+                <ChartSelectionNavLink Url="charts/high-low-by-doctor"
+                                       IconUrl="images/bar-chart.svg"
+                                       Title="@HighLowEpisodesByDoctorData.Title"
+                                       Description="@HighLowEpisodesByDoctorData.Description" />
+            </li>
+            <li>
+                <ChartSelectionNavLink Url="charts/top-20-episodes"
+                                       IconUrl="images/bar-chart.svg"
+                                       Title="@Top20EpisodesData.Title"
+                                       Description="@Top20EpisodesData.Description" />
+            </li>
+            <li>
+                <ChartSelectionNavLink Url="charts/bottom-20-episodes"
+                                       IconUrl="images/bar-chart.svg"
+                                       Title="@Bottom20EpisodesData.Title"
+                                       Description="@Bottom20EpisodesData.Description" />
+            </li>
+            <li>
+                <ChartSelectionNavLink Url="charts/total-hours-watched-by-doctor"
+                                       IconUrl="images/pie-chart.svg"
+                                       Title="@TotalHoursWatchedByDoctorData.Title"
+                                       Description="@TotalHoursWatchedByDoctorData.Description" />
+            </li>
+            <li>
+                <ChartSelectionNavLink Url="charts/population"
+                                       IconUrl="images/line-chart.svg"
+                                       Title="@PopulationByYearData.Title"
+                                       Description="@PopulationByYearData.Description" />
+            </li>
+        </ul>
+    </nav>
 
-    <ul class="chart-list">
-        <li>
-            <ChartSelectionNavLink Url="charts/all-episodes"
-                                   IconUrl="images/bar-chart.svg"
-                                   Title="@AllEpisodesData.Title"
-                                   Description="@AllEpisodesData.Description" />
-        </li>
-        <li>
-            <ChartSelectionNavLink Url="charts/average-by-doctor"
-                                   IconUrl="images/bar-chart.svg"
-                                   Title="@AverageByDoctorData.Title"
-                                   Description="@AverageByDoctorData.Description" />
-        </li>
-        <li>
-            <ChartSelectionNavLink Url="charts/high-low-by-doctor"
-                                   IconUrl="images/bar-chart.svg"
-                                   Title="@HighLowEpisodesByDoctorData.Title"
-                                   Description="@HighLowEpisodesByDoctorData.Description" />
-        </li>
-        <li>
-            <ChartSelectionNavLink Url="charts/top-20-episodes"
-                                   IconUrl="images/bar-chart.svg"
-                                   Title="@Top20EpisodesData.Title"
-                                   Description="@Top20EpisodesData.Description" />
-        </li>
-        <li>
-            <ChartSelectionNavLink Url="charts/bottom-20-episodes"
-                                   IconUrl="images/bar-chart.svg"
-                                   Title="@Bottom20EpisodesData.Title"
-                                   Description="@Bottom20EpisodesData.Description" />
-        </li>
-        <li>
-            <ChartSelectionNavLink Url="charts/total-hours-watched-by-doctor"
-                                   IconUrl="images/pie-chart.svg"
-                                   Title="@TotalHoursWatchedByDoctorData.Title"
-                                   Description="@TotalHoursWatchedByDoctorData.Description" />
-        </li>
-        <li>
-            <ChartSelectionNavLink Url="charts/population"
-                                   IconUrl="images/line-chart.svg"
-                                   Title="@PopulationByYearData.Title"
-                                   Description="@PopulationByYearData.Description" />
-        </li>
-    </ul>
-
-    <div class="sources">
+    <footer>
         <a href="sources">Sources and methodology</a>
-    </div>
-</div>
+    </footer>
+</main>
 
 <div class="tardis-image"></div>

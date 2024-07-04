@@ -1,4 +1,8 @@
-﻿.page-content {
+﻿header {
+    margin-top: 24px;
+}
+
+main {
     position: relative;
     z-index: 1;
     margin: 1rem 4rem;
@@ -17,6 +21,25 @@
     font-family: segoe-light, sans-serif;
 }
 
+nav ul {
+    width: 520px;
+    list-style: none;
+    margin-top: 48px;
+    padding-left: 6px;
+}
+
+footer {
+    margin: 96px 0 0 8px;
+}
+
+    footer a {
+        color: #ffffff;
+    }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
 .tardis-image {
     position: absolute;
     right: 0;
@@ -28,22 +51,3 @@
     background-repeat: no-repeat;
     background-position: bottom right;
 }
-
-.chart-list {
-    width: 520px;
-    list-style: none;
-    margin-top: 48px;
-    padding-left: 6px;
-}
-
-.sources {
-    margin: 96px 0 0 8px;
-}
-
-    .sources a {
-        color: #ffffff;
-    }
-
-        .sources a:hover {
-            text-decoration: underline;
-        }

@@ -34,8 +34,8 @@
 
 <ChartOptions>
     <ChartOptionsSet>
-        <span>Calculate using</span>
-        
+        <ChartOptionsText Label="Calculate using" />
+
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="overnight" Group="ratingsOption"
                            CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Overnight"
@@ -56,14 +56,14 @@
     </ChartOptionsSet>
 </ChartOptions>
 
-<div>
-    <p class="note">
-        * Ratings are based on "views", which can be as little as 3 minutes.
-        Beyond that, it's impossible to know how much of an episode someone actually watched, so this is a simple 
-        calculation based on <strong>ratings * episode length</strong>.
-    </p>
-    <a href="https://www.radiotimes.com/tv/entertainment/how-do-uk-tv-viewing-figures-and-overnight-ratings-work/" target="_blank">Source</a>
-</div>
+<p>
+    * Ratings are based on "views", which can be as little as
+    <a href="https://www.radiotimes.com/tv/entertainment/how-do-uk-tv-viewing-figures-and-overnight-ratings-work/" target="_blank">
+        3 minutes.
+    </a>
+    Beyond that, it's impossible to know how much of an episode someone actually watched, so this is a simple
+    calculation based on <strong>ratings * episode length</strong>.
+</p>
 
 @code {
     private ApexChart<TotalHoursWatchedByDoctorDataPoint> Chart { get; set; } = default!;

@@ -2,12 +2,15 @@
     margin-bottom: 20px;
 }
 
-.title {
-    text-transform: uppercase;
-    font-family: segoe-light, sans-serif;
-    font-size: 1.3rem;
-}
+    section h2 {
+        text-transform: uppercase;
+        font-family: segoe-light, sans-serif;
+        font-size: 1.3rem;
+        font-weight: normal;
+        margin-bottom: 4px;
+    }
 
-.description {
-    font-size: 0.85rem;
-}
+    section p {
+        font-size: 0.85rem;
+        margin-top: 0;
+    }

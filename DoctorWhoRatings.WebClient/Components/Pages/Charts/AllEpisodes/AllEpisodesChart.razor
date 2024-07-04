@@ -46,12 +46,10 @@
     
 <ChartOptions>
     <ChartOptionsSet>
-        <ChartOptionsSet>
-            <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
-                                  Id="population" Label="Adjust relative to current population"
-                                  AfterChanged="AfterOptionChanged">
-            </ChartOptionsCheckbox>
-        </ChartOptionsSet>
+        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                              Id="population" Label="Adjust relative to current population"
+                              AfterChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
     </ChartOptionsSet>
 </ChartOptions>
 

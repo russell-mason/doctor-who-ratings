@@ -74,20 +74,20 @@
 
 <ChartOptions>
     <ChartOptionsSet>
-        <span>Calculate using</span>
-        
+        <ChartOptionsText Label="Calculate using" />
+
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="overnight" Group="ratingsOption"
                            CheckedValue="@HighLowEpisodesCalculationMethod.Overnight"
                            AfterChanged="AfterOptionChanged">
         </ChartOptionsRadio>
-        
+
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="consolidated" Group="ratingsOption"
                            CheckedValue="@HighLowEpisodesCalculationMethod.Consolidated"
                            AfterChanged="AfterOptionChanged">
         </ChartOptionsRadio>
-        
+
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="extended" Group="ratingsOption"
                            CheckedValue="@HighLowEpisodesCalculationMethod.Extended"

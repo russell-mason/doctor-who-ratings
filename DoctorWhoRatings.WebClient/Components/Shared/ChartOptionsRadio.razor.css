@@ -3,7 +3,7 @@ label {
     cursor: pointer;
 }
 
-.radio {
-    vertical-align: middle;
-    margin: -0.1rem 0.3rem 0 0.5rem;
-}
+    input[type=radio] {
+        vertical-align: middle;
+        margin: -2px 5px 0 8px;
+    }

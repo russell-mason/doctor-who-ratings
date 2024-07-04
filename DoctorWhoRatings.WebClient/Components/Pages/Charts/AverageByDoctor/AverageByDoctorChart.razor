@@ -47,14 +47,14 @@
 
 <ChartOptions>
     <ChartOptionsSet>
-        <span>Calculate using</span>
-        
+        <ChartOptionsText Label="Calculate using" />
+
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="mean" Group="midpointOption"
                            CheckedValue="@AverageByDoctorCalculationMethod.Mean"
                            AfterChanged="AfterOptionChanged">
         </ChartOptionsRadio>
-        
+
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="median" Group="midpointOption"
                            CheckedValue="@AverageByDoctorCalculationMethod.Median"

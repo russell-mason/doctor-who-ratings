@@ -1,36 +1,38 @@
-﻿.page-container {
-    margin: 24px;
-}
-
-.title-block {
+﻿section {
     margin-bottom: 24px;
     line-height: 140%
 }
 
-    .title-block:nth-child(n+2) {
-        margin-top: 64px;
+    section:nth-child(n+2) {
+        margin-top: 48px;
     }
 
-.title {
-    text-transform: uppercase;
-    font-size: 1.3rem;
-    font-family: segoe-light, sans-serif;
-    font-weight: normal;
-}
+    section h1 {
+        text-transform: uppercase;
+        font-size: 1.3rem;
+        font-family: segoe-light, sans-serif;
+        font-weight: normal;
+    }
 
-.website-block {
+.website-references {
     margin-top: 24px;
 }
 
-.website {
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-family: segoe-light, sans-serif;
-}
+    .website-references h2 {
+        text-transform: uppercase;
+        font-size: 1rem;
+        font-family: segoe-light, sans-serif;
+        font-weight: normal;
+        margin-bottom: 6px;
+    }
 
-a {
-    color: #ffffff;
-}
+    .website-references ul {
+        margin-top: 6px;
+    }
+
+    a {
+        color: #ffffff;
+    }
 
     a:hover {
         text-decoration: underline;

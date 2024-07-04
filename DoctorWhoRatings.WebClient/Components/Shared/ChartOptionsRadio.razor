@@ -1,7 +1,6 @@
 ﻿@typeparam T
 
-<input class="radio" id="@Id" type="radio" name="@Group"
-       value="@Value" checked="@Value?.Equals(CheckedValue)" @onchange="OnChanged" />
+<input id="@Id" type="radio" name="@Group" value="@Value" checked="@Value?.Equals(CheckedValue)" @onchange="OnChanged" />
 
 @if (!string.IsNullOrWhiteSpace(Label))
 {
