@@ -33,7 +33,7 @@
 </Chart>
 
 <ChartOptions>
-    <ChartOptionsSet>
+    <ChartOptionsGroup>
         <ChartOptionsText Label="Calculate using" />
 
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
@@ -53,7 +53,7 @@
                            CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Extended"
                            AfterChanged="AfterOptionChanged">
         </ChartOptionsRadio>
-    </ChartOptionsSet>
+    </ChartOptionsGroup>
 </ChartOptions>
 
 <p>

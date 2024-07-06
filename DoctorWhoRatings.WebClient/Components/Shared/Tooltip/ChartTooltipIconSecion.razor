@@ -1,0 +1,30 @@
+﻿<div class="icon-section">
+    <img class="icon" src="@IconUrl" alt="@IconAlt" />
+    <div class="content">
+        @if (Title != null)
+        {
+            <div class="title">@Title</div>
+        }
+        
+        @if (ChildContent != null)
+        {
+            <div>
+                @ChildContent
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? IconUrl { get; set; }
+
+    [Parameter]
+    public string? IconAlt { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

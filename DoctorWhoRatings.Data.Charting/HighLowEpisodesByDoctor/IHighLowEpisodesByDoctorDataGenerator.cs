@@ -1,8 +1,8 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.HighLowEpisodesByDoctor;
 
 /// <summary>
-/// Generates a chart-based data source specifically designed to show the highest, and lowest, rated episodes for
-/// each doctor.
+/// Generates a chart-based data source specifically designed to show the highest, and lowest, episode
+/// ratings for each doctor.
 /// </summary>
 public interface IHighLowEpisodesByDoctorDataGenerator
 {

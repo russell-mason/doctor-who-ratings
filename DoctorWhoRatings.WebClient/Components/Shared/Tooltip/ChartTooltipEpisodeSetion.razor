@@ -1,0 +1,109 @@
+﻿<div class="episode-section">
+    <div class="episode">
+        @if (Actor != null)
+        {
+            <div class="actor">@Actor</div>
+        }
+
+        @if (EpisodeCount != null)
+        {
+            <div class="episodes">
+                <span class="highlighted-value">@EpisodeCount</span>
+                <span>
+                    @if (EpisodeCount == 1)
+                    {
+                        <text>episode</text>
+                    }
+                    else
+                    {
+                        <text>episodes</text>
+                    }
+                </span>
+            </div>
+        }
+        
+        @if (TotalEpisodeHours != null)
+        {
+            <div class="total-episode-hours">
+                @{
+                    var totalEpisodeHours = Formatter.ToTimeSpan(TotalEpisodeHours);
+                    var hours = (int) totalEpisodeHours.TotalHours;
+                    var minutes = totalEpisodeHours.Minutes;
+                    var hoursText = hours == 1 ? "hour" : "hours";
+                    var minutesText = minutes == 1 ? "minute" : "minutes";
+                }
+                <span class="highlighted-value">@hours</span>
+                <span> @hoursText</span>
+                <span class="highlighted-value">@minutes</span>
+                <span> @minutesText</span>
+            </div>
+        }
+        
+        @if (HasHighestRating || HasLowestRating)
+        {
+            <div class="high-low">@(HasHighestRating ? "Highest episode ratings" : "Lowest episode ratings")</div>
+        }
+
+        @if (StoryTitle != null)
+        {
+            <div class="story">@StoryTitle</div>
+        }
+
+        @if (PartTitle != null)
+        {
+            <div class="part">@PartTitle</div>
+        }
+
+        @if (SeasonFormatDescription != null & Season != null)
+        {
+            <div class="season">@SeasonFormatDescription @Season</div>
+        }
+    </div>
+    
+    @if (OriginalAirDate != null)
+    {
+        <div class="episode-air-date">
+            <ChartTooltipBreak />
+
+            <ChartTooltipIconSecion IconUrl="images/calendar.svg"
+                                    IconAlt="Broadcast">
+                <div>
+                    <span>Broadcast on </span>
+                    <span class="highlighted-value">@Formatter.FormatDate(OriginalAirDate)</span>
+                </div>
+            </ChartTooltipIconSecion>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string? Actor { get; set; }
+
+    [Parameter]
+    public int? EpisodeCount { get; set; }
+
+    [Parameter]
+    public decimal? TotalEpisodeHours { get; set; }
+
+    [Parameter]
+    public string? StoryTitle { get; set; }
+
+    [Parameter]
+    public string? PartTitle { get; set; }
+
+    [Parameter]
+    public string? SeasonFormatDescription { get; set; }
+
+    [Parameter]
+    public int? Season { get; set; }
+
+    [Parameter]
+    public DateTime? OriginalAirDate { get; set; }
+
+    [Parameter]
+    public bool HasHighestRating { get; set; }
+
+    [Parameter]
+    public bool HasLowestRating { get; set; }
+}

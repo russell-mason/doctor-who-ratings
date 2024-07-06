@@ -1,16 +1,16 @@
-﻿section {
+﻿.chart-heading {
     margin-bottom: 20px;
 }
 
-    section h2 {
-        text-transform: uppercase;
-        font-family: segoe-light, sans-serif;
-        font-size: 1.3rem;
-        font-weight: normal;
-        margin-bottom: 4px;
-    }
+h2 {
+    text-transform: uppercase;
+    font-family: segoe-light, sans-serif;
+    font-size: 1.3rem;
+    font-weight: normal;
+    margin-bottom: 4px;
+}
 
-    section p {
-        font-size: 0.85rem;
-        margin-top: 0;
-    }
+p {
+    font-size: 0.85rem;
+    margin-top: 0;
+}

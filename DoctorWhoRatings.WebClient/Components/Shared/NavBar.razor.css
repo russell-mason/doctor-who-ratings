@@ -1,4 +1,4 @@
-﻿nav {
+﻿.nav-bar {
     text-transform: uppercase;
     font-size: 0.9rem;
     background-color: #243A64;
@@ -6,18 +6,18 @@
     filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
 }
 
-    nav .nav-item {
-        display: inline-block;
-        color: #ffffff;
+.nav-item {
+    display: inline-block;
+    color: #ffffff;
+}
+
+    .nav-item:after {
+        display: block;
+        content: '';
+        border-bottom: 3px solid #ffffff;
+        opacity: 0;
     }
 
-        nav .nav-item:after {
-            display: block;
-            content: '';
-            border-bottom: 3px solid #ffffff;
-            opacity: 0;
-        }
-
-        nav .nav-item:hover:after {
-            opacity: 1;
-        }
+    .nav-item:hover:after {
+        opacity: 1;
+    }

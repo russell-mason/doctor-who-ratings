@@ -1,0 +1,63 @@
+﻿<div class="ratings-section">
+    @if (Title != null)
+    {
+        <h2>@Title</h2>
+    }
+
+    @if (TargetRatings != null)
+    {
+        <div class="ratings series-target-icon-section">
+            <img class="icon" src="images/target.svg" alt="Target Ratings"/>
+            <div class="rating">
+                <span class="highlighted-value">@Formatter.FormatNumber(TargetRatings)</span>
+                <span> million additional viewers</span>
+            </div>
+        </div>
+    }
+
+    <div class="ratings-icon-section">
+        <img class="icon" src="images/view.svg" alt="Ratings"/>
+        <div class="ratings">
+            @if (OvernightRatings != null)
+            {
+                <div class="rating">
+                    <span class="highlighted-value">@Formatter.FormatNumber(OvernightRatings)</span>
+                    <span> million overnight viewers</span>
+                </div>
+            }
+
+            @if (ConsolidatedRatings != null)
+            {
+                <div class="rating">
+                    <span class="highlighted-value">@Formatter.FormatNumber(ConsolidatedRatings)</span>
+                    <span> million viewers after seven days</span>
+                </div>
+            }
+
+            @if (ExtendedRatings != null)
+            {
+                <div class="rating">
+                    <span class="highlighted-value">@Formatter.FormatNumber(ExtendedRatings)</span>
+                    <span> million viewers after seven days on all devices</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public decimal? TargetRatings { get; set; }
+
+    [Parameter]
+    public decimal? OvernightRatings { get; set; }
+
+    [Parameter]
+    public decimal? ConsolidatedRatings { get; set; }
+
+    [Parameter]
+    public decimal? ExtendedRatings { get; set; }
+}

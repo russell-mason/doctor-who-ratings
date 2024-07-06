@@ -73,7 +73,7 @@
 </Chart>
 
 <ChartOptions>
-    <ChartOptionsSet>
+    <ChartOptionsGroup>
         <ChartOptionsText Label="Calculate using" />
 
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
@@ -93,14 +93,14 @@
                            CheckedValue="@HighLowEpisodesCalculationMethod.Extended"
                            AfterChanged="AfterOptionChanged">
         </ChartOptionsRadio>
-    </ChartOptionsSet>
+    </ChartOptionsGroup>
 
-    <ChartOptionsSet>
+    <ChartOptionsGroup>
         <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
                               Id="population" Label="Adjust relative to current population"
                               AfterChanged="AfterOptionChanged">
         </ChartOptionsCheckbox>
-    </ChartOptionsSet>
+    </ChartOptionsGroup>
 </ChartOptions>
 
 @code {

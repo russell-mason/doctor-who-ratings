@@ -1,0 +1,46 @@
+﻿.episode {
+    padding: 13px 16px;
+}
+
+.actor {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-family: segoe-bold, sans-serif;
+    font-weight: bold;
+    color: #507dd7;
+}
+
+.episodes {
+    margin-top: 5px;
+}
+
+.total-episode-hours {
+    margin-top: 4px;
+}
+
+.high-low {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-family: segoe-light, sans-serif;
+    margin: 10px 0 3px 0;
+}
+
+.story {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #505050;
+    margin-top: 4px;
+}
+
+.part {
+    margin-top: 3px;
+}
+
+.season {
+    margin-top: 0.4rem;
+}
+
+.highlighted-value {
+    font-weight: bold;
+    color: #505050;
+}

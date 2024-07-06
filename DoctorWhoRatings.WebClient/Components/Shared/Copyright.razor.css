@@ -1,8 +1,8 @@
-﻿section {
+﻿.copyright {
     position: relative;
 }
 
-section p {
+p {
     margin: 24px;
     font-size: 0.75rem;
     text-align: right;

@@ -1,147 +1,30 @@
-﻿<div class="tooltip">
-    <div class="block">
-        <div class="actor">@DataPoint.Actor</div>
-        
-        <div class="episodes">
-            <span class="highlighted-value">@DataPoint.EpisodeCount</span>
-            <span>
-                @if (DataPoint.EpisodeCount == 1)
-                {
-                    <text>episode</text>
-                }
-                else
-                {
-                    <text>episodes</text>
-                }
-            </span>
-        </div>
-    </div>
+﻿<ChartTooltip>
+    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                               EpisodeCount="@DataPoint.EpisodeCount"
+                               StoryTitle="@HighLowDataPoint.StoryTitle"
+                               PartTitle="@HighLowDataPoint.StoryPartTitle" 
+                               HasHighestRating="@HasHighestRating"
+                               HasLowestRating="@HasLowestRating" />
+
+    <ChartTooltipBreak />
     
-    <div class="break"></div>
+    <ChartTooltipRatingsSection TargetRatings="@TargetExcessRatings"
+                                OvernightRatings="@HighLowDataPoint.OvernightRatings"
+                                ConsolidatedRatings="@HighLowDataPoint.ConsolidatedRatings"
+                                ExtendedRatings="@HighLowDataPoint.ExtendedRatings" />
+</ChartTooltip>
 
-    <div class="block">
-        <div class="high-low">@(IsHigh ? "Highest rated episode" : "Lowest rated episode")</div>
-
-        <div class="story">@HighLowDataPoint.StoryTitle</div>
-
-        @if (HighLowDataPoint.StoryPartTitle != null)
-        {
-            <div>@HighLowDataPoint.StoryPartTitle</div>
-        }
-    </div>
-
-    <div class="break"></div>
-
-    <div class="block icon-block">
-        <img class="icon" src="images/calculator.svg" alt="Calculation method" />
-        <div class="calculation-method">@(DataOptions.CalculationMethod.ToString())</div>
-    </div>
-
-    <div class="break"></div>
-
-    @if (IsExcess)
-    {
-        <div class="block icon-block series-target">
-            @{
-                var excess = IsConsolidatedExcess
-                    ? HighLowDataPoint.ConsolidatedExcessRatings
-                    : HighLowDataPoint.ExtendedExcessRatings;
-            }
-
-            <img class="icon" src="images/target.svg" alt="Ratings" />
-            <div>
-                <div>
-                    <span class="highlighted-value">@FormatNumber(excess)</span>
-                    <span> million additional viewers</span>
-                </div>
-            </div>
-        </div>
-    }
-
-    <div class="block icon-block">
-        <img class="icon" src="images/view.svg" alt="Ratings" />
-        <div>
-            @if (HighLowDataPoint.OvernightRatings != null)
-            {
-                <div>
-                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.OvernightRatings)</span>
-                    <span> million overnight viewers</span>
-                </div>
-            }
-
-            @if (HighLowDataPoint.ConsolidatedRatings != null)
-            {
-                <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.ConsolidatedRatings)</span>
-                    <span> million viewers after seven days</span>
-                </div>
-            }
-
-            @if (HighLowDataPoint.ExtendedRatings != null)
-            {
-                <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.ExtendedRatings)</span>
-                    <span> million viewers after seven days on all devices</span>
-                </div>
-            }
-        </div>
-    </div>
-</div>
-
-<div class="tooltip secondary">
-    <div class="population-adjusted">Population adjusted</div>
-
-    @if (IsExcess)
-    {
-        <div class="block icon-block series-target">
-            @{
-                var adjustedExcess = IsConsolidatedExcess
-                    ? HighLowDataPoint.PopulationAdjustedConsolidatedExcessRatings
-                    : HighLowDataPoint.PopulationAdjustedExtendedExcessRatings;
-            }
-
-            <img class="icon" src="images/target.svg" alt="Ratings" />
-            <div>
-                <div>
-                    <span class="highlighted-value">@FormatNumber(adjustedExcess)</span>
-                    <span> million additional viewers</span>
-                </div>
-            </div>
-        </div>
-    }
-
-    <div class="block icon-block">
-        <img class="icon" src="images/view.svg" alt="Ratings" />
-        <div>
-            @if (HighLowDataPoint.PopulationAdjustedOvernightRatings != null)
-            {
-                <div>
-                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.PopulationAdjustedOvernightRatings)</span>
-                    <span> million overnight viewers</span>
-                </div>
-            }
-
-            @if (HighLowDataPoint.PopulationAdjustedConsolidatedRatings != null)
-            {
-                <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.PopulationAdjustedConsolidatedRatings)</span>
-                    <span> million viewers after seven days</span>
-                </div>
-            }
-
-            @if (HighLowDataPoint.PopulationAdjustedExtendedRatings != null)
-            {
-                <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(HighLowDataPoint.PopulationAdjustedExtendedRatings)</span>
-                    <span> million viewers after seven days on all devices</span>
-                </div>
-            }
-        </div>
-    </div>
-</div>
+<ChartSecondaryTooltip>
+    <ChartTooltipRatingsSection Title="Population adjusted"
+                                TargetRatings="@TargetPopulationAdjustedExcessRatings"
+                                OvernightRatings="@HighLowDataPoint.PopulationAdjustedOvernightRatings"
+                                ConsolidatedRatings="@HighLowDataPoint.PopulationAdjustedConsolidatedRatings"
+                                ExtendedRatings="@HighLowDataPoint.PopulationAdjustedExtendedRatings" />
+</ChartSecondaryTooltip>
 
 @code {
     private const int ConsolidatedSeriesIndex = 1;
+    private const int ExtendedSeriesIndex = 2;
     private const int SeriesPerDataPoint = 3;
 
     [Parameter]
@@ -153,13 +36,27 @@
     [Parameter]
     public required HighLowEpisodesByDoctorDataOptions DataOptions { get; set; }
 
-    private bool IsHigh => SeriesIndex / SeriesPerDataPoint == 0;
+    private bool HasHighestRating => SeriesIndex / SeriesPerDataPoint == 0;
 
-    private bool IsExcess => SeriesIndex % SeriesPerDataPoint != 0;
+    private bool HasLowestRating => !HasHighestRating;
 
     private bool IsConsolidatedExcess => SeriesIndex % SeriesPerDataPoint == 1;
 
-    private HighLowEpisodeByDoctorDataPoint HighLowDataPoint => IsHigh ? DataPoint.HighEpisodeDataPoint : DataPoint.LowEpisodeDataPoint;
+    private bool IsExtendedExcess => SeriesIndex % SeriesPerDataPoint == 2;
 
-    private string FormatNumber(decimal? number) => number?.ToString("0.00") ?? "N/A";
+    private HighLowEpisodeByDoctorDataPoint HighLowDataPoint => HasHighestRating
+        ? DataPoint.HighEpisodeDataPoint 
+        : DataPoint.LowEpisodeDataPoint;
+
+    private decimal? TargetExcessRatings => IsConsolidatedExcess
+        ? HighLowDataPoint.ConsolidatedExcessRatings
+        : IsExtendedExcess 
+            ? HighLowDataPoint.ExtendedExcessRatings 
+            : null;
+
+    private decimal? TargetPopulationAdjustedExcessRatings => IsConsolidatedExcess
+        ? HighLowDataPoint.PopulationAdjustedConsolidatedExcessRatings
+        : IsExtendedExcess 
+            ? HighLowDataPoint.PopulationAdjustedExtendedExcessRatings
+            : null;
 }

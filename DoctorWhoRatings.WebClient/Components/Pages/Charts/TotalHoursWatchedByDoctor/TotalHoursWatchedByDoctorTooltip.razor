@@ -1,81 +1,23 @@
-﻿<div class="tooltip">
-    <div class="block">
-        <div class="actor">@DataPoint.Actor</div>
+﻿<ChartTooltip>
+    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                               EpisodeCount="@DataPoint.EpisodeCount"
+                               TotalEpisodeHours="@DataPoint.TotalEpisodeHours" />
 
-        <div class="episodes">
-            <span class="highlighted-value">@DataPoint.EpisodeCount</span>
-            <span>
-                @if (DataPoint.EpisodeCount == 1)
-                {
-                    <text>episode</text>
-                }
-                else
-                {
-                    <text>episodes</text>
-                }
-            </span>
-        </div>
-        
-        <div class="episode-hours">
-            @{
-                var totalEpisodeHours = ToTimeSpan(DataPoint.TotalEpisodeHours);
-                var hours = (int) totalEpisodeHours.TotalHours;
-                var minutes = totalEpisodeHours.Minutes;
-                var hoursText = hours == 1 ? "hour" : "hours";
-                var minutesText = minutes == 1 ? "minute" : "minutes";
-            }
-            <span class="highlighted-value">@hours</span>
-            <span> @hoursText</span>
-            <span class="highlighted-value">@minutes</span>
-            <span> @minutesText</span>
-        </div>
-    </div>
-
-    <div class="break"></div>
-
-    <div class="block icon-block">
-        <img class="icon" src="images/calculator.svg" alt="Calculation method" />
-        <div class="calculation-method">@(DataOptions.CalculationMethod.ToString())</div>
-    </div>
+    <ChartTooltipBreak />
     
-    <div class="break"></div>
+    <ChartTooltipIconSecion IconUrl="images/pie-chart.svg"
+                            IconAlt="Share">
+        <div>@Formatter.FormatNumber(PercentageShare)% share of total hours watched</div>
+    </ChartTooltipIconSecion>
 
-    <div class="block icon-block">
-        <img class="icon" src="images/pie-chart.svg" alt="Percent share" />
-        <div>@FormatNumber(PercentageShare)% share of total hours watched</div>
-    </div>
+    <ChartTooltipBreak />
+    
+    <ChartTooltipWatchedHoursSection OvernightHoursWatched="@DataPoint.TotalOvernightHoursWatched"
+                                     ConsolidatedHoursWatched="@DataPoint.TotalConsolidatedHoursWatched"
+                                     ExtendedHoursWatched="@DataPoint.TotalExtendedHoursWatched" />
 
-    <div class="break"></div>
-
-    <div class="block icon-block">
-        <img class="icon" src="images/view.svg" alt="Ratings" />
-        <div>
-            @if (DataPoint.TotalOvernightHoursWatched != null)
-            {
-                <div>
-                    <span class="highlighted-value">@FormatNumber(DataPoint.TotalOvernightHoursWatched)</span>
-                    <span> million hours watched overnight</span>
-                </div>
-            }
-
-            @if (DataPoint.TotalConsolidatedHoursWatched != null)
-            {
-                <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(DataPoint.TotalConsolidatedHoursWatched)</span>
-                    <span> million hours watched after seven days</span>
-                </div>
-            }
-
-            @if (DataPoint.TotalExtendedHoursWatched != null)
-            {
-                <div class="line-space">
-                    <span class="highlighted-value">@FormatNumber(DataPoint.TotalExtendedHoursWatched)</span>
-                    <span> million hours watched after seven days on all devices</span>
-                </div>
-            }
-        </div>
-    </div>
-</div>
+    
+</ChartTooltip>
 
 @code {
     [Parameter]
@@ -86,8 +28,4 @@
 
     [Parameter]
     public decimal PercentageShare { get; set; }
-
-    private string FormatNumber(decimal? number) => number?.ToString("0.00") ?? "N/A";
-
-    private TimeSpan ToTimeSpan(decimal? number) => number == null ? TimeSpan.Zero : TimeSpan.FromHours((double) number);
 }

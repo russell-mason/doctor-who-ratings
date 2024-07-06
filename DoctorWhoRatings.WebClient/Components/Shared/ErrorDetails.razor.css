@@ -1,4 +1,4 @@
-﻿#blazor-error-ui {
+﻿.blazor-error-ui {
     background: #d24a4a;
     color: #000000;
     display: none;
@@ -11,7 +11,7 @@
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
+    .blazor-error-ui .dismiss {
         cursor: pointer;
         position: absolute;
         right: 0.75rem;

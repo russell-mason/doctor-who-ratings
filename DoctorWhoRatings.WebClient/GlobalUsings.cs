@@ -7,7 +7,7 @@ global using DoctorWhoRatings.Data.Charting.HighLowEpisodesByDoctor;
 global using DoctorWhoRatings.Data.Charting.PopulationByYear;
 global using DoctorWhoRatings.Data.Charting.Top20Episodes;
 global using DoctorWhoRatings.Data.Charting.TotalHoursWatchedByDoctor;
-global using DoctorWhoRatings.WebClient;
 global using DoctorWhoRatings.WebClient.Components;
 global using DoctorWhoRatings.WebClient.Extensions;
 global using System.Diagnostics;
+global using Microsoft.AspNetCore.Components;

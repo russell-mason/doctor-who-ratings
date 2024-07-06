@@ -1,0 +1,16 @@
+﻿@if (Note != null)
+{
+    <div class="note-section">
+        <ChartTooltipBreak />
+
+        <ChartTooltipIconSecion IconUrl="images/note.svg"
+                                IconAlt="Note">
+            <div>@Formatter.FormatNote(Note)</div>
+        </ChartTooltipIconSecion>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string? Note { get; set; }
+}
