@@ -1,4 +1,4 @@
-﻿namespace DoctorWhoRatings.Data;
+﻿namespace DoctorWhoRatings.Data.Excel;
 
 /// <summary>
 /// Represents a mapping between a header key and a column reference in an Excel sheet.

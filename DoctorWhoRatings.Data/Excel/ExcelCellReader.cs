@@ -1,4 +1,4 @@
-﻿namespace DoctorWhoRatings.Data;
+﻿namespace DoctorWhoRatings.Data.Excel;
 
 /// <summary>
 /// A helper class that simplifies reading multiple cell values from the same row via a header mapping key.
