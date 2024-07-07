@@ -2,9 +2,10 @@
 
 public class AllEpisodesDataGenerator(IDoctorWhoDataProvider dataProvider) : IAllEpisodesDataGenerator
 {
-    public AllEpisodesData Generate()
+    public AllEpisodesData Generate(AllEpisodesDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
+                                     .Where(episode => MatchesFilter(episode, options))
                                      .Select(CreateDataPoint)
                                      .ToList()
                                      .AsReadOnly();
@@ -15,6 +16,11 @@ public class AllEpisodesDataGenerator(IDoctorWhoDataProvider dataProvider) : IAl
         };
 
         return allEpisodesData;
+    }
+
+    private static bool MatchesFilter(Episode episode, AllEpisodesDataOptions options)
+    {
+        return options.DoctorFilter == null || episode.Doctor == options.DoctorFilter;
     }
 
     private static AllEpisodesDataPoint CreateDataPoint(Episode episode)

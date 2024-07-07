@@ -11,11 +11,13 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         using var spreadsheetDocument = spreadsheetReader.OpenSpreadsheetDocument(path);
 
         var episodes = ReadEpisodes().ToList().AsReadOnly();
+        var doctors = ReadDoctors().ToList().AsReadOnly();
         var populations = ReadPopulation().ToList().AsReadOnly();
 
         var doctorWhoData = new DoctorWhoData
         {
             Episodes = episodes,
+            Doctors = doctors,
             Populations = populations
         };
 
@@ -64,6 +66,30 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         };
 
         return episode;
+    }
+
+    private IEnumerable<Doctor> ReadDoctors()
+    {
+        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Doctors).ToList();
+        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
+        var doctorRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
+
+        var doctors = doctorRows.Select(doctorRow => CreateDoctor(doctorRow, columnMappings));
+
+        return doctors;
+    }
+
+    private Doctor CreateDoctor(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
+    {
+        var cellReader = spreadsheetReader.CreateCellReader(row, columnMappings);
+
+        var doctor = new Doctor
+        {
+            Number = cellReader.Read<int>(nameof(Doctor.Number)),
+            Actor = cellReader.Read<string>(nameof(Doctor.Actor))
+        };
+
+        return doctor;
     }
 
     private IEnumerable<YearPopulation> ReadPopulation()

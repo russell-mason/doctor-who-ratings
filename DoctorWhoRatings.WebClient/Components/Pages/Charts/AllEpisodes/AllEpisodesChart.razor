@@ -1,5 +1,6 @@
 ﻿@page "/charts/all-episodes"
 @inject IAllEpisodesDataGenerator AllEpisodesDataGenerator
+@inject IDoctorWhoDataProvider DoctorWhoDataProvider
 
 <PageTitle>@AllEpisodesData.Title - @Application.Name</PageTitle>
 
@@ -45,6 +46,13 @@
 </Chart>
     
 <ChartOptions>
+    
+    <ChartOptionsGroup>
+        <ChartOptionsSelect @bind-Value="DataOptionsDoctorFilter"
+                            Id="doctor" Label="Filter by" Values="DoctorsDataSource"
+                            AfterChanged="AfterOptionChanged" />
+    </ChartOptionsGroup>
+
     <ChartOptionsGroup>
         <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
                               Id="population" Label="Adjust relative to current population"
@@ -60,13 +68,26 @@
 
     private AllEpisodesData DataSource { get; set; } = default!;
 
-    private AllEpisodesDataOptions DataOptions { get; } = new();
+    private AllEpisodesDataOptions DataOptions { get; } = new() { DoctorFilter = 1 };  // Default to the first Doctor
 
-    protected override void OnInitialized() => DataSource = AllEpisodesDataGenerator.Generate();
+    /// <summary>
+    /// The underlying options filter allows null, meaning do not filter. For this chart, there will always be a
+    /// pre-defined set of values so this just wraps it to allow correct binding.
+    /// </summary>
+    private int DataOptionsDoctorFilter
+    {
+        get => DataOptions.DoctorFilter ?? default;
+        set => DataOptions.DoctorFilter = value;
+    }
+
+    private IEnumerable<(int, string)> DoctorsDataSource => 
+        DoctorWhoDataProvider.DoctorWhoData.Doctors.Select(doctor => (doctor.Number, doctor.Actor));
+
+    protected override void OnInitialized() => DataSource = AllEpisodesDataGenerator.Generate(DataOptions);
 
     private async Task AfterOptionChanged()
     {
-        DataSource = AllEpisodesDataGenerator.Generate();
+        DataSource = AllEpisodesDataGenerator.Generate(DataOptions);
 
         StateHasChanged();
 

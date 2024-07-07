@@ -27,6 +27,10 @@
 
         if (!success)
         {
+            // Output error and ignore
+
+            Console.WriteLine($"Unable to convert '{eventArgs.Value}' to type 'bool'.");
+
             return;
         }
 

@@ -1,0 +1,52 @@
+﻿@typeparam T
+
+@if (!string.IsNullOrWhiteSpace(Label))
+{
+    <label for="@Id">@Label</label>
+}
+
+<select id="@Id" value="@Value" @onchange="OnChanged">
+    @foreach (var (id, value) in Values)
+    {
+        <option value="@id" selected="@(Value?.Equals(id))">@value</option>
+    }
+</select>
+
+@code {
+    [Parameter]
+    public required string Id { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public T? Value { get; set; }
+
+    [Parameter]
+    public required IEnumerable<(T, string)> Values { get; set; }
+
+    [Parameter]
+    public EventCallback<T> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback AfterChanged { get; set; }
+
+    private async Task OnChanged(ChangeEventArgs eventArgs)
+    {
+        try
+        {
+            var result = (T) Convert.ChangeType(eventArgs.Value?.ToString(), typeof(T))!;
+
+            Value = result;
+
+            await ValueChanged.InvokeAsync(result);
+            await AfterChanged.InvokeAsync();
+        }
+        catch
+        {
+            // Output error and ignore
+
+            Console.WriteLine($"Unable to convert '{eventArgs.Value}' to type '{typeof(T).Name}'");
+        }
+    }
+}

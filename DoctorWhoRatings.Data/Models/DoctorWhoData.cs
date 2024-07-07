@@ -11,6 +11,11 @@ public record DoctorWhoData
     public IReadOnlyList<Episode> Episodes { get; init; } = [];
 
     /// <summary>
+    /// Gets a collection of all doctors.
+    /// </summary>
+    public IReadOnlyList<Doctor> Doctors { get; init; } = [];
+
+    /// <summary>
     /// Gets a collection of population details by year.
     /// </summary>
     public IReadOnlyList<YearPopulation> Populations { get; init; } = [];
