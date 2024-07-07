@@ -5,12 +5,19 @@ public static class AllEpisodesChartOptions
     public static ApexChartOptions<AllEpisodesDataPoint> Defaults =>
         new()
         {
-            PlotOptions = new PlotOptions
+            Chart = new Chart 
+            { 
+                Id = "all-episodes" 
+            },
+            Markers = new Markers
             {
-                Bar = new PlotOptionsBar
-                {
-                    ColumnWidth = "90%"
-                }
+                Size = 2,
+                StrokeWidth = 0,
+                Colors = "#1E5EAB"
+            },
+            Stroke = new Stroke
+            {
+                Width = 2
             },
             Xaxis = new XAxis
             {
@@ -22,7 +29,9 @@ public static class AllEpisodesChartOptions
                         FontSize = "0"
                     }
                 },
-                TickPlacement = TickPlacement.On
+                TickPlacement = TickPlacement.On,
+                Tooltip = new XAxisTooltip { Enabled = false },
+                Crosshairs = new AxisCrosshairs { Show = false }
             },
             Yaxis =
             [
@@ -34,9 +43,9 @@ public static class AllEpisodesChartOptions
                     }
                 }
             ],
-            Chart =
+            Tooltip = new Tooltip
             {
-                Stacked = true
+                FollowCursor = true
             }
         };
 }

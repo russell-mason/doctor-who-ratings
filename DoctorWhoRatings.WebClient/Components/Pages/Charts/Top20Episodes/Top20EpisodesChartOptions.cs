@@ -25,6 +25,10 @@ public static class Top20EpisodesChartOptions
             Chart =
             {
                 Stacked = true
+            },
+            Tooltip = new Tooltip
+            {
+                FollowCursor = true
             }
         };
 }

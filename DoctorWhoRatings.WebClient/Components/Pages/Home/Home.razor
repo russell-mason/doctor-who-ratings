@@ -13,8 +13,14 @@
         <ul>
             <li>
                 <ChartSelectionNavLink Url="charts/all-episodes"
-                                       IconUrl="images/bar-chart.svg"
+                                       IconUrl="images/line-chart.svg"
                                        Title="@AllEpisodesData.Title"
+                                       Description="@AllEpisodesData.Description" />
+            </li>
+            <li>
+                <ChartSelectionNavLink Url="charts/all-episodes-by-doctor"
+                                       IconUrl="images/bar-chart.svg"
+                                       Title="@(AllEpisodesData.Title + " (by Doctor)")"
                                        Description="@AllEpisodesData.Description" />
             </li>
             <li>

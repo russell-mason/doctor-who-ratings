@@ -1,8 +1,8 @@
-﻿namespace DoctorWhoRatings.WebClient.Components.Pages.Charts.Bottom20Episodes;
+﻿namespace DoctorWhoRatings.WebClient.Components.Pages.Charts.AllEpisodesByDoctor;
 
-public static class Bottom20EpisodesChartOptions
+public static class AllEpisodesByDoctorChartOptions
 {
-    public static ApexChartOptions<Bottom20EpisodesDataPoint> Defaults =>
+    public static ApexChartOptions<AllEpisodesDataPoint> Defaults =>
         new()
         {
             PlotOptions = new PlotOptions
@@ -11,6 +11,18 @@ public static class Bottom20EpisodesChartOptions
                 {
                     ColumnWidth = "90%"
                 }
+            },
+            Xaxis = new XAxis
+            {
+                Labels = new XAxisLabels
+                {
+                    Formatter = "function(value) { return '' }",
+                    Style = new AxisLabelStyle
+                    {
+                        FontSize = "0"
+                    }
+                },
+                TickPlacement = TickPlacement.On
             },
             Yaxis =
             [

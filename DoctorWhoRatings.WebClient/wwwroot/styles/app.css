@@ -43,15 +43,15 @@ h1:focus {
 
 @font-face {
     font-family: segoe-regular;
-    src: url("fonts/segoeui.woff");
+    src: url("../fonts/segoeui.woff");
 }
 
 @font-face {
     font-family: segoe-light;
-    src: url("fonts/segoeuil.woff");
+    src: url("../fonts/segoeuil.woff");
 }
 
 @font-face {
     font-family: segoe-bold;
-    src: url("fonts/segoeuib.woff");
+    src: url("../fonts/segoeuib.woff");
 }

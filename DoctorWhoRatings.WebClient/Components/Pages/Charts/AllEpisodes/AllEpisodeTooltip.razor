@@ -8,43 +8,15 @@
 
     <ChartTooltipBreak />
 
-    <ChartTooltipRatingsSection TargetRatings="@TargetExcessRatings"
-                                OvernightRatings="@DataPoint.OvernightRatings"
-                                ConsolidatedRatings="@DataPoint.ConsolidatedRatings"
-                                ExtendedRatings="@DataPoint.ExtendedRatings" />
+    <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings" />
     
     <ChartTooltipNoteSection Note="@DataPoint.Note" />
 </ChartTooltip>
 
-<ChartSecondaryTooltip>
-    <ChartTooltipRatingsSection Title="Population adjusted"
-                                TargetRatings="@TargetPopulationAdjustedExcessRatings"
-                                OvernightRatings="@DataPoint.PopulationAdjustedOvernightRatings"
-                                ConsolidatedRatings="@DataPoint.PopulationAdjustedConsolidatedRatings"
-                                ExtendedRatings="@DataPoint.PopulationAdjustedExtendedRatings" />
-</ChartSecondaryTooltip>
-
 @code {
-    private const int ConsolidatedSeriesIndex = 1;
-    private const int ExtendedSeriesIndex = 2;
-
     [Parameter]
     public required AllEpisodesDataPoint DataPoint { get; set; }
 
     [Parameter]
     public required int SeriesIndex { get; set; }
-
-    private decimal? TargetExcessRatings => SeriesIndex switch
-    {
-        ConsolidatedSeriesIndex => DataPoint.ConsolidatedExcessRatings,
-        ExtendedSeriesIndex => DataPoint.ExtendedExcessRatings,
-        _ => null
-    };
-
-    private decimal? TargetPopulationAdjustedExcessRatings => SeriesIndex switch
-    {
-        ConsolidatedSeriesIndex => DataPoint.PopulationAdjustedConsolidatedExcessRatings,
-        ExtendedSeriesIndex => DataPoint.PopulationAdjustedExtendedExcessRatings,
-        _ => null
-    };
 }

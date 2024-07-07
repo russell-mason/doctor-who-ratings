@@ -12,6 +12,10 @@ public static class TotalHoursWatchedByDoctorChartOptions
                     Enabled = false
                 },
                 Formatter = "function(value) { return value.toFixed(2) + '%'; }"
+            },
+            Tooltip = new Tooltip
+            {
+                FollowCursor = true
             }
         };
 }

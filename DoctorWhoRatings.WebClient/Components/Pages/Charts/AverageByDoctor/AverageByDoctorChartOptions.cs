@@ -25,6 +25,10 @@ public static class AverageByDoctorChartOptions
             Chart =
             {
                 Stacked = true
+            },
+            Tooltip = new Tooltip
+            {
+                FollowCursor = true
             }
         };
 }

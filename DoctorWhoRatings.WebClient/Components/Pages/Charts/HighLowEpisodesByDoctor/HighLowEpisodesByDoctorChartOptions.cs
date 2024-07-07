@@ -25,6 +25,10 @@ public static class HighLowEpisodesByDoctorChartOptions
             Chart =
             {
                 Stacked = true
+            },
+            Tooltip = new Tooltip
+            {
+                FollowCursor = true
             }
         };
 }

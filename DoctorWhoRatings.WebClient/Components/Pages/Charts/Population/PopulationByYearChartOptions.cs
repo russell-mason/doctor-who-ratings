@@ -13,6 +13,10 @@ public static class PopulationByYearChartOptions
             {
                 Curve = new CurveSelections(Curve.MonotoneCubic)
             },
+            Xaxis = new XAxis {
+                Tooltip = new XAxisTooltip { Enabled = false },
+                Crosshairs = new AxisCrosshairs { Show = false }
+            },
             Yaxis =
             [
                 new YAxis
@@ -22,6 +26,10 @@ public static class PopulationByYearChartOptions
                         Formatter = "function(value) { return Math.round(value / 1000000, 0); }"
                     }
                 }
-            ]
+            ],
+            Tooltip = new Tooltip
+            {
+                FollowCursor = true
+            }
         };
 }

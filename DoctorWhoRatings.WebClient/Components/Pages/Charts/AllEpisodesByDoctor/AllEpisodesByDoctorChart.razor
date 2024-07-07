@@ -1,0 +1,96 @@
+﻿@page "/charts/all-episodes-by-doctor"
+@inject IAllEpisodesDataGenerator AllEpisodesDataGenerator
+@inject IDoctorWhoDataProvider DoctorWhoDataProvider
+
+<PageTitle>@AllEpisodesData.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@(AllEpisodesData.Title + " (by Doctor)")"
+              Description="@AllEpisodesData.Description" />
+
+<Chart>
+    <ApexChart @ref="Chart" 
+               TItem="AllEpisodesDataPoint"
+               Title="@AllEpisodesData.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
+
+        <ApexPointTooltip>
+            <AllEpisodesByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
+                                        SeriesIndex="@context.SeriesIndex" />
+        </ApexPointTooltip>
+
+        <ChildContent>
+            <ApexPointSeries TItem="AllEpisodesDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@AllEpisodesData.SeriesTitles[0]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => dataPoint.Id"
+                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedOvernightRatings : dataPoint.OvernightRatings" />
+            
+            <ApexPointSeries TItem="AllEpisodesDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@AllEpisodesData.SeriesTitles[1]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => dataPoint.Id"
+                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedConsolidatedExcessRatings: dataPoint.ConsolidatedExcessRatings" />
+            
+            <ApexPointSeries TItem="AllEpisodesDataPoint"
+                             Items="DataSource.DataPoints"
+                             Name="@AllEpisodesData.SeriesTitles[2]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => dataPoint.Id"
+                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedExtendedExcessRatings : dataPoint.ExtendedExcessRatings" />
+        </ChildContent>
+    </ApexChart>
+</Chart>
+    
+<ChartOptions>
+    
+    <ChartOptionsGroup>
+        <ChartOptionsSelect @bind-Value="DataOptionsDoctorFilter"
+                            Id="doctor" Label="Filter by" Values="DoctorsDataSource"
+                            AfterChanged="AfterOptionChanged" />
+    </ChartOptionsGroup>
+
+    <ChartOptionsGroup>
+        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                              Id="population" Label="Adjust relative to current population"
+                              AfterChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
+    </ChartOptionsGroup>
+</ChartOptions>
+
+@code {
+    private ApexChart<AllEpisodesDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<AllEpisodesDataPoint> ChartOptions { get; } = AllEpisodesByDoctorChartOptions.Defaults;
+
+    private AllEpisodesData DataSource { get; set; } = default!;
+
+    private AllEpisodesDataOptions DataOptions { get; } = new() { DoctorFilter = 1 };  // Default to the first Doctor
+
+    /// <summary>
+    /// The underlying options filter allows null, meaning do not filter. For this chart, there will always be a
+    /// pre-defined set of values so this just wraps it to allow correct binding.
+    /// </summary>
+    private int DataOptionsDoctorFilter
+    {
+        get => DataOptions.DoctorFilter ?? default;
+        set => DataOptions.DoctorFilter = value;
+    }
+
+    private IEnumerable<(int, string)> DoctorsDataSource => 
+        DoctorWhoDataProvider.DoctorWhoData.Doctors.Select(doctor => (doctor.Number, doctor.Actor));
+
+    protected override void OnInitialized() => DataSource = AllEpisodesDataGenerator.Generate(DataOptions);
+
+    private async Task AfterOptionChanged()
+    {
+        DataSource = AllEpisodesDataGenerator.Generate(DataOptions);
+
+        StateHasChanged();
+
+        await Chart.UpdateSeriesAsync();
+    }
+}
