@@ -7,6 +7,10 @@
                                OriginalAirDate="@DataPoint.OriginalAirDate" />
 
     <ChartTooltipBreak />
+    
+    <ChartTooltipRatingPositionSection Position="@(DataPointIndex + 1)" IsHighestRatings="@true" />
+    
+    <ChartTooltipBreak />
 
     <ChartTooltipRatingsSection TargetRatings="@TargetExcessRatings"
                                 OvernightRatings="@DataPoint.OvernightRatings"
@@ -34,6 +38,9 @@
 
     [Parameter]
     public required int SeriesIndex { get; set; }
+
+    [Parameter]
+    public required int DataPointIndex { get; set; }
 
     [Parameter]
     public required Top20EpisodesDataOptions DataOptions { get; set; }

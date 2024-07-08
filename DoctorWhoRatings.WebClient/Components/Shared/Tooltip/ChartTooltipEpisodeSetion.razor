@@ -38,11 +38,6 @@
                 <span> @minutesText</span>
             </div>
         }
-        
-        @if (HasHighestRating || HasLowestRating)
-        {
-            <div class="high-low">@(HasHighestRating ? "Highest episode ratings" : "Lowest episode ratings")</div>
-        }
 
         @if (StoryTitle != null)
         {
@@ -72,6 +67,15 @@
                     <span class="highlighted-value">@Formatter.FormatDate(OriginalAirDate)</span>
                 </div>
             </ChartTooltipIconSecion>
+        </div>
+    }
+    
+    @if (HasHighestRating || HasLowestRating)
+    {
+        <div class ="ratings-position">
+            <ChartTooltipBreak />
+
+            <ChartTooltipRatingPositionSection IsHighestRatings="@HasHighestRating" IsLowestRatings="@HasLowestRating" />
         </div>
     }
 </div>

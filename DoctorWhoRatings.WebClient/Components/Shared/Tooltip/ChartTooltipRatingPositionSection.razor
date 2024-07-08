@@ -1,0 +1,42 @@
+﻿<div class="ratings-position-section">
+    <span class="highlighted-value">@FormatPosition()</span><span class="ratings-type">@SelectRatingType()</span>
+</div>
+
+@code {
+    [Parameter]
+    public int? Position { get; set; }
+
+    [Parameter]
+    public bool IsHighestRatings { get; set; }
+
+    [Parameter]
+    public bool IsLowestRatings { get; set; }
+
+    private string FormatPosition()
+    {
+        if (Position is null or 1) 
+        { 
+            return string.Empty; 
+        }
+
+        var suffix = Position switch
+        {
+            2 => "nd",
+            3 => "rd",
+            _ => "th"
+        };
+
+        return $"{Position}{suffix} ";
+    }
+
+    private string SelectRatingType()
+    {
+        var text = IsHighestRatings
+            ? "Highest episode ratings" 
+            : IsLowestRatings 
+                ? "Lowest episode ratings" 
+                : string.Empty;
+
+        return text;
+    }
+}

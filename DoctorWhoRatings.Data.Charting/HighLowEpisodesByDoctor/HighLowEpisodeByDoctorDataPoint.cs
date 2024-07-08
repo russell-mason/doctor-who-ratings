@@ -2,6 +2,10 @@
 
 public class HighLowEpisodeByDoctorDataPoint
 {
+    public int? Season { get; init; }
+
+    public required string SeasonFormatDescription { get; init; }
+
     public required string StoryTitle { get; set; }
 
     public string? StoryPartTitle { get; set; }

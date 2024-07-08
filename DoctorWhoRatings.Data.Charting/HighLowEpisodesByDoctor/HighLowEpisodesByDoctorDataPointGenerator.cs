@@ -35,6 +35,8 @@ public class HighLowEpisodesByDoctorDataPointGenerator(IDoctorWhoDataProvider da
 
             HighEpisodeDataPoint = new HighLowEpisodeByDoctorDataPoint
             {
+                Season = highEpisode.Season,
+                SeasonFormatDescription = highEpisode.SeasonFormatDescription,
                 StoryTitle = highEpisode.StoryTitle,
                 StoryPartTitle = highEpisode.PartTitle,
                 OvernightRatings = highEpisode.OvernightRatings,
@@ -55,6 +57,8 @@ public class HighLowEpisodesByDoctorDataPointGenerator(IDoctorWhoDataProvider da
             },
             LowEpisodeDataPoint = new HighLowEpisodeByDoctorDataPoint
             {
+                Season = lowEpisode.Season,
+                SeasonFormatDescription = lowEpisode.SeasonFormatDescription,
                 StoryTitle = lowEpisode.StoryTitle,
                 StoryPartTitle = lowEpisode.PartTitle,
                 OvernightRatings = lowEpisode.OvernightRatings,

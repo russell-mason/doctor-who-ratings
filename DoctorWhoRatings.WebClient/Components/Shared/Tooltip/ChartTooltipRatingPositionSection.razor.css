@@ -1,0 +1,13 @@
+﻿.ratings-position-section {
+    padding: 13px 16px;
+}
+
+.highlighted-value {
+    font-weight: bold;
+    color: #505050;
+}
+
+.ratings-type {
+    text-transform: uppercase;
+    margin: 10px 0 3px 0;
+}
