@@ -17,7 +17,8 @@
         <ApexPointTooltip>
             <Top20EpisodesTooltip DataPoint="@context.DataPoint.Items.First()"
                                   SeriesIndex="@context.SeriesIndex"
-                                  DataOptions="DataOptions" />
+                                  DataOptions="DataOptions"
+                                  ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
         </ApexPointTooltip>
 
         <ChildContent>

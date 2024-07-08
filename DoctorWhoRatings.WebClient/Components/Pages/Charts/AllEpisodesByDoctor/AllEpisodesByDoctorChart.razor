@@ -17,7 +17,8 @@
 
         <ApexPointTooltip>
             <AllEpisodesByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
-                                        SeriesIndex="@context.SeriesIndex" />
+                                        SeriesIndex="@context.SeriesIndex"
+                                        ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
         </ApexPointTooltip>
 
         <ChildContent>

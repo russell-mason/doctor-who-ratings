@@ -14,13 +14,16 @@
                                 ExtendedRatings="@HighLowDataPoint.ExtendedRatings" />
 </ChartTooltip>
 
-<ChartSecondaryTooltip>
-    <ChartTooltipRatingsSection Title="Population adjusted"
-                                TargetRatings="@TargetPopulationAdjustedExcessRatings"
-                                OvernightRatings="@HighLowDataPoint.PopulationAdjustedOvernightRatings"
-                                ConsolidatedRatings="@HighLowDataPoint.PopulationAdjustedConsolidatedRatings"
-                                ExtendedRatings="@HighLowDataPoint.PopulationAdjustedExtendedRatings" />
-</ChartSecondaryTooltip>
+@if (ShowPopulationAdjusted)
+{
+    <ChartSecondaryTooltip>
+        <ChartTooltipRatingsSection Title="Population adjusted"
+                                    TargetRatings="@TargetPopulationAdjustedExcessRatings"
+                                    OvernightRatings="@HighLowDataPoint.PopulationAdjustedOvernightRatings"
+                                    ConsolidatedRatings="@HighLowDataPoint.PopulationAdjustedConsolidatedRatings"
+                                    ExtendedRatings="@HighLowDataPoint.PopulationAdjustedExtendedRatings"/>
+    </ChartSecondaryTooltip>
+}
 
 @code {
     private const int ConsolidatedSeriesIndex = 1;
@@ -35,6 +38,9 @@
 
     [Parameter]
     public required HighLowEpisodesByDoctorDataOptions DataOptions { get; set; }
+
+    [Parameter]
+    public bool ShowPopulationAdjusted { get; set; }
 
     private bool HasHighestRating => SeriesIndex / SeriesPerDataPoint == 0;
 

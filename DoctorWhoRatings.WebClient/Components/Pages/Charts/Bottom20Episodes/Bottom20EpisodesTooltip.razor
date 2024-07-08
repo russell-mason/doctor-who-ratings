@@ -14,13 +14,16 @@
                                 ExtendedRatings="@DataPoint.ExtendedRatings" />
 </ChartTooltip>
 
-<ChartSecondaryTooltip>
-    <ChartTooltipRatingsSection Title="Population adjusted"
-                                TargetRatings="@TargetPopulationAdjustedExcessRatings"
-                                OvernightRatings="@DataPoint.PopulationAdjustedOvernightRatings"
-                                ConsolidatedRatings="@DataPoint.PopulationAdjustedConsolidatedRatings"
-                                ExtendedRatings="@DataPoint.PopulationAdjustedExtendedRatings" />
-</ChartSecondaryTooltip>
+@if (ShowPopulationAdjusted)
+{
+    <ChartSecondaryTooltip>
+        <ChartTooltipRatingsSection Title="Population adjusted"
+                                    TargetRatings="@TargetPopulationAdjustedExcessRatings"
+                                    OvernightRatings="@DataPoint.PopulationAdjustedOvernightRatings"
+                                    ConsolidatedRatings="@DataPoint.PopulationAdjustedConsolidatedRatings"
+                                    ExtendedRatings="@DataPoint.PopulationAdjustedExtendedRatings"/>
+    </ChartSecondaryTooltip>
+}
 
 @code {
     private const int ConsolidatedSeriesIndex = 1;
@@ -34,6 +37,9 @@
 
     [Parameter]
     public required Bottom20EpisodesDataOptions DataOptions { get; set; }
+
+    [Parameter]
+    public bool ShowPopulationAdjusted { get; set; }
 
     private decimal? TargetExcessRatings => SeriesIndex switch
     {
