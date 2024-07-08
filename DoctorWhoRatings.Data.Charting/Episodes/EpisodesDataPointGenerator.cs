@@ -1,31 +1,25 @@
-﻿namespace DoctorWhoRatings.Data.Charting.AllEpisodes;
+﻿namespace DoctorWhoRatings.Data.Charting.Episodes;
 
-public class AllEpisodesDataGenerator(IDoctorWhoDataProvider dataProvider) : IAllEpisodesDataGenerator
+public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IEpisodesDataPointGenerator
 {
-    public AllEpisodesData Generate(AllEpisodesDataOptions options)
+    public List<EpisodeDataPoint> Generate(EpisodesDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
                                      .Where(episode => MatchesFilter(episode, options))
                                      .Select(CreateDataPoint)
-                                     .ToList()
-                                     .AsReadOnly();
+                                     .ToList();
 
-        var allEpisodesData = new AllEpisodesData
-        {
-            DataPoints = dataPoints
-        };
-
-        return allEpisodesData;
+        return dataPoints;
     }
 
-    private static bool MatchesFilter(Episode episode, AllEpisodesDataOptions options)
+    private static bool MatchesFilter(Episode episode, EpisodesDataOptions options)
     {
         return options.DoctorFilter == null || episode.Doctor == options.DoctorFilter;
     }
 
-    private static AllEpisodesDataPoint CreateDataPoint(Episode episode)
+    private static EpisodeDataPoint CreateDataPoint(Episode episode)
     {
-        var dataPoint = new AllEpisodesDataPoint
+        var dataPoint = new EpisodeDataPoint
         {
             Id = episode.Id,
             Actor = episode.Actor,

@@ -1,15 +1,15 @@
 ﻿@page "/charts/total-hours-watched-by-doctor"
-@inject ITotalHoursWatchedByDoctorDataGenerator TotalHoursWatchedByDoctorDataGenerator
+@inject ITotalHoursWatchedByDoctorDataPointGenerator DataPointGenerator
 
-<PageTitle>@TotalHoursWatchedByDoctorData.Title - @Application.Name</PageTitle>
+<PageTitle>@TotalHoursWatchedByDoctorChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@TotalHoursWatchedByDoctorData.Title"
-              Description="@(TotalHoursWatchedByDoctorData.Description + " *")" />
+<ChartHeading Title="@TotalHoursWatchedByDoctorChartCaptions.Title"
+              Description="@(TotalHoursWatchedByDoctorChartCaptions.Description + " *")" />
 
 <Chart>
     <ApexChart @ref="Chart"
                TItem="TotalHoursWatchedByDoctorDataPoint"
-               Title="@TotalHoursWatchedByDoctorData.YAxisTitle"
+               Title="@TotalHoursWatchedByDoctorChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
                Width="@("100%")">
@@ -22,8 +22,8 @@
 
         <ChildContent>
             <ApexPointSeries TItem="TotalHoursWatchedByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@TotalHoursWatchedByDoctorData.SeriesTitles[0]"
+                             Items="DataPoints"
+                             Name="@TotalHoursWatchedByDoctorChartCaptions.SeriesTitles[0]"
                              SeriesType="SeriesType.Pie"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => dataPoint.CalculatedTotalHoursWatched"
@@ -70,25 +70,23 @@
 
     private ApexChartOptions<TotalHoursWatchedByDoctorDataPoint> ChartOptions { get; } = TotalHoursWatchedByDoctorChartOptions.Defaults;
 
-    private TotalHoursWatchedByDoctorData DataSource { get; set; } = default!;
-
     private TotalHoursWatchedByDoctorDataOptions DataOptions { get; } = new();
+
+    private List<TotalHoursWatchedByDoctorDataPoint> DataPoints { get; set; } = default!;
 
     private decimal GetPercentageShare(TotalHoursWatchedByDoctorDataPoint currentDataPoint)
     {
-        var total = DataSource.DataPoints.Sum(dataPoint => dataPoint.CalculatedTotalHoursWatched);
+        var total = DataPoints.Sum(dataPoint => dataPoint.CalculatedTotalHoursWatched);
         var percent = currentDataPoint.CalculatedTotalHoursWatched / total * 100;
         
         return percent;
     }
 
-    protected override void OnInitialized() => DataSource = TotalHoursWatchedByDoctorDataGenerator.Generate(DataOptions);
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 
     private async Task AfterOptionChanged()
     {
-        DataSource = TotalHoursWatchedByDoctorDataGenerator.Generate(DataOptions);
-
-        StateHasChanged();
+        DataPoints = DataPointGenerator.Generate(DataOptions);
 
         await Chart.UpdateSeriesAsync();
     }

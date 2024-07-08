@@ -1,6 +1,6 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.AllEpisodes;
 
-public class AllEpisodesData
+public static class AllEpisodesChartCaptions
 {
     public const string Title = "All Episodes";
 
@@ -16,6 +16,4 @@ public class AllEpisodesData
         "Additional viewers after seven days",
         "Additional viewers on all devices"
     ];
-
-    public IReadOnlyList<AllEpisodesDataPoint> DataPoints { get; set; } = [];
 }

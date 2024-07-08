@@ -7,13 +7,13 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IExcelSpreadsheetReader, ExcelSpreadsheetReader>();
         services.AddSingleton<IDoctorWhoDataReader, DoctorWhoDataReader>();
         services.AddSingleton<IDoctorWhoDataProvider, DoctorWhoDataProvider>();
-        services.AddSingleton<IAllEpisodesDataGenerator, AllEpisodesDataGenerator>();
-        services.AddSingleton<IAverageByDoctorDataGenerator, AverageByDoctorDataGenerator>();
-        services.AddSingleton<IHighLowEpisodesByDoctorDataGenerator, HighLowEpisodesByDoctorDataGenerator>();
-        services.AddSingleton<IPopulationByYearDataGenerator, PopulationByYearDataGenerator>();
-        services.AddSingleton<ITop20EpisodesDataGenerator, Top20EpisodesDataGenerator>();
-        services.AddSingleton<IBottom20EpisodesDataGenerator, Bottom20EpisodesDataGenerator>();
-        services.AddSingleton<ITotalHoursWatchedByDoctorDataGenerator, TotalHoursWatchedByDoctorDataGenerator>();
+        services.AddSingleton<IEpisodesDataPointGenerator, EpisodesDataPointGenerator>();
+        services.AddSingleton<IAverageByDoctorDataPointGenerator, AverageByDoctorDataPointGenerator>();
+        services.AddSingleton<IHighLowEpisodesByDoctorDataPointGenerator, HighLowEpisodesByDoctorDataPointGenerator>();
+        services.AddSingleton<IPopulationByYearDataPointGenerator, PopulationByYearDataPointGenerator>();
+        services.AddSingleton<ITop20EpisodesDataPointGenerator, Top20EpisodesDataPointGenerator>();
+        services.AddSingleton<IBottom20EpisodesDataPointGenerator, Bottom20EpisodesDataPointGenerator>();
+        services.AddSingleton<ITotalHoursWatchedByDoctorDataPointGenerator, TotalHoursWatchedByDoctorDataPointGenerator>();
 
         return services;
     }

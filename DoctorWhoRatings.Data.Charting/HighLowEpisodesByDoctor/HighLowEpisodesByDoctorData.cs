@@ -1,6 +1,6 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.HighLowEpisodesByDoctor;
 
-public class HighLowEpisodesByDoctorData
+public static class HighLowEpisodesByDoctorChartCaptions
 {
     public const string Title = "High/Low Episodes (by Doctor)";
 
@@ -19,6 +19,4 @@ public class HighLowEpisodesByDoctorData
         "Additional viewers after seven days (Low)",
         "Additional viewers on all devices (Low)"
     ];
-
-    public IReadOnlyList<HighLowEpisodesByDoctorDataPoint> DataPoints { get; set; } = [];
 }

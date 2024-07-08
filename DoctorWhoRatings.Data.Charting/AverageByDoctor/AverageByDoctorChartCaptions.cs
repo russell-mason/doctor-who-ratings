@@ -1,6 +1,6 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.AverageByDoctor;
 
-public class AverageByDoctorData
+public static class AverageByDoctorChartCaptions
 {
     public const string Title = "Average (by Doctor)";
 
@@ -16,6 +16,4 @@ public class AverageByDoctorData
         "Additional viewers after seven days",
         "Additional viewers on all devices"
     ];
-
-    public IReadOnlyList<AverageByDoctorDataPoint> DataPoints { get; set; } = [];
 }

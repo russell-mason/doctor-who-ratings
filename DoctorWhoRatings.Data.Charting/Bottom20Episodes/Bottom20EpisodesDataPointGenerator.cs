@@ -1,23 +1,17 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.Bottom20Episodes;
 
-public class Bottom20EpisodesDataGenerator(IDoctorWhoDataProvider dataProvider) : IBottom20EpisodesDataGenerator
+public class Bottom20EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IBottom20EpisodesDataPointGenerator
 {
-    public Bottom20EpisodesData Generate(Bottom20EpisodesDataOptions options)
+    public List<Bottom20EpisodesDataPoint> Generate(Bottom20EpisodesDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
                                      .Where(episode => IsFormatIncluded(episode, options))
                                      .OrderBy(episode => SelectRating(episode, options))
                                      .Take(20)
                                      .Select(episode => CreateDataPoint(episode, options))
-                                     .ToList()
-                                     .AsReadOnly();
+                                     .ToList();
 
-        var bottom20EpisodesData = new Bottom20EpisodesData
-        {
-            DataPoints = dataPoints
-        };
-
-        return bottom20EpisodesData;
+        return dataPoints;
     }
 
     private static Bottom20EpisodesDataPoint CreateDataPoint(Episode episode, Bottom20EpisodesDataOptions options)

@@ -1,6 +1,6 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.TotalHoursWatchedByDoctor;
 
-public class TotalHoursWatchedByDoctorData
+public class TotalHoursWatchedByDoctorChartCaptions
 {
     public const string Title = "Total Hours Watched (by Doctor)";
 
@@ -16,6 +16,4 @@ public class TotalHoursWatchedByDoctorData
         "Additional viewers after seven days",
         "Additional viewers on all devices"
     ];
-
-    public IReadOnlyList<TotalHoursWatchedByDoctorDataPoint> DataPoints { get; set; } = [];
 }

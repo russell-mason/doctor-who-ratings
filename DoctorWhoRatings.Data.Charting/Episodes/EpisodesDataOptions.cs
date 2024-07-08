@@ -1,6 +1,6 @@
-﻿namespace DoctorWhoRatings.Data.Charting.AllEpisodes;
+﻿namespace DoctorWhoRatings.Data.Charting.Episodes;
 
-public class AllEpisodesDataOptions
+public class EpisodesDataOptions
 {
     public int? DoctorFilter { get; set; }
 

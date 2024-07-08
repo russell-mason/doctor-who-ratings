@@ -1,15 +1,15 @@
 ﻿@page "/charts/average-by-doctor"
-@inject IAverageByDoctorDataGenerator AverageByDoctorDataGenerator
+@inject IAverageByDoctorDataPointGenerator DataPointGenerator
 
-<PageTitle>@AverageByDoctorData.Title - @Application.Name</PageTitle>
+<PageTitle>@AverageByDoctorChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@AverageByDoctorData.Title"
-              Description="@AverageByDoctorData.Description" />
+<ChartHeading Title="@AverageByDoctorChartCaptions.Title"
+              Description="@AverageByDoctorChartCaptions.Description" />
 
 <Chart>
     <ApexChart @ref="Chart"
                TItem="AverageByDoctorDataPoint"
-               Title="@AverageByDoctorData.YAxisTitle"
+               Title="@AverageByDoctorChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
                Width="@("100%")">
@@ -23,22 +23,22 @@
 
         <ChildContent>
             <ApexPointSeries TItem="AverageByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@AverageByDoctorData.SeriesTitles[0]"
+                             Items="DataPoints"
+                             Name="@AverageByDoctorChartCaptions.SeriesTitles[0]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />
 
             <ApexPointSeries TItem="AverageByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@AverageByDoctorData.SeriesTitles[1]"
+                             Items="DataPoints"
+                             Name="@AverageByDoctorChartCaptions.SeriesTitles[1]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings : dataPoint.CalculatedConsolidatedExcessRatings" />
 
             <ApexPointSeries TItem="AverageByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@AverageByDoctorData.SeriesTitles[2]"
+                             Items="DataPoints"
+                             Name="@AverageByDoctorChartCaptions.SeriesTitles[2]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedExtendedExcessRatings : dataPoint.CalculatedExtendedExcessRatings" />
@@ -76,17 +76,15 @@
 
     private ApexChartOptions<AverageByDoctorDataPoint> ChartOptions { get; } = AverageByDoctorChartOptions.Defaults; 
 
-    private AverageByDoctorData DataSource { get; set; } = default!;
-
     private AverageByDoctorDataOptions DataOptions { get; } = new();
 
-    protected override void OnInitialized() => DataSource = AverageByDoctorDataGenerator.Generate(DataOptions);
+    private List<AverageByDoctorDataPoint> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 
     private async Task AfterOptionChanged()
     {
-        DataSource = AverageByDoctorDataGenerator.Generate(DataOptions);
-
-        StateHasChanged();
+        DataPoints = DataPointGenerator.Generate(DataOptions);
 
         await Chart.UpdateSeriesAsync();
     }

@@ -1,16 +1,16 @@
 ﻿@page "/charts/all-episodes-by-doctor"
-@inject IAllEpisodesDataGenerator AllEpisodesDataGenerator
-@inject IDoctorWhoDataProvider DoctorWhoDataProvider
+@inject IEpisodesDataPointGenerator DataPointGenerator
+@inject IDoctorWhoDataProvider DataProvider
 
-<PageTitle>@AllEpisodesData.Title - @Application.Name</PageTitle>
+<PageTitle>@AllEpisodesByDoctorChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@(AllEpisodesData.Title + " (by Doctor)")"
-              Description="@AllEpisodesData.Description" />
+<ChartHeading Title="@AllEpisodesByDoctorChartCaptions.Title"
+              Description="@AllEpisodesByDoctorChartCaptions.Description" />
 
 <Chart>
     <ApexChart @ref="Chart" 
-               TItem="AllEpisodesDataPoint"
-               Title="@AllEpisodesData.YAxisTitle"
+               TItem="EpisodeDataPoint"
+               Title="@AllEpisodesByDoctorChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
                Width="@("100%")">
@@ -22,30 +22,30 @@
         </ApexPointTooltip>
 
         <ChildContent>
-            <ApexPointSeries TItem="AllEpisodesDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@AllEpisodesData.SeriesTitles[0]"
+            <ApexPointSeries TItem="EpisodeDataPoint"
+                             Items="DataPoints"
+                             Name="@AllEpisodesByDoctorChartCaptions.SeriesTitles[0]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Id"
                              YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedOvernightRatings : dataPoint.OvernightRatings" />
             
-            <ApexPointSeries TItem="AllEpisodesDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@AllEpisodesData.SeriesTitles[1]"
+            <ApexPointSeries TItem="EpisodeDataPoint"
+                             Items="DataPoints"
+                             Name="@AllEpisodesByDoctorChartCaptions.SeriesTitles[1]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Id"
-                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedConsolidatedExcessRatings: dataPoint.ConsolidatedExcessRatings" />
+                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedConsolidatedExcessRatings : dataPoint.ConsolidatedExcessRatings" />
             
-            <ApexPointSeries TItem="AllEpisodesDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@AllEpisodesData.SeriesTitles[2]"
+            <ApexPointSeries TItem="EpisodeDataPoint"
+                             Items="DataPoints"
+                             Name="@AllEpisodesByDoctorChartCaptions.SeriesTitles[2]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Id"
                              YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedExtendedExcessRatings : dataPoint.ExtendedExcessRatings" />
         </ChildContent>
     </ApexChart>
 </Chart>
-    
+
 <ChartOptions>
     
     <ChartOptionsGroup>
@@ -63,13 +63,13 @@
 </ChartOptions>
 
 @code {
-    private ApexChart<AllEpisodesDataPoint> Chart { get; set; } = default!;
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
 
-    private ApexChartOptions<AllEpisodesDataPoint> ChartOptions { get; } = AllEpisodesByDoctorChartOptions.Defaults;
+    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesByDoctorChartOptions.Defaults;
 
-    private AllEpisodesData DataSource { get; set; } = default!;
+    private EpisodesDataOptions DataOptions { get; } = new() { DoctorFilter = 1 };  // Default to the first Doctor
 
-    private AllEpisodesDataOptions DataOptions { get; } = new() { DoctorFilter = 1 };  // Default to the first Doctor
+    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
 
     /// <summary>
     /// The underlying options filter allows null, meaning do not filter. For this chart, there will always be a
@@ -82,15 +82,13 @@
     }
 
     private IEnumerable<(int, string)> DoctorsDataSource => 
-        DoctorWhoDataProvider.DoctorWhoData.Doctors.Select(doctor => (doctor.Number, doctor.Actor));
+        DataProvider.DoctorWhoData.Doctors.Select(doctor => (doctor.Number, doctor.Actor));
 
-    protected override void OnInitialized() => DataSource = AllEpisodesDataGenerator.Generate(DataOptions);
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 
     private async Task AfterOptionChanged()
     {
-        DataSource = AllEpisodesDataGenerator.Generate(DataOptions);
-
-        StateHasChanged();
+        DataPoints = DataPointGenerator.Generate(DataOptions);
 
         await Chart.UpdateSeriesAsync();
     }

@@ -1,6 +1,6 @@
-﻿namespace DoctorWhoRatings.Data.Charting.AllEpisodes;
+﻿namespace DoctorWhoRatings.Data.Charting.Episodes;
 
-public class AllEpisodesDataPoint
+public class EpisodeDataPoint
 {
     public int Id { get; init; }
 

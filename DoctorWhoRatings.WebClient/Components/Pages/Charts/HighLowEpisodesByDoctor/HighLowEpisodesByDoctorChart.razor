@@ -1,15 +1,15 @@
 ﻿@page "/charts/high-low-by-doctor"
-@inject IHighLowEpisodesByDoctorDataGenerator HighLowEpisodesByDoctorDataGenerator
+@inject IHighLowEpisodesByDoctorDataPointGenerator DataPointGenerator
 
-<PageTitle>@HighLowEpisodesByDoctorData.Title - @Application.Name</PageTitle>
+<PageTitle>@HighLowEpisodesByDoctorChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@HighLowEpisodesByDoctorData.Title"
-              Description="@HighLowEpisodesByDoctorData.Description" />
+<ChartHeading Title="@HighLowEpisodesByDoctorChartCaptions.Title"
+              Description="@HighLowEpisodesByDoctorChartCaptions.Description" />
 
 <Chart>
     <ApexChart @ref="Chart"
                TItem="HighLowEpisodesByDoctorDataPoint"
-               Title="@HighLowEpisodesByDoctorData.YAxisTitle"
+               Title="@HighLowEpisodesByDoctorChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
                Width="@("100%")">
@@ -23,48 +23,48 @@
         
         <ChildContent>
             <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[0]"
+                             Items="DataPoints"
+                             Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[0]"
                              Group="High"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => dataPoint.HighEpisodeDataPoint.CalculatedOvernightRatings ?? 0" />
 
             <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[1]"
+                             Items="DataPoints"
+                             Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[1]"
                              Group="High"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => dataPoint.HighEpisodeDataPoint.CalculatedConsolidatedExcessRatings ?? 0" />
 
             <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[2]"
+                             Items="DataPoints"
+                             Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[2]"
                              Group="High"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => dataPoint.HighEpisodeDataPoint.CalculatedExtendedExcessRatings ?? 0" />
 
             <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[3]"
+                             Items="DataPoints"
+                             Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[3]"
                              Group="Low"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => dataPoint.LowEpisodeDataPoint.CalculatedOvernightRatings ?? 0" />
 
             <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[4]"
+                             Items="DataPoints"
+                             Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[4]"
                              Group="Low"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => dataPoint.LowEpisodeDataPoint.CalculatedConsolidatedExcessRatings ?? 0" />
 
             <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@HighLowEpisodesByDoctorData.SeriesTitles[5]"
+                             Items="DataPoints"
+                             Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[5]"
                              Group="Low"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
@@ -109,17 +109,15 @@
 
     private ApexChartOptions<HighLowEpisodesByDoctorDataPoint> ChartOptions { get; } = HighLowEpisodesByDoctorChartOptions.Defaults;
 
-    private HighLowEpisodesByDoctorData DataSource { get; set; } = default!;
-
     private HighLowEpisodesByDoctorDataOptions DataOptions { get; } = new();
 
-    protected override void OnInitialized() => DataSource = HighLowEpisodesByDoctorDataGenerator.Generate(DataOptions);
+    private List<HighLowEpisodesByDoctorDataPoint> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 
     private async Task AfterOptionChanged()
     {
-        DataSource = HighLowEpisodesByDoctorDataGenerator.Generate(DataOptions);
-
-        StateHasChanged();
+        DataPoints = DataPointGenerator.Generate(DataOptions);
 
         await Chart.UpdateSeriesAsync();
     }

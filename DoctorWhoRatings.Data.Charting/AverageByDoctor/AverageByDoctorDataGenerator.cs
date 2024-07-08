@@ -1,21 +1,15 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.AverageByDoctor;
 
-public class AverageByDoctorDataGenerator(IDoctorWhoDataProvider dataProvider) : IAverageByDoctorDataGenerator
+public class AverageByDoctorDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IAverageByDoctorDataPointGenerator
 {
-    public AverageByDoctorData Generate(AverageByDoctorDataOptions options)
+    public List<AverageByDoctorDataPoint> Generate(AverageByDoctorDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
                                      .GroupBy(episode => episode.Doctor)
                                      .Select(group => CreateDataPoint(group, options))
-                                     .ToList()
-                                     .AsReadOnly();
+                                     .ToList();
 
-        var averageByDoctorData = new AverageByDoctorData
-        {
-            DataPoints = dataPoints
-        };
-
-        return averageByDoctorData;
+        return dataPoints;
     }
 
     private static AverageByDoctorDataPoint CreateDataPoint(IGrouping<int, Episode> group, AverageByDoctorDataOptions options)

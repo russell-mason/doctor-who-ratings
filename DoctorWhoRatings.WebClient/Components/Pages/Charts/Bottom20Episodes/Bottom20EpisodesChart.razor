@@ -1,15 +1,15 @@
 ﻿@page "/charts/bottom-20-episodes"
-@inject IBottom20EpisodesDataGenerator Bottom20EpisodesDataGenerator
+@inject IBottom20EpisodesDataPointGenerator DataPointGenerator
 
-<PageTitle>@Bottom20EpisodesData.Title - @Application.Name</PageTitle>
+<PageTitle>@Bottom20EpisodesChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@Bottom20EpisodesData.Title"
-              Description="@Bottom20EpisodesData.Description" />
+<ChartHeading Title="@Bottom20EpisodesChartCaptions.Title"
+              Description="@Bottom20EpisodesChartCaptions.Description" />
 
 <Chart>
     <ApexChart @ref="Chart"
                TItem="Bottom20EpisodesDataPoint"
-               Title="@Bottom20EpisodesData.YAxisTitle"
+               Title="@Bottom20EpisodesChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
                Width="@("100%")">
@@ -23,22 +23,22 @@
 
         <ChildContent>
             <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@Bottom20EpisodesData.SeriesTitles[0]"
+                             Items="DataPoints"
+                             Name="@Bottom20EpisodesChartCaptions.SeriesTitles[0]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => dataPoint.CalculatedOvernightRatings" />
 
             <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@Bottom20EpisodesData.SeriesTitles[1]"
+                             Items="DataPoints"
+                             Name="@Bottom20EpisodesChartCaptions.SeriesTitles[1]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => dataPoint.CalculatedConsolidatedExcessRatings" />
 
             <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@Bottom20EpisodesData.SeriesTitles[2]"
+                             Items="DataPoints"
+                             Name="@Bottom20EpisodesChartCaptions.SeriesTitles[2]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.Actor"
                              YValue="dataPoint => dataPoint.CalculatedExtendedExcessRatings" />
@@ -89,17 +89,15 @@
 
     private ApexChartOptions<Bottom20EpisodesDataPoint> ChartOptions { get; } = Bottom20EpisodesChartOptions.Defaults;
 
-    private Bottom20EpisodesData DataSource { get; set; } = default!;
-
     private Bottom20EpisodesDataOptions DataOptions { get; } = new();
 
-    protected override void OnInitialized() => DataSource = Bottom20EpisodesDataGenerator.Generate(DataOptions);
+    private List<Bottom20EpisodesDataPoint> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 
     private async Task AfterOptionChanged()
     {
-        DataSource = Bottom20EpisodesDataGenerator.Generate(DataOptions);
-
-        StateHasChanged();
+        DataPoints = DataPointGenerator.Generate(DataOptions);
 
         await Chart.UpdateSeriesAsync();
     }

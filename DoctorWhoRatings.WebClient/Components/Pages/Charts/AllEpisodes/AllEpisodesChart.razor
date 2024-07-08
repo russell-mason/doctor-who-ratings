@@ -1,15 +1,15 @@
 ﻿@page "/charts/all-episodes"
-@inject IAllEpisodesDataGenerator AllEpisodesDataGenerator
+@inject IEpisodesDataPointGenerator DataPointGenerator
 
-<PageTitle>@AllEpisodesData.Title - @Application.Name</PageTitle>
+<PageTitle>@AllEpisodesChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@AllEpisodesData.Title"
-              Description="@(AllEpisodesData.Description + " Only shows like-for like overnight ratings")" />
+<ChartHeading Title="@AllEpisodesChartCaptions.Title"
+              Description="@(AllEpisodesChartCaptions.Description + " Only shows like-for like overnight ratings")" />
 
 <Chart>
     <ApexChart @ref="Chart"
-               TItem="AllEpisodesDataPoint"
-               Title="@AllEpisodesData.YAxisTitle"
+               TItem="EpisodeDataPoint"
+               Title="@AllEpisodesChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
                Width="@("100%")">
@@ -20,9 +20,9 @@
         </ApexPointTooltip>
 
         <ChildContent>
-            <ApexPointSeries TItem="AllEpisodesDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@AllEpisodesData.SeriesTitles[0]"
+            <ApexPointSeries TItem="EpisodeDataPoint"
+                             Items="DataPoints"
+                             Name="@AllEpisodesChartCaptions.SeriesTitles[0]"
                              SeriesType="SeriesType.Line"
                              XValue="dataPoint => dataPoint.Id"
                              YValue="dataPoint => dataPoint.OvernightRatings" />
@@ -31,13 +31,13 @@
 </Chart>
 
 @code {
-    private ApexChart<AllEpisodesDataPoint> Chart { get; set; } = default!;
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
 
-    private ApexChartOptions<AllEpisodesDataPoint> ChartOptions { get; } = AllEpisodesChartOptions.Defaults;
+    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesChartOptions.Defaults;
 
-    private AllEpisodesData DataSource { get; set; } = default!;
+    private EpisodesDataOptions DataOptions { get; } = new();
 
-    private AllEpisodesDataOptions DataOptions { get; } = new();
+    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
 
-    protected override void OnInitialized() => DataSource = AllEpisodesDataGenerator.Generate(DataOptions);
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 }

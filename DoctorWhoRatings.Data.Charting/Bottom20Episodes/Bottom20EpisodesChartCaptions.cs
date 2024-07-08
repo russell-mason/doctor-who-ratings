@@ -1,6 +1,6 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.Bottom20Episodes;
 
-public class Bottom20EpisodesData
+public static class Bottom20EpisodesChartCaptions
 {
     public const string Title = "Bottom 20 Episodes";
 
@@ -16,6 +16,4 @@ public class Bottom20EpisodesData
         "Additional viewers after seven days",
         "Additional viewers on all devices"
     ];
-
-    public IReadOnlyList<Bottom20EpisodesDataPoint> DataPoints { get; set; } = [];
 }

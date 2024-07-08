@@ -1,14 +1,14 @@
 ﻿@page "/charts/population"
-@inject IPopulationByYearDataGenerator PopulationByYearDataGenerator
+@inject IPopulationByYearDataPointGenerator DataPointGenerator
 
-<PageTitle>@PopulationByYearData.Title - @Application.Name</PageTitle>
+<PageTitle>@PopulationByYearChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@PopulationByYearData.Title"
-              Description="@PopulationByYearData.Description" />
+<ChartHeading Title="@PopulationByYearChartCaptions.Title"
+              Description="@PopulationByYearChartCaptions.Description" />
 
 <Chart>
     <ApexChart TItem="PopulationByYearDataPoint"
-               Title="@PopulationByYearData.YAxisTitle"
+               Title="@PopulationByYearChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
                Width="@("100%")">
@@ -19,8 +19,8 @@
 
         <ChildContent>
             <ApexPointSeries TItem="PopulationByYearDataPoint"
-                             Items="DataSource.DataPoints"
-                             Name="@PopulationByYearData.SeriesTitles[0]"
+                             Items="DataPoints"
+                             Name="@PopulationByYearChartCaptions.SeriesTitles[0]"
                              SeriesType="SeriesType.Area"
                              XValue="dataPoint => dataPoint.Year"
                              YValue="dataPoint => dataPoint.Population" />
@@ -31,7 +31,7 @@
 @code {
     private ApexChartOptions<PopulationByYearDataPoint> ChartOptions { get; } = PopulationByYearChartOptions.Defaults;
 
-    private PopulationByYearData DataSource { get; set; } = default!;
+    private List<PopulationByYearDataPoint> DataPoints { get; set; } = default!;
 
-    protected override void OnInitialized() => DataSource = PopulationByYearDataGenerator.Generate();
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate();
 }

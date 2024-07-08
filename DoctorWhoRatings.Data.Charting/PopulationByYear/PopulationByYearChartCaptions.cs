@@ -1,6 +1,6 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.PopulationByYear;
 
-public class PopulationByYearData
+public class PopulationByYearChartCaptions
 {
     public const string Title = "UK Population";
 
@@ -11,6 +11,4 @@ public class PopulationByYearData
     public const string YAxisTitle = "Population (million)";
 
     public static readonly string[] SeriesTitles = ["Year"];
-
-    public IReadOnlyList<PopulationByYearDataPoint> DataPoints { get; set; } = [];
 }

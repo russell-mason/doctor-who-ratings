@@ -2,7 +2,7 @@
 
 public static class AllEpisodesChartOptions
 {
-    public static ApexChartOptions<AllEpisodesDataPoint> Defaults =>
+    public static ApexChartOptions<EpisodeDataPoint> Defaults =>
         new()
         {
             Chart = new Chart 

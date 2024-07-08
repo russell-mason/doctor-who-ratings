@@ -1,21 +1,15 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.HighLowEpisodesByDoctor;
 
-public class HighLowEpisodesByDoctorDataGenerator(IDoctorWhoDataProvider dataProvider) : IHighLowEpisodesByDoctorDataGenerator
+public class HighLowEpisodesByDoctorDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IHighLowEpisodesByDoctorDataPointGenerator
 {
-    public HighLowEpisodesByDoctorData Generate(HighLowEpisodesByDoctorDataOptions options)
+    public List<HighLowEpisodesByDoctorDataPoint> Generate(HighLowEpisodesByDoctorDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
                                      .GroupBy(episode => episode.Doctor)
                                      .Select(group => CreateDataPoint(group, options))
-                                     .ToList()
-                                     .AsReadOnly();
+                                     .ToList();
 
-        var highLowEpisodesByDoctorData = new HighLowEpisodesByDoctorData()
-        {
-            DataPoints = dataPoints
-        };
-
-        return highLowEpisodesByDoctorData;
+        return dataPoints;
     }
 
     private static HighLowEpisodesByDoctorDataPoint CreateDataPoint(IGrouping<int, Episode> group,

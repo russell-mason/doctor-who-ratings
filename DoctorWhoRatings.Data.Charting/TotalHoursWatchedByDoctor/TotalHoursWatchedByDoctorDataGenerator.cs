@@ -1,21 +1,15 @@
 ﻿namespace DoctorWhoRatings.Data.Charting.TotalHoursWatchedByDoctor;
 
-public class TotalHoursWatchedByDoctorDataGenerator(IDoctorWhoDataProvider dataProvider) : ITotalHoursWatchedByDoctorDataGenerator
+public class TotalHoursWatchedByDoctorDataPointGenerator(IDoctorWhoDataProvider dataProvider) : ITotalHoursWatchedByDoctorDataPointGenerator
 {
-    public TotalHoursWatchedByDoctorData Generate(TotalHoursWatchedByDoctorDataOptions options)
+    public List<TotalHoursWatchedByDoctorDataPoint> Generate(TotalHoursWatchedByDoctorDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
                                      .GroupBy(episode => episode.Doctor)
                                      .Select(group => CreateDataPoint(group, options))
-                                     .ToList()
-                                     .AsReadOnly();
+                                     .ToList();
 
-        var totalHoursWatchedByDoctorData = new TotalHoursWatchedByDoctorData
-        {
-            DataPoints = dataPoints
-        };
-
-        return totalHoursWatchedByDoctorData;
+        return dataPoints;
     }
 
     private static TotalHoursWatchedByDoctorDataPoint CreateDataPoint(IGrouping<int, Episode> group, 
