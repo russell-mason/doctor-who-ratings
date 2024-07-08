@@ -52,20 +52,20 @@
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="mean" Group="midpointOption"
                            CheckedValue="@AverageByDoctorCalculationMethod.Mean"
-                           AfterChanged="AfterOptionChanged">
+                           AfterValueChanged="AfterOptionChanged">
         </ChartOptionsRadio>
 
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="median" Group="midpointOption"
                            CheckedValue="@AverageByDoctorCalculationMethod.Median"
-                           AfterChanged="AfterOptionChanged">
+                           AfterValueChanged="AfterOptionChanged">
         </ChartOptionsRadio>
     </ChartOptionsGroup>
     
     <ChartOptionsGroup>
         <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
                               Id="population" Label="Adjust relative to current population"
-                              AfterChanged="AfterOptionChanged">
+                              AfterValueChanged="AfterOptionChanged">
         </ChartOptionsCheckbox>
     </ChartOptionsGroup>
 </ChartOptions>

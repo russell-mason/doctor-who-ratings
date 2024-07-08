@@ -52,33 +52,33 @@
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="overnight" Group="ratingsOption"
                            CheckedValue="@Top20EpisodesCalculationMethod.Overnight"
-                           AfterChanged="AfterOptionChanged">
+                           AfterValueChanged="AfterOptionChanged">
         </ChartOptionsRadio>
 
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="consolidated" Group="ratingsOption"
                            CheckedValue="@Top20EpisodesCalculationMethod.Consolidated"
-                           AfterChanged="AfterOptionChanged">
+                           AfterValueChanged="AfterOptionChanged">
         </ChartOptionsRadio>
 
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="extended" Group="ratingsOption"
                            CheckedValue="@Top20EpisodesCalculationMethod.Extended"
-                           AfterChanged="AfterOptionChanged">
+                           AfterValueChanged="AfterOptionChanged">
         </ChartOptionsRadio>
     </ChartOptionsGroup>
     
     <ChartOptionsGroup>
         <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeSpecials"
                               Id="specials" Label="Include specials/movie"
-                              AfterChanged="AfterOptionChanged">
+                              AfterValueChanged="AfterOptionChanged">
         </ChartOptionsCheckbox>
     </ChartOptionsGroup>
     
     <ChartOptionsGroup>
         <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
                               Id="population" Label="Adjust relative to current population"
-                              AfterChanged="AfterOptionChanged">
+                              AfterValueChanged="AfterOptionChanged">
         </ChartOptionsCheckbox>
     </ChartOptionsGroup>
 </ChartOptions>

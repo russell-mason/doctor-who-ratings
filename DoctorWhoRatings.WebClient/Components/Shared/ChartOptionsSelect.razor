@@ -5,10 +5,10 @@
     <label for="@Id">@Label</label>
 }
 
-<select id="@Id" value="@Value" @onchange="OnChanged">
-    @foreach (var (id, value) in Values)
+<select id="@Id" @bind="@Value" @bind:after="OnAfterValueChanged">
+    @foreach (var (key, value) in Values)
     {
-        <option value="@id" selected="@(Value?.Equals(id))">@value</option>
+        <option value="@key" selected="@(Value?.Equals(key))">@value</option>
     }
 </select>
 
@@ -29,24 +29,11 @@
     public EventCallback<T> ValueChanged { get; set; }
 
     [Parameter]
-    public EventCallback AfterChanged { get; set; }
+    public EventCallback AfterValueChanged { get; set; }
 
-    private async Task OnChanged(ChangeEventArgs eventArgs)
+    private async Task OnAfterValueChanged()
     {
-        try
-        {
-            var result = (T) Convert.ChangeType(eventArgs.Value?.ToString(), typeof(T))!;
-
-            Value = result;
-
-            await ValueChanged.InvokeAsync(result);
-            await AfterChanged.InvokeAsync();
-        }
-        catch
-        {
-            // Output error and ignore
-
-            Console.WriteLine($"Unable to convert '{eventArgs.Value}' to type '{typeof(T).Name}'");
-        }
+        await ValueChanged.InvokeAsync(Value);
+        await AfterValueChanged.InvokeAsync();
     }
 }

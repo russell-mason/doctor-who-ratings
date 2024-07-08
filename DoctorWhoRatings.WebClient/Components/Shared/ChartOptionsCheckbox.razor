@@ -1,4 +1,4 @@
-﻿<input id="@Id" type="checkbox" value="@Value.ToString()" checked="@Value" @onchange="OnChanged" />
+﻿<input id="@Id" type="checkbox" @bind="Value" @bind:after="OnAfterValueChanged" />
 
 @if (!string.IsNullOrWhiteSpace(Label))
 {
@@ -19,24 +19,11 @@
     public EventCallback<bool> ValueChanged { get; set; }
 
     [Parameter]
-    public EventCallback AfterChanged { get; set; }
+    public EventCallback AfterValueChanged { get; set; }
 
-    private async Task OnChanged(ChangeEventArgs eventArgs)
+    private async Task OnAfterValueChanged()
     {
-        var success = bool.TryParse(eventArgs.Value?.ToString(), out var result);
-
-        if (!success)
-        {
-            // Output error and ignore
-
-            Console.WriteLine($"Unable to convert '{eventArgs.Value}' to type 'bool'.");
-
-            return;
-        }
-
-        Value = result;
-
-        await ValueChanged.InvokeAsync(result);
-        await AfterChanged.InvokeAsync();
+        await ValueChanged.InvokeAsync(Value);
+        await AfterValueChanged.InvokeAsync();
     }
 }

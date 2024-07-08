@@ -39,19 +39,19 @@
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="overnight" Group="ratingsOption"
                            CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Overnight"
-                           AfterChanged="AfterOptionChanged">
+                           AfterValueChanged="AfterOptionChanged">
         </ChartOptionsRadio>
 
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="consolidated" Group="ratingsOption"
                            CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Consolidated"
-                           AfterChanged="AfterOptionChanged">
+                           AfterValueChanged="AfterOptionChanged">
         </ChartOptionsRadio>
 
         <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                            Id="extended" Group="ratingsOption"
                            CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Extended"
-                           AfterChanged="AfterOptionChanged">
+                           AfterValueChanged="AfterOptionChanged">
         </ChartOptionsRadio>
     </ChartOptionsGroup>
 </ChartOptions>

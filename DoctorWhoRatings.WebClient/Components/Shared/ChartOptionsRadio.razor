@@ -1,6 +1,6 @@
 ﻿@typeparam T
 
-<input id="@Id" type="radio" name="@Group" value="@Value" checked="@Value?.Equals(CheckedValue)" @onchange="OnChanged" />
+<input id="@Id" type="radio" name="@Group" @bind="Value" @bind:after="OnAfterValueChanged" checked="@Value?.Equals(CheckedValue)" />
 
 @if (!string.IsNullOrWhiteSpace(Label))
 {
@@ -27,7 +27,7 @@
     public EventCallback<T> ValueChanged { get; set; }
 
     [Parameter]
-    public EventCallback AfterChanged { get; set; }
+    public EventCallback AfterValueChanged { get; set; }
 
     protected override void OnInitialized()
     {
@@ -36,9 +36,9 @@
         base.OnInitialized();
     }
 
-    private async Task OnChanged()
+    private async Task OnAfterValueChanged()
     {
         await ValueChanged.InvokeAsync(CheckedValue);
-        await AfterChanged.InvokeAsync();
+        await AfterValueChanged.InvokeAsync();
     }
 }

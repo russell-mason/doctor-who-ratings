@@ -50,13 +50,13 @@
     <ChartOptionsGroup>
         <ChartOptionsSelect @bind-Value="DataOptionsDoctorFilter"
                             Id="doctor" Label="Filter by" Values="DoctorsDataSource"
-                            AfterChanged="AfterOptionChanged" />
+                            AfterValueChanged="AfterOptionChanged" />
     </ChartOptionsGroup>
 
     <ChartOptionsGroup>
         <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
                               Id="population" Label="Adjust relative to current population"
-                              AfterChanged="AfterOptionChanged">
+                              AfterValueChanged="AfterOptionChanged">
         </ChartOptionsCheckbox>
     </ChartOptionsGroup>
 </ChartOptions>
