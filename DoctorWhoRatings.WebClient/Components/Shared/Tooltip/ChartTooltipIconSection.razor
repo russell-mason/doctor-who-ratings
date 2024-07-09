@@ -1,0 +1,30 @@
+﻿<div class="icon-section">
+    <ChartTooltipIconBlock IconUrl="@IconUrl" 
+                           IconAlt="@IconAlt">
+        <div>
+            @if (Title != null)
+            {
+                <div class="title">@Title</div>
+            }
+
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+        </div>
+    </ChartTooltipIconBlock>
+</div>
+
+@code {
+    [Parameter]
+    public string? IconUrl { get; set; }
+
+    [Parameter]
+    public string? IconAlt { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

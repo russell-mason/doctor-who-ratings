@@ -7,31 +7,23 @@
 
         @if (EpisodeCount != null)
         {
+            var episodeText = EpisodeCount == 1 ? "episode" : "episodes";
+            
             <div class="episodes">
                 <span class="highlighted-value">@EpisodeCount</span>
-                <span>
-                    @if (EpisodeCount == 1)
-                    {
-                        <text>episode</text>
-                    }
-                    else
-                    {
-                        <text>episodes</text>
-                    }
-                </span>
+                <span>@episodeText</span>
             </div>
         }
         
         @if (TotalEpisodeHours != null)
         {
+            var totalEpisodeHours = Formatter.ToTimeSpan(TotalEpisodeHours);
+            var hours = (int) totalEpisodeHours.TotalHours;
+            var minutes = totalEpisodeHours.Minutes;
+            var hoursText = hours == 1 ? "hour" : "hours";
+            var minutesText = minutes == 1 ? "minute" : "minutes";
+
             <div class="total-episode-hours">
-                @{
-                    var totalEpisodeHours = Formatter.ToTimeSpan(TotalEpisodeHours);
-                    var hours = (int) totalEpisodeHours.TotalHours;
-                    var minutes = totalEpisodeHours.Minutes;
-                    var hoursText = hours == 1 ? "hour" : "hours";
-                    var minutesText = minutes == 1 ? "minute" : "minutes";
-                }
                 <span class="highlighted-value">@hours</span>
                 <span> @hoursText</span>
                 <span class="highlighted-value">@minutes</span>
@@ -60,13 +52,13 @@
         <div class="episode-air-date">
             <ChartTooltipBreak />
 
-            <ChartTooltipIconSecion IconUrl="images/calendar.svg"
-                                    IconAlt="Broadcast">
+            <ChartTooltipIconSection IconUrl="images/calendar.svg"
+                                     IconAlt="Broadcast">
                 <div>
                     <span>Broadcast on </span>
                     <span class="highlighted-value">@Formatter.FormatDate(OriginalAirDate)</span>
                 </div>
-            </ChartTooltipIconSecion>
+            </ChartTooltipIconSection>
         </div>
     }
     

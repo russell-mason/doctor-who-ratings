@@ -1,19 +1,12 @@
-﻿.watched-hours-section {
-    display: flex;
-    padding: 13px 16px;
+﻿.hours-watched {
+    margin-top: -1px;
 }
+
+    .hours-watched > .hours:not(:first-of-type) {
+        margin-top: 5px;
+    }
+
 .highlighted-value {
     font-weight: bold;
     color: #505050;
-}
-
-.line-space {
-    margin-top: 5px;
-}
-
-.icon {
-    height: 16px;
-    width: 16px;
-    filter: invert(48%) sepia(2%) saturate(9%) hue-rotate(331deg) brightness(90%) contrast(91%);
-    margin: 1px 12px 0 0;
 }

@@ -1,10 +1,4 @@
-﻿.series-target-icon-section {
-    display: flex;
-    padding: 13px 16px;
-    padding-bottom: 0;
-}
-
-h2 {
+﻿h2 {
     text-transform: uppercase;
     font-size: 0.7rem;
     font-family: segoe-light, sans-serif;
@@ -13,23 +7,19 @@ h2 {
     padding: 13px 0 0 16px;
 }
 
-.ratings-icon-section {
-    display: flex;
-    padding: 13px 16px;
+.ratings-target {
+    margin-bottom: -11px;
 }
 
-.icon {
-    height: 16px;
-    width: 16px;
-    filter: invert(48%) sepia(2%) saturate(9%) hue-rotate(331deg) brightness(90%) contrast(91%);
-    margin: 1px 12px 0 0;
+.ratings {
+    margin-top: -1px;
+}
+
+.ratings > .rating:not(:first-of-type) {
+    margin-top: 5px;
 }
 
 .highlighted-value {
     font-weight: bold;
     color: #505050;
-}
-
-.ratings > .rating:not(:first-of-type) {
-    margin-top: 5px;
 }

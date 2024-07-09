@@ -1,30 +1,32 @@
 ﻿<div class="watched-hours-section">
-    <img class="icon" src="images/view.svg" alt="Ratings" />
-    <div>
-        @if (OvernightHoursWatched != null)
-        {
-            <div>
-                <span class="highlighted-value">@Formatter.FormatNumber(OvernightHoursWatched)</span>
-                <span> million hours watched overnight</span>
-            </div>
-        }
+    <ChartTooltipIconSection IconUrl="images/view.svg" 
+                             IconAlt="Ratings">
+        <div class="hours-watched">
+            @if (OvernightHoursWatched != null)
+            {
+                <div class="hours">
+                    <span class="highlighted-value">@Formatter.FormatNumber(OvernightHoursWatched)</span>
+                    <span> million hours watched overnight</span>
+                </div>
+            }
 
-        @if (ConsolidatedHoursWatched != null)
-        {
-            <div class="line-space">
-                <span class="highlighted-value">@Formatter.FormatNumber(ConsolidatedHoursWatched)</span>
-                <span> million hours watched after seven days</span>
-            </div>
-        }
+            @if (ConsolidatedHoursWatched != null)
+            {
+                <div class="hours">
+                    <span class="highlighted-value">@Formatter.FormatNumber(ConsolidatedHoursWatched)</span>
+                    <span> million hours watched after seven days</span>
+                </div>
+            }
 
-        @if (ExtendedHoursWatched != null)
-        {
-            <div class="line-space">
-                <span class="highlighted-value">@Formatter.FormatNumber(ExtendedHoursWatched)</span>
-                <span> million hours watched after seven days on all devices</span>
-            </div>
-        }
-    </div>
+            @if (ExtendedHoursWatched != null)
+            {
+                <div class="hours">
+                    <span class="highlighted-value">@Formatter.FormatNumber(ExtendedHoursWatched)</span>
+                    <span> million hours watched after seven days on all devices</span>
+                </div>
+            }
+        </div>
+    </ChartTooltipIconSection>
 </div>
 
 @code {
@@ -33,7 +35,7 @@
 
     [Parameter]
     public decimal? ConsolidatedHoursWatched { get; set; }
-        
+
     [Parameter]
     public decimal? ExtendedHoursWatched { get; set; }
 }

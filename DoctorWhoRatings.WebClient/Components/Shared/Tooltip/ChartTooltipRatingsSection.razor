@@ -6,17 +6,21 @@
 
     @if (TargetRatings != null)
     {
-        <div class="ratings series-target-icon-section">
-            <img class="icon" src="images/target.svg" alt="Target Ratings"/>
-            <div class="rating">
-                <span class="highlighted-value">@Formatter.FormatNumber(TargetRatings)</span>
-                <span> million additional viewers</span>
-            </div>
+        <div class="ratings-target">
+            <ChartTooltipIconSection IconUrl="images/target.svg"
+                                     IconAlt="Target Ratings">
+                <div class="ratings">
+                    <div class="rating">
+                        <span class="highlighted-value">@Formatter.FormatNumber(TargetRatings)</span>
+                        <span> million additional viewers</span>
+                    </div>
+                </div>
+            </ChartTooltipIconSection>
         </div>
     }
 
-    <div class="ratings-icon-section">
-        <img class="icon" src="images/view.svg" alt="Ratings"/>
+    <ChartTooltipIconSection IconUrl="images/view.svg"
+                             IconAlt="Ratings">
         <div class="ratings">
             @if (OvernightRatings != null)
             {
@@ -42,7 +46,7 @@
                 </div>
             }
         </div>
-    </div>
+    </ChartTooltipIconSection>
 </div>
 
 @code {

@@ -9,3 +9,8 @@
     font-weight: bold;
     color: #507dd7;
 }
+
+.highlighted-value {
+    font-weight: bold;
+    color: #505050;
+}

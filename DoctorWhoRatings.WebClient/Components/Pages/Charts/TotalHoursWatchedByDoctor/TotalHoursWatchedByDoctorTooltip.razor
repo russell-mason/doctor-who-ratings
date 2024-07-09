@@ -5,18 +5,19 @@
 
     <ChartTooltipBreak />
     
-    <ChartTooltipIconSecion IconUrl="images/pie-chart.svg"
-                            IconAlt="Share">
-        <div>@Formatter.FormatNumber(PercentageShare)% share of total hours watched</div>
-    </ChartTooltipIconSecion>
+    <ChartTooltipIconSection IconUrl="images/pie-chart.svg"
+                             IconAlt="Share">
+        <div class="share">
+            <span class="highlighted-value">@Formatter.FormatNumber(PercentageShare)</span>
+            <span>% share of total hours watched</span>
+        </div>
+    </ChartTooltipIconSection>
 
     <ChartTooltipBreak />
     
     <ChartTooltipWatchedHoursSection OvernightHoursWatched="@DataPoint.TotalOvernightHoursWatched"
                                      ConsolidatedHoursWatched="@DataPoint.TotalConsolidatedHoursWatched"
                                      ExtendedHoursWatched="@DataPoint.TotalExtendedHoursWatched" />
-
-    
 </ChartTooltip>
 
 @code {

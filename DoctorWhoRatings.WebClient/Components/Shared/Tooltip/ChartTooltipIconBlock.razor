@@ -1,16 +1,9 @@
-﻿<div class="icon-section">
+﻿<div class="icon-block">
     <img class="icon" src="@IconUrl" alt="@IconAlt" />
     <div class="content">
-        @if (Title != null)
-        {
-            <div class="title">@Title</div>
-        }
-        
         @if (ChildContent != null)
         {
-            <div>
-                @ChildContent
-            </div>
+            @ChildContent
         }
     </div>
 </div>
@@ -21,9 +14,6 @@
 
     [Parameter]
     public string? IconAlt { get; set; }
-
-    [Parameter]
-    public string? Title { get; set; }
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
