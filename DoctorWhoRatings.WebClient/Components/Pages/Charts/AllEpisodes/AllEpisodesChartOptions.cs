@@ -5,10 +5,6 @@ public static class AllEpisodesChartOptions
     public static ApexChartOptions<EpisodeDataPoint> Defaults =>
         new()
         {
-            Chart = new Chart 
-            { 
-                Id = "all-episodes" 
-            },
             Markers = new Markers
             {
                 Size = 2,
