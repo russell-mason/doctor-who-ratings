@@ -33,6 +33,7 @@ public static class AllEpisodesChartOptions
             [
                 new YAxis
                 {
+                    Min = 0,
                     Labels = new YAxisLabels
                     {
                         Formatter = "function(value) { return value.toFixed(2); }"
@@ -44,4 +45,18 @@ public static class AllEpisodesChartOptions
                 FollowCursor = true
             }
         };
+
+    public static Annotations CreateAnnotations(List<EpisodeDataPoint> dataPoints)
+    {
+        var xAxis = dataPoints
+                    .GroupBy(dataPoint => dataPoint.Actor)
+                    .Select(group => (group.First().Id, group.Key));
+
+        var annotations = new Annotations
+        {
+            Xaxis = ApexChartOptionsExtensions.CreateAnnotationsXAxis(xAxis)
+        };
+
+        return annotations;
+    }
 }

@@ -65,7 +65,7 @@
 @code {
     private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
 
-    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesByDoctorChartOptions.Defaults;
+    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; set; } = AllEpisodesByDoctorChartOptions.Defaults;
 
     private EpisodesDataOptions DataOptions { get; } = new() { DoctorFilter = 1 };  // Default to the first Doctor
 
@@ -84,12 +84,25 @@
     private IEnumerable<(int, string)> DoctorsDataSource => 
         DataProvider.DoctorWhoData.Doctors.Select(doctor => (doctor.Number, doctor.Actor));
 
-    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
+    protected override void OnInitialized()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Chart.AddCustomAnnotations(AllEpisodesByDoctorChartOptions.CreateAnnotations(DataPoints));
+        }
+    }
 
     private async Task AfterOptionChanged()
     {
         DataPoints = DataPointGenerator.Generate(DataOptions);
 
         await Chart.UpdateSeriesAsync();
+
+        await Chart.AddCustomAnnotations(AllEpisodesByDoctorChartOptions.CreateAnnotations(DataPoints));
     }
 }

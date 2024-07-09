@@ -7,7 +7,8 @@
               Description="@(AllEpisodesChartCaptions.Description + " Only shows like-for like overnight ratings")" />
 
 <Chart>
-    <ApexChart TItem="EpisodeDataPoint"
+    <ApexChart @ref="Chart" 
+               TItem="EpisodeDataPoint"
                Title="@AllEpisodesChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
@@ -30,11 +31,24 @@
 </Chart>
 
 @code {
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+
     private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesChartOptions.Defaults;
 
     private EpisodesDataOptions DataOptions { get; } = new();
 
     private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
 
-    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
+    protected override void OnInitialized()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Chart.AddCustomAnnotations(AllEpisodesChartOptions.CreateAnnotations(DataPoints));
+        }
+    }
 }
