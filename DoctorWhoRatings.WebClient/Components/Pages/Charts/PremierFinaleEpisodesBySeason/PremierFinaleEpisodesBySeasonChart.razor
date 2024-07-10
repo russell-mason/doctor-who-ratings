@@ -1,0 +1,116 @@
+﻿@page "/charts/premier-finale-by-season"
+@inject IPremierFinaleEpisodesBySeasonDataPointGenerator DataPointGenerator
+
+<PageTitle>@PremierFinaleEpisodesBySeasonChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@PremierFinaleEpisodesBySeasonChartCaptions.Title"
+              Description="@(PremierFinaleEpisodesBySeasonChartCaptions.Description + ". Excludes specials and movies")" />
+
+<Chart>
+    <ApexChart @ref="Chart"
+               TItem="PremierFinaleEpisodeBySeasonDataPoint"
+               Title="@PremierFinaleEpisodesBySeasonChartCaptions.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
+            
+        <ApexPointTooltip>
+            <PremierFinaleEpisodesBySeasonTooltip DataPoint="@context.DataPoint.Items.First()"
+                                                  DataOptions="DataOptions"
+                                                  ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
+        </ApexPointTooltip>
+        
+        <ChildContent>
+            @foreach (var keyValues in DataPoints)
+            {
+                <ApexPointSeries TItem="PremierFinaleEpisodeBySeasonDataPoint"
+                                 Items="@keyValues.Value"
+                                 Name="@($"{keyValues.Value.First().Actor} - {keyValues.Key}")"
+                                 SeriesType="SeriesType.Line"
+                                 XValue="dataPoint => dataPoint.EpisodePosition"
+                                 YValue="dataPoint => dataPoint.CalculatedRatings ?? 0"/>
+            }
+        </ChildContent>
+    </ApexChart>
+</Chart>
+
+<ChartOptions>
+    <ChartOptionsGroup>
+        <ChartOptionsText Label="Calculate using" />
+
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="overnight" Group="ratingsOption"
+                           CheckedValue="@PremierFinaleEpisodesBySeasonCalculationMethod.Overnight"
+                           AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="consolidated" Group="ratingsOption"
+                           CheckedValue="@PremierFinaleEpisodesBySeasonCalculationMethod.Consolidated"
+                           AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="extended" Group="ratingsOption"
+                           CheckedValue="@PremierFinaleEpisodesBySeasonCalculationMethod.Extended"
+                           AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+    </ChartOptionsGroup>
+
+    <ChartOptionsGroup>
+        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                              Id="population" Label="Adjust relative to current population"
+                              AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
+    </ChartOptionsGroup>
+
+    <ChartOptionsGroup>
+        <ChartOptionsText Label="Legend Selection"></ChartOptionsText>
+        <button type="button" @onclick="() => ToggleLegend(LegendSelectionAction.None)">None</button>
+        <button type="button" @onclick="() => ToggleLegend(LegendSelectionAction.All)">All</button>
+        <button type="button" @onclick="() => ToggleLegend(LegendSelectionAction.Toggle)">Toggle</button>
+    </ChartOptionsGroup>
+</ChartOptions>
+
+@code {
+    private ApexChart<PremierFinaleEpisodeBySeasonDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<PremierFinaleEpisodeBySeasonDataPoint> ChartOptions { get; } = PremierFinaleEpisodesBySeasonChartOptions.Defaults;
+
+    private PremierFinaleEpisodesBySeasonDataOptions DataOptions { get; } = new();
+
+    private Dictionary<string, List<PremierFinaleEpisodeBySeasonDataPoint>> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
+
+    private async Task AfterOptionChanged()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+
+        await Chart.UpdateSeriesAsync();
+    }
+
+    private async Task ToggleLegend(LegendSelectionAction action)
+    {
+        foreach (var chartSeries in Chart.Series)
+        {
+            switch (action)
+            {
+                case LegendSelectionAction.None:
+                    await chartSeries.Hide();
+                    break;
+
+                case LegendSelectionAction.All:
+                    await chartSeries.Show();
+                    break;
+                
+                case LegendSelectionAction.Toggle:
+                    await chartSeries.Toggle();
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(action));
+            }
+        }
+    }
+}

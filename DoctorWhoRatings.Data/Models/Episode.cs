@@ -24,6 +24,8 @@ public record Episode
 
     public required string SeasonFormatDescription { get; init; }
 
+    public string SeasonDescription => Season.HasValue ? $"{SeasonFormatDescription} {Season}" : $"{SeasonFormatDescription}";
+
     public int Story { get; init; }
 
     public int? StoryInSeason { get; init; }

@@ -1,0 +1,35 @@
+﻿<ChartTooltip>
+    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                               EpisodeCount="@DataPoint.EpisodeCount"
+                               StoryTitle="@DataPoint.StoryTitle"
+                               PartTitle="@DataPoint.StoryPartTitle"
+                               SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
+                               Season="@DataPoint.Season" />
+
+    <ChartTooltipBreak />
+    
+    <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings"
+                                ConsolidatedRatings="@DataPoint.ConsolidatedRatings"
+                                ExtendedRatings="@DataPoint.ExtendedRatings" />
+</ChartTooltip>
+
+@if (ShowPopulationAdjusted)
+{
+    <ChartSecondaryTooltip>
+        <ChartTooltipRatingsSection Title="Population adjusted"
+                                    OvernightRatings="@DataPoint.PopulationAdjustedOvernightRatings"
+                                    ConsolidatedRatings="@DataPoint.PopulationAdjustedConsolidatedRatings"
+                                    ExtendedRatings="@DataPoint.PopulationAdjustedExtendedRatings" />
+    </ChartSecondaryTooltip>
+}
+
+@code {
+    [Parameter]
+    public required PremierFinaleEpisodeBySeasonDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required PremierFinaleEpisodesBySeasonDataOptions DataOptions { get; set; }
+
+    [Parameter]
+    public bool ShowPopulationAdjusted { get; set; }
+}

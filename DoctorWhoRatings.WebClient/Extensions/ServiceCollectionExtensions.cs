@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IEpisodesDataPointGenerator, EpisodesDataPointGenerator>();
         services.AddSingleton<IAverageByDoctorDataPointGenerator, AverageByDoctorDataPointGenerator>();
         services.AddSingleton<IHighLowEpisodesByDoctorDataPointGenerator, HighLowEpisodesByDoctorDataPointGenerator>();
+        services.AddSingleton<IPremierFinaleEpisodesBySeasonDataPointGenerator, PremierFinaleEpisodesBySeasonDataPointGenerator>();
         services.AddSingleton<IPopulationByYearDataPointGenerator, PopulationByYearDataPointGenerator>();
         services.AddSingleton<ITop20EpisodesDataPointGenerator, Top20EpisodesDataPointGenerator>();
         services.AddSingleton<IBottom20EpisodesDataPointGenerator, Bottom20EpisodesDataPointGenerator>();

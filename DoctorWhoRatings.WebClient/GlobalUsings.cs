@@ -6,6 +6,7 @@ global using DoctorWhoRatings.Data.Charting.Bottom20Episodes;
 global using DoctorWhoRatings.Data.Charting.Episodes;
 global using DoctorWhoRatings.Data.Charting.HighLowEpisodesByDoctor;
 global using DoctorWhoRatings.Data.Charting.PopulationByYear;
+global using DoctorWhoRatings.Data.Charting.PremierFinaleEpisodesBySeason;
 global using DoctorWhoRatings.Data.Charting.Top20Episodes;
 global using DoctorWhoRatings.Data.Charting.TotalHoursWatchedByDoctor;
 global using DoctorWhoRatings.Data.Excel;
