@@ -1,0 +1,118 @@
+﻿@page "/charts/dashboard"
+@inject IDashboardGenerator DataGenerator
+
+<PageTitle>@DashboardCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@DashboardCaptions.Title"
+              Description="@DashboardCaptions.Description" />
+
+<section class="dashboard-section">
+    <div class="two-column-set">
+        <div class="doctors-group">
+            <div class="card primary column-quarter">
+                <h1>Doctors</h1>
+                <div class="value highlighted-value">@Data.NumberOfDoctors</div>
+            </div>
+            <div class="episodes-group column-three-quarters">
+                <div class="card column-episodes-half">
+                    <h1>Seasons</h1>
+                    <div class="value highlighted-value">@Data.NumberOfSeasons</div>
+                </div>
+                <div class="card column-episodes-half">
+                    <h1>Stories</h1>
+                    <div class="value highlighted-value">@Data.NumberOfStories</div>
+                </div>
+                <div class="card column-episodes-half">
+                    <h1>Episodes</h1>
+                    <div class="value highlighted-value">@Data.TotalNumberOfEpisodes</div>
+                </div>
+                <div class="card column-episodes-half">
+                    <h1>Series Episodes</h1>
+                    <div class="value highlighted-value">@Data.NumberOfSeriesEpisodes</div>
+                </div>
+                <div class="card column-episodes-half">
+                    <h1>Specials</h1>
+                    <div class="value highlighted-value">@Data.NumberOfSpecials</div>
+                </div>
+                <div class="card column-episodes-half">
+                    <h1>Movies</h1>
+                    <div class="value highlighted-value">@Data.NumberOfMovies</div>
+                </div>
+            </div>
+        </div>
+        <div class="time-group">
+            <div class="card primary column-full">
+                <h1>Time since first episode</h1>
+                <div class="value">
+                    <span class="highlighted-value">@Data.PeriodSinceFirstEpisode.years</span>
+                    <span class="description word">years</span>
+                    <span class="highlighted-value"> @Data.PeriodSinceFirstEpisode.months</span>
+                    <span class="description word">months</span>
+                    <span class="highlighted-value">@Data.PeriodSinceFirstEpisode.days</span>
+                    <span class="description">days</span>
+                </div>
+            </div>
+            <div class="card column-full">
+                <h1>Time since last episode</h1>
+                <div class="value">
+                    @if (Data.PeriodSinceLastEpisode.years > 0)
+                    {
+                        <span class="highlighted-value">@Data.PeriodSinceLastEpisode.years</span>
+                        <span class="description word">years</span>
+                    }
+
+                    @if (Data.PeriodSinceLastEpisode.years > 0 || Data.PeriodSinceLastEpisode.months > 0)
+                    {
+                        <span class="highlighted-value"> @Data.PeriodSinceLastEpisode.months</span>
+                        <span class="description word">months</span>
+                    }
+
+                    <span class="highlighted-value">@Data.PeriodSinceLastEpisode.days</span>
+                    <span class="description">days</span>
+                </div>
+            </div>
+            <div class="column-full three-column-set">
+                <div class="card colums-third">
+                    @{
+                        var totalEpisodeHours = Formatter.ToTimeSpan(Data.TotalEpisodeHours);
+                        var hours = (int) totalEpisodeHours.TotalHours;
+                        var minutes = totalEpisodeHours.Minutes;
+                        var hoursText = hours == 1 ? "hour" : "hours";
+                        var minutesText = minutes == 1 ? "minute" : "minutes";
+                    }
+
+                    <h1>Content</h1>
+                    <div class="content-group">
+                        <div class="value highlighted-value right">@hours</div>
+                        <div class="value description left">@hoursText</div>
+                        <div class="value highlighted-value right">@minutes</div>
+                        <div class="value description left">@minutesText</div>
+                    </div>
+                </div>
+                <div class="card colums-third">
+                    <h1>Views</h1>
+                    <div class="value">
+                        <div class="highlighted-value">@Formatter.FormatNumber(Data.TotalRatings / 1000)</div>
+                        <div class="description">billion</div>
+                    </div>
+                </div>
+                <div class="card colums-third">
+                    <h1>Hours Watched</h1>
+                    <div class="value">
+                        <div class="highlighted-value">@Formatter.FormatNumber(Data.TotalHoursWatched / 1000)</div>
+                        <div class="description">billion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    public DashboardData Data { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        Data = DataGenerator.Generate();
+    }
+}

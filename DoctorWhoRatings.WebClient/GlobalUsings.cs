@@ -3,6 +3,7 @@ global using DoctorWhoRatings.Data;
 global using DoctorWhoRatings.Data.Charting.AllEpisodes;
 global using DoctorWhoRatings.Data.Charting.AverageByDoctor;
 global using DoctorWhoRatings.Data.Charting.Bottom20Episodes;
+global using DoctorWhoRatings.Data.Charting.Dashboard;
 global using DoctorWhoRatings.Data.Charting.Episodes;
 global using DoctorWhoRatings.Data.Charting.HighLowEpisodesByDoctor;
 global using DoctorWhoRatings.Data.Charting.PopulationByYear;

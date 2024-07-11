@@ -7,6 +7,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IExcelSpreadsheetReader, ExcelSpreadsheetReader>();
         services.AddSingleton<IDoctorWhoDataReader, DoctorWhoDataReader>();
         services.AddSingleton<IDoctorWhoDataProvider, DoctorWhoDataProvider>();
+        services.AddSingleton<IDashboardGenerator, DashboardGenerator>();
         services.AddSingleton<IEpisodesDataPointGenerator, EpisodesDataPointGenerator>();
         services.AddSingleton<IAverageByDoctorDataPointGenerator, AverageByDoctorDataPointGenerator>();
         services.AddSingleton<IHighLowEpisodesByDoctorDataPointGenerator, HighLowEpisodesByDoctorDataPointGenerator>();

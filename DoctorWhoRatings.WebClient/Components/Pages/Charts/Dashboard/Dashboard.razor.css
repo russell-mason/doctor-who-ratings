@@ -1,0 +1,117 @@
+﻿.card {
+    position: relative;
+    z-index: 1;
+    background: #f0f0f0;
+    color: #000000;
+    border-radius: 5px;
+    padding: 16px;
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
+    text-align: center;
+    background-color: #f0f0f0;
+    color: #505050;
+}
+
+    .card.primary {
+        background-color: #ffb080;
+    }
+
+.doctors-group {
+    display: flex;
+    flex: 45%;
+    gap: 12px;
+}
+
+.time-group {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 55%;
+    gap: 12px;
+}
+
+.episodes-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.content-group {
+    display: grid;
+    grid-template-columns: 2.25fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: baseline;
+}
+
+.two-column-set {
+    display: flex;
+    gap: 24px;
+}
+
+.three-column-set {
+    display: flex;
+    gap: 12px;
+}
+
+.column-full {
+    flex: 100%;
+}
+
+.column-three-quarters {
+    flex: 75%;
+}
+
+.column-episodes-half {
+    flex: 40;
+}
+
+.colums-third {
+    flex: 33.33%;
+}
+
+.column-quarter {
+    flex: 25%;
+}
+
+h1 {
+    font-family: segoe-bold, sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #507dd7;
+    margin-left: -5px;
+}
+
+.primary h1 {
+    color: #8b3200;
+}
+
+.value {
+    margin-top: -0.9rem;
+}
+
+.primary .value {
+    color: #333333;
+}
+
+.highlighted-value {
+    font-family: segoe-bold, sans-serif;
+    font-weight: bold;
+    font-size: 5rem;
+}
+
+    .highlighted-value.right {
+        text-align: right;
+    }
+
+    .description.left {
+        text-align: left;
+    }
+
+    .description {
+        font-family: segoe-light;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+
+.word {
+    margin-right: 0.8rem;
+}
