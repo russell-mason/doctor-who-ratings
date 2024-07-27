@@ -49,8 +49,8 @@ public static class AllEpisodesChartOptions
     public static Annotations CreateAnnotations(List<EpisodeDataPoint> dataPoints)
     {
         var xAxis = dataPoints
-                    .GroupBy(dataPoint => dataPoint.Actor)
-                    .Select(group => (group.First().Id, group.Key));
+                    .GroupBy(dataPoint => new { dataPoint.Actor, dataPoint.Doctor })
+                    .Select(group => (group.First().Id, group.Key.Actor));
 
         var annotations = new Annotations
         {

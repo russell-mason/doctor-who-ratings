@@ -45,11 +45,11 @@
                 <h1>Time since first episode</h1>
                 <div class="value">
                     <span class="highlighted-value">@Data.PeriodSinceFirstEpisode.years</span>
-                    <span class="description word">years</span>
+                    <span class="description word">@Pluralize(Data.PeriodSinceFirstEpisode.years, "year")</span>
                     <span class="highlighted-value"> @Data.PeriodSinceFirstEpisode.months</span>
-                    <span class="description word">months</span>
+                    <span class="description word">@Pluralize(Data.PeriodSinceFirstEpisode.months, "month")</span>
                     <span class="highlighted-value">@Data.PeriodSinceFirstEpisode.days</span>
-                    <span class="description">days</span>
+                    <span class="description">@Pluralize(Data.PeriodSinceFirstEpisode.days, "day")</span>
                 </div>
             </div>
             <div class="card column-full">
@@ -58,17 +58,17 @@
                     @if (Data.PeriodSinceLastEpisode.years > 0)
                     {
                         <span class="highlighted-value">@Data.PeriodSinceLastEpisode.years</span>
-                        <span class="description word">years</span>
+                        <span class="description word">@Pluralize(Data.PeriodSinceLastEpisode.years, "year")</span>
                     }
 
                     @if (Data.PeriodSinceLastEpisode.years > 0 || Data.PeriodSinceLastEpisode.months > 0)
                     {
                         <span class="highlighted-value"> @Data.PeriodSinceLastEpisode.months</span>
-                        <span class="description word">months</span>
+                        <span class="description word">@Pluralize(Data.PeriodSinceLastEpisode.months, "month")</span>
                     }
 
                     <span class="highlighted-value">@Data.PeriodSinceLastEpisode.days</span>
-                    <span class="description">days</span>
+                    <span class="description">@Pluralize(Data.PeriodSinceLastEpisode.days, "day")</span>
                 </div>
             </div>
             <div class="column-full three-column-set">
@@ -77,8 +77,8 @@
                         var totalEpisodeHours = Formatter.ToTimeSpan(Data.TotalEpisodeHours);
                         var hours = (int) totalEpisodeHours.TotalHours;
                         var minutes = totalEpisodeHours.Minutes;
-                        var hoursText = hours == 1 ? "hour" : "hours";
-                        var minutesText = minutes == 1 ? "minute" : "minutes";
+                        var hoursText = Pluralize(hours, "hour");
+                        var minutesText = Pluralize(minutes, "minute");
                     }
 
                     <h1>Content</h1>
@@ -114,5 +114,10 @@
     protected override void OnInitialized()
     {
         Data = DataGenerator.Generate();
+    }
+
+    private static string Pluralize(int value, string word)
+    {
+        return value == 1 ? word : $"{word}s";
     }
 }

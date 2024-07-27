@@ -1,4 +1,4 @@
-﻿namespace DoctorWhoRatings.Data;
+﻿namespace DoctorWhoRatings.Data.Excel;
 
 /// <summary>
 /// Provides a general mechanism for reading data from an Excel spreadsheet.

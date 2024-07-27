@@ -22,6 +22,7 @@ public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
         var dataPoint = new EpisodeDataPoint
         {
             Id = episode.Id,
+            Doctor = episode.Doctor,
             Actor = episode.Actor,
             Season = episode.Season,
             SeasonFormatDescription = episode.SeasonFormatDescription,

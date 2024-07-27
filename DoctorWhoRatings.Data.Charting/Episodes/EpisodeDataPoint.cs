@@ -4,6 +4,8 @@ public class EpisodeDataPoint
 {
     public int Id { get; init; }
 
+    public required int Doctor { get; init; }
+
     public required string Actor { get; init; }
 
     public int? Season { get; init; }
