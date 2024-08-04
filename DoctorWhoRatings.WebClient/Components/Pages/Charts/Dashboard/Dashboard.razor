@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="card colums-third">
-                    <h1>Hours Watched</h1>
+                    <h1>Hours Watched*</h1>
                     <div class="value">
                         <div class="highlighted-value">@Formatter.FormatNumber(Data.TotalHoursWatched / 1000)</div>
                         <div class="description">billion</div>
@@ -107,6 +107,14 @@
         </div>
     </div>
 </section>
+
+<p>
+    * Ratings are based on "views", which can be as little as
+    <a href="https://www.radiotimes.com/tv/entertainment/how-do-uk-tv-viewing-figures-and-overnight-ratings-work/" target="_blank">
+        3 minutes.
+    </a>
+    This is a simple calculation based on <strong>ratings * episode length</strong>.
+</p>
 
 @code {
     public DashboardData Data { get; set; } = default!;

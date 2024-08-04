@@ -115,3 +115,12 @@ h1 {
 .word {
     margin-right: 0.8rem;
 }
+
+p {
+    font-size: 0.8rem;
+}
+
+    p a {
+        color: #ffffff;
+        text-decoration: underline;
+    }

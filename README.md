@@ -4,7 +4,8 @@ This project has been created out a simple sense of curiosity.
 
 This site will allow all ratings for the Doctor Who TV series to shown, compared, and contrasted. A wide range of charts, graphs, and analysis, will be added over time.
 
-View live here: www.russellmason.com/doctor-who-ratings
+View live here: http://www.russellmason.com/doctor-who-ratings  
+(please be patient as the site will probably need a few moments to warm up)
 
 # Getting Started
 
