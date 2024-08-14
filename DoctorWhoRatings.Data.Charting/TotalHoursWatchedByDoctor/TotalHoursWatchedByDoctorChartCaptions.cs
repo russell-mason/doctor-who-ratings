@@ -4,7 +4,7 @@ public class TotalHoursWatchedByDoctorChartCaptions
 {
     public const string Title = "Total Hours Watched (by Doctor)";
 
-    public const string Description = "Shows the total number of hours watched for each doctor";
+    public const string Description = "Shows the total number of hours watched for each doctor.";
 
     public const string XAxisTitle = "Doctor";
 

@@ -10,6 +10,10 @@ public record Episode
     /// </summary>
     public int Id { get; init; }
 
+    public int EraId { get; init; }
+
+    public required string EraDescription { get; init; }
+
     public int? EpisodeFormatId { get; init; }
 
     public string? EpisodeFormatDescription { get; init; }

@@ -1,0 +1,106 @@
+﻿@page "/charts/by-era"
+@inject IByEraDataPointGenerator DataPointGenerator
+
+<PageTitle>@ByEraChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@ByEraChartCaptions.Title"
+              Description="@ByEraChartCaptions.Description" />
+
+<Chart>
+    <ApexChart @ref="Chart"
+               TItem="ByEraDataPoint"
+               Title="@ByEraChartCaptions.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
+
+        <ApexPointTooltip>
+            <ByEraTooltip DataPoint="@context.DataPoint.Items.First()"
+                          DataOptions="DataOptions"
+                          PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
+        </ApexPointTooltip>
+
+        <ChildContent>
+            <ApexPointSeries TItem="ByEraDataPoint"
+                             Items="DataPoints"
+                             Name="@ByEraChartCaptions.SeriesTitles[0]"
+                             SeriesType="SeriesType.Pie"
+                             XValue="dataPoint => dataPoint.Era"
+                             YValue="dataPoint => dataPoint.CalculatedRatings"
+                             ShowDataLabels />
+        </ChildContent>
+    </ApexChart>
+</Chart>
+
+<ChartOptions>
+    <ChartOptionsGroup>
+        <ChartOptionsText Label="Calculate using" />
+        
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="total" Group="ratingsOption" Label="@ByEraCalculationMethod.Sum.Humanize()"
+                           CheckedValue="@ByEraCalculationMethod.Sum"
+                           AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="perEpisode" Group="ratingsOption" Label="@ByEraCalculationMethod.MeanPerEpisode.Humanize()"
+                           CheckedValue="@ByEraCalculationMethod.MeanPerEpisode"
+                           AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                           Id="peHour" Group="ratingsOption" Label="@ByEraCalculationMethod.MeanPerHour.Humanize()"
+                           CheckedValue="@ByEraCalculationMethod.MeanPerHour"
+                           AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+    </ChartOptionsGroup>
+    
+    <ChartOptionsGroup>
+        <ChartOptionsText Label="Over" />
+
+        <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
+                           Id="overnight" Group="overOption"
+                           CheckedValue="@ByEraOverCalculationMethod.Overnight"
+                           AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
+                           Id="consolidated" Group="overOption"
+                           CheckedValue="@ByEraOverCalculationMethod.Consolidated"
+                           AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+
+        <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
+                           Id="extended" Group="overOption"
+                           CheckedValue="@ByEraOverCalculationMethod.Extended"
+                           AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsRadio>
+    </ChartOptionsGroup>
+</ChartOptions>
+
+@code {
+    private ApexChart<ByEraDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<ByEraDataPoint> ChartOptions { get; } = ByEraChartOptions.Defaults;
+
+    private ByEraDataOptions DataOptions { get; } = new();
+
+    private List<ByEraDataPoint> DataPoints { get; set; } = default!;
+
+    private decimal GetPercentageShare(ByEraDataPoint currentDataPoint)
+    {
+        var total = DataPoints.Sum(dataPoint => dataPoint.CalculatedRatings);
+        var percent = currentDataPoint.CalculatedRatings / total * 100;
+
+        return percent;
+    }
+
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
+
+    private async Task AfterOptionChanged()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+
+        await Chart.UpdateSeriesAsync();
+    }
+}

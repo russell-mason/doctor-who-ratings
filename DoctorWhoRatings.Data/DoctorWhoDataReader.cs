@@ -42,6 +42,8 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         var episode = new Episode
         {
             Id = cellReader.Read<int>(nameof(Episode.Id)),
+            EraId = cellReader.Read<int>(nameof(Episode.EraId)),
+            EraDescription = cellReader.Read<string>(nameof(Episode.EraDescription)),
             EpisodeFormatId = cellReader.Read<int?>(nameof(Episode.EpisodeFormatId)),
             EpisodeFormatDescription = cellReader.Read<string?>(nameof(Episode.EpisodeFormatDescription)),
             Doctor = cellReader.Read<int>(nameof(Episode.Doctor)),

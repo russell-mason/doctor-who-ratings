@@ -1,0 +1,37 @@
+﻿<ChartTooltip>
+    <ChartTooltipEpisodeSetion Actor="@DataPoint.Era"
+                               EpisodeCount="@DataPoint.EpisodeCount" />
+
+    <ChartTooltipBreak />
+    
+    <ChartTooltipIconSection IconUrl="images/pie-chart.svg"
+                             IconAlt="Share">
+        <div class="share">
+            <span class="highlighted-value">@Formatter.FormatNumber(PercentageShare)</span>
+            <span>% share of total ratings</span>
+        </div>
+    </ChartTooltipIconSection>
+    
+    <ChartTooltipBreak />
+    
+    <ChartTooltipIconSection IconUrl="images/calculator.svg" 
+                             IconAlt="Calculation method"
+                             Title="@DataOptions.CalculationMethod.Humanize()" />
+    <ChartTooltipBreak />
+
+    <ChartTooltipRatingsSection OvernightRatings="DataPoint.CalculatedOvernightRatings"
+                                ConsolidatedRatings="DataPoint.CalculatedConsolidatedRatings"
+                                ExtendedRatings="DataPoint.CalculatedExtendedRatings">
+    </ChartTooltipRatingsSection>
+</ChartTooltip>
+
+@code {
+    [Parameter]
+    public required ByEraDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required ByEraDataOptions DataOptions { get; set; }
+
+    [Parameter]
+    public decimal PercentageShare { get; set; }
+}

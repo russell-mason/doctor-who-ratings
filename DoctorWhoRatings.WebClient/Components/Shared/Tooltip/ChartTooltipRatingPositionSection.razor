@@ -38,6 +38,11 @@
                 ? "Lowest episode ratings" 
                 : string.Empty;
 
+        if (Position > 1)
+        {
+            text = text.ToLower();
+        }
+
         return text;
     }
 }

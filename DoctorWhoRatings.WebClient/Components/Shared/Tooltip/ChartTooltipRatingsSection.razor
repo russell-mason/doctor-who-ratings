@@ -12,7 +12,7 @@
                 <div class="ratings">
                     <div class="rating">
                         <span class="highlighted-value">@Formatter.FormatNumber(TargetRatings)</span>
-                        <span> million additional viewers</span>
+                        <span> @Formatter.NumberRepresentationText(TargetRatings) additional viewers</span>
                     </div>
                 </div>
             </ChartTooltipIconSection>
@@ -26,7 +26,7 @@
             {
                 <div class="rating">
                     <span class="highlighted-value">@Formatter.FormatNumber(OvernightRatings)</span>
-                    <span> million overnight viewers</span>
+                    <span> @Formatter.NumberRepresentationText(OvernightRatings) overnight viewers</span>
                 </div>
             }
 
@@ -34,7 +34,7 @@
             {
                 <div class="rating">
                     <span class="highlighted-value">@Formatter.FormatNumber(ConsolidatedRatings)</span>
-                    <span> million viewers after seven days</span>
+                    <span> @Formatter.NumberRepresentationText(ConsolidatedRatings) viewers after seven days</span>
                 </div>
             }
 
@@ -42,7 +42,7 @@
             {
                 <div class="rating">
                     <span class="highlighted-value">@Formatter.FormatNumber(ExtendedRatings)</span>
-                    <span> million viewers after seven days on all devices</span>
+                    <span> @Formatter.NumberRepresentationText(ExtendedRatings) viewers after seven days on all devices</span>
                 </div>
             }
         </div>
