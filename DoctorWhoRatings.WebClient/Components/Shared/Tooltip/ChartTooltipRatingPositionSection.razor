@@ -1,6 +1,11 @@
 ﻿<div class="ratings-position-section">
-    <span class="highlighted-value">@FormatPosition()</span>
-    <span class="ratings-type">@SelectRatingType()</span>
+    <ChartTooltipIconBlock IconUrl="images/high-low.svg"
+                           IconAlt="Rating position">
+        <div>
+            <span class="highlighted-value">@Formatter.FormatPosition(Position, false)</span>
+            <span class="ratings-type">@SelectRatingType()</span>
+        </div>
+    </ChartTooltipIconBlock>
 </div>
 
 @code {
@@ -12,23 +17,6 @@
 
     [Parameter]
     public bool IsLowestRatings { get; set; }
-
-    private string FormatPosition()
-    {
-        if (Position is null or 1) 
-        { 
-            return string.Empty; 
-        }
-
-        var suffix = Position switch
-        {
-            2 => "nd",
-            3 => "rd",
-            _ => "th"
-        };
-
-        return $"{Position}{suffix} ";
-    }
 
     private string SelectRatingType()
     {

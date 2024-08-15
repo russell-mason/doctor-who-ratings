@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IBottom20EpisodesDataPointGenerator, Bottom20EpisodesDataPointGenerator>();
         services.AddSingleton<ITotalHoursWatchedByDoctorDataPointGenerator, TotalHoursWatchedByDoctorDataPointGenerator>();
         services.AddSingleton<IByEraDataPointGenerator, ByEraDataPointGenerator>();
+        services.AddSingleton<ITimelineDataPointGenerator, TimelineDataPointGenerator>();
 
         return services;
     }

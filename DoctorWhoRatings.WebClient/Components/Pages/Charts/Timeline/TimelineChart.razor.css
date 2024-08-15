@@ -1,0 +1,62 @@
+﻿.timeline {
+    position: relative;
+    width: 600px;
+    display: grid;
+    grid-template-columns: 1fr 66px 1fr;
+}
+
+.timeline-item {
+    display: contents;
+}
+
+.marker {
+    grid-column: 2 / 3;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background-color: #507dd7;
+    justify-self: center;
+}
+
+.line {
+    position: absolute;
+    top: 22px;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 100%;
+    background-color: #b2b0bf;
+    z-index: -1;
+}
+
+.date {
+    grid-column: 1 / 2;
+    font-family: segoe-regular, sans-serif;
+    font-size: 1.2rem;
+    color: #ffb080;
+    justify-self: end;
+}
+
+.doctor {
+    grid-column: 3 / 4;
+    font-family: segoe-light, sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #ccccff;
+}
+
+.actor {
+    grid-column: 3 / 4;
+    font-family: segoe-bold, sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffb080;
+}
+
+.episodes {
+    grid-column: 3 / 4;
+    font-family: segoe-regular, sans-serif;
+    font-size: 1rem;
+    margin: 2px 0 28px 0;
+}

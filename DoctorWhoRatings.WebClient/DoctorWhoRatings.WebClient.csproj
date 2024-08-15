@@ -16,4 +16,10 @@
         <ProjectReference Include="..\DoctorWhoRatings.Data\DoctorWhoRatings.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="Components\Pages\Charts\Timeline\TimelineChart.razor">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+    </ItemGroup>
+
 </Project>

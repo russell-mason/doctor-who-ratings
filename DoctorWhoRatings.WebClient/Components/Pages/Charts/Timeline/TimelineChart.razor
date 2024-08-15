@@ -1,0 +1,30 @@
+﻿@page "/charts/timeline"
+@inject ITimelineDataPointGenerator DataPointGenerator
+
+<PageTitle>@TimelineChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@TimelineChartCaptions.Title"
+              Description="@TimelineChartCaptions.Description" />
+
+<div class="timeline">
+    <div class="line"></div>
+
+    @foreach (var dataPoint in DataPoints)
+    {
+        var episodeText = $"{dataPoint.EpisodeCount} {(dataPoint.EpisodeCount == 1 ? "episode" : "episodes")}";
+
+        <div class="timeline-item">
+            <div class="doctor">@Formatter.FormatPosition(dataPoint.Number) doctor</div>
+            <div class="date">@Formatter.FormatDate(dataPoint.FirstEpisodeAirDate)</div>
+            <div class="marker"></div>
+            <div class="actor">@dataPoint.Actor</div>
+            <div class="episodes">@episodeText</div>
+        </div>
+    }
+</div>
+
+@code {
+    private List<TimelineDataPoint> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate();
+}

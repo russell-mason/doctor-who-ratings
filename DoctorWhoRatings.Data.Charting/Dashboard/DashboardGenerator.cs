@@ -28,14 +28,14 @@ public class DashboardGenerator(IDoctorWhoDataProvider dataProvider) : IDashboar
     }
 
     private static decimal? CalculateRatings(IEnumerable<Episode> episodes) =>
-        episodes.Sum(episode => episode.ExtendedRatings ?? episode.ConsolidatedExcessRatings ?? episode.OvernightRatings);
+        episodes.Sum(episode => episode.ExtendedRatings ?? episode.ConsolidatedRatings ?? episode.OvernightRatings);
 
     private static decimal? CalculateMinutesWatched(IEnumerable<Episode> episodes) =>
-        episodes.Sum(episode => (episode.Runtime * (episode.ExtendedRatings ?? episode.ConsolidatedExcessRatings ?? episode.OvernightRatings)));
+        episodes.Sum(episode => (episode.Runtime * (episode.ExtendedRatings ?? episode.ConsolidatedRatings ?? episode.OvernightRatings)));
 
     private static (int years, int months, int days) PeriodToNow(DateTime from)
     {
-        var to = DateTime.Now;
+        var to = DateTime.UtcNow.Date;
         var years = to.Year - from.Year;
         var months = to.Month - from.Month;
         var days = to.Day - from.Day;
