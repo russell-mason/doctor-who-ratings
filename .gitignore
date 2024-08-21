@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+DoctorWhoRatings.WebClient/scripts/*.js
+DoctorWhoRatings.WebClient/scripts/*.js.map

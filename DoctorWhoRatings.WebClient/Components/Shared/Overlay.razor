@@ -1,0 +1,22 @@
+@inject IJSRuntime JsRuntime
+
+<div id="@Id" class="overlay">
+    <div class="loader">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; } = Guid.NewGuid().ToString("N");
+
+    [Parameter, EditorRequired]
+    public required string WaitOnCssSelector { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await JsRuntime.InvokeVoidAsync("Overlay.pollForContent", Id, WaitOnCssSelector);
+    }
+}
