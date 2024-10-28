@@ -3,8 +3,10 @@
 public static class Formatter
 {
     // Assumes values in millions
-    public static string FormatNumber(decimal? number) => 
-        (number is >= 1000 ? (number/1000)?.ToString("0.000") : number?.ToString("0.00") ?? "N/A") ?? "N/A";
+    public static string FormatNumber(decimal? number) => FormatNumber(number, "N/A");
+
+    public static string FormatNumber(decimal? number, string nullText) =>
+        (number is >= 1000 ? (number / 1000)?.ToString("0.000") : number?.ToString("0.00") ?? nullText) ?? nullText;
 
     public static string FormatNumber(int number) => number.ToString("00,000,000");
 

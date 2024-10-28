@@ -105,5 +105,7 @@ public record Episode
     public decimal PopulationFactor { get; init; }
 
     public string? Note { get; init; }
+
+    public string? WikiUrl { get; init; }
 }
 

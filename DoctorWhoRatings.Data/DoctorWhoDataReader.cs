@@ -64,7 +64,8 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
             ExtendedRatings = cellReader.Read<decimal?>(nameof(Episode.ExtendedRatings)),
             Population = cellReader.Read<int>(nameof(Episode.Population)),
             PopulationFactor = cellReader.Read<decimal>(nameof(Episode.PopulationFactor)),
-            Note = cellReader.Read<string>(nameof(Episode.Note))
+            Note = cellReader.Read<string>(nameof(Episode.Note)),
+            WikiUrl = cellReader.Read<string>(nameof(Episode.WikiUrl))
         };
 
         return episode;

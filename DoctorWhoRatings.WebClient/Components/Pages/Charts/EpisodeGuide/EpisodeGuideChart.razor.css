@@ -1,0 +1,85 @@
+﻿table {
+    width: 100%;
+    max-width: 1200px;
+    border-spacing: 0;
+}
+
+td {
+    vertical-align: baseline;
+    padding: 3px 0;
+}
+
+.doctor {
+    font-family: segoe-light, sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #ccccff;
+    margin-top: 36px;
+}
+
+    .doctor.no1 {
+        margin-top: 0;
+    }
+
+.actor {
+    font-family: segoe-bold, sans-serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffb080;
+    margin-bottom: -4px;
+}
+
+.season {
+    font-family: segoe-light, sans-serif;
+    font-size: 1.2rem;
+    color: #a6d2ff;
+    margin: 12px 0;
+}
+
+.story {
+    font-family: segoe-regular, sans-serif;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+    .story.first {
+        margin-top: 0;
+    }
+
+.story-number {
+    font-size: 0.75rem;
+    color: #a6d2ff;
+}
+
+.episode {
+}
+
+    .episode.indent {
+        margin-left: 24px;
+    }
+
+.episode-number {
+    font-size: 0.75rem;
+    color: #a6d2ff;
+}
+
+.date {
+}
+
+.rating {
+    text-align: end;
+    margin-left: 8px;
+}
+
+.millions {
+    font-size: 0.8rem;
+}
+
+.wiki {
+    width: 16px;
+    height: 16px;
+    filter: invert(100%);
+    vertical-align: bottom;
+    margin: 0 16px 0 8px;
+}
