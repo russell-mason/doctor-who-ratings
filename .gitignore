@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 DoctorWhoRatings.WebClient/scripts/*.js
 DoctorWhoRatings.WebClient/scripts/*.js.map
+
+DoctorWhoRatings.WebClient/Properties/ServiceDependencies/doctor-who-ratings - Web Deploy/
