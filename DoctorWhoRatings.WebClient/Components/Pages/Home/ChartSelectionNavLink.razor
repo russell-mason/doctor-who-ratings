@@ -1,10 +1,14 @@
 ﻿<NavLink href="@Url" Match="NavLinkMatch.All">
     <div class="chart-link">
         <div class="chart-link-header">
-            <img class="chart-link-icon" src="@IconUrl" alt="Chart" />
-            <div class="chart-link-title">@Title</div>
+            <div class="inner-text">
+                <img class="chart-link-icon" src="@IconUrl" alt="Chart"/>
+                <div class="chart-link-title">@Title</div>
+            </div>
         </div>
-        <div class="chart-link-description">@Description</div>
+        <div class="chart-link-description">
+            <div class="inner-text">@Description</div>
+        </div>
     </div>
 </NavLink>
 
