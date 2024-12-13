@@ -14,7 +14,8 @@ public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
 
     private static bool MatchesFilter(Episode episode, EpisodesDataOptions options)
     {
-        return options.DoctorFilter == null || episode.Doctor == options.DoctorFilter;
+        return (options.DoctorFilter == null || episode.Doctor == options.DoctorFilter) &&
+               (options.EpisodeFormatId == null || episode.EpisodeFormatId == options.EpisodeFormatId);
     }
 
     private static EpisodeDataPoint CreateDataPoint(Episode episode)
