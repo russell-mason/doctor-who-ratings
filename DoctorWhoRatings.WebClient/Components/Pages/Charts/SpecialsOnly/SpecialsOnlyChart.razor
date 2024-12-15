@@ -7,7 +7,7 @@
               Description="@SpecialsOnlyChartCaptions.Description" />
 
 <Chart>
-    <ApexChart @ref="Chart" 
+    <ApexChart @ref="Chart"
                TItem="EpisodeDataPoint"
                Title="@SpecialsOnlyChartCaptions.YAxisTitle"
                Options="ChartOptions"
@@ -27,14 +27,14 @@
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.OriginalAirDate"
                              YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedOvernightRatings : dataPoint.OvernightRatings" />
-            
+
             <ApexPointSeries TItem="EpisodeDataPoint"
                              Items="DataPoints"
                              Name="@SpecialsOnlyChartCaptions.SeriesTitles[1]"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => dataPoint.OriginalAirDate"
                              YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedConsolidatedExcessRatings : dataPoint.ConsolidatedExcessRatings" />
-            
+
             <ApexPointSeries TItem="EpisodeDataPoint"
                              Items="DataPoints"
                              Name="@SpecialsOnlyChartCaptions.SeriesTitles[2]"
@@ -52,6 +52,23 @@
                               AfterValueChanged="AfterOptionChanged">
         </ChartOptionsCheckbox>
     </ChartOptionsGroup>
+
+    <ChartOptionsGroup>
+        <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeChristmas"
+                              Id="includeChristmas" Label="Include Christmas"
+                              AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
+
+        <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeNewYear"
+                              Id="includeNewYear" Label="Include New Year"
+                              AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
+        
+        <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeNonSeasonal"
+                              Id="includeNonSeasonal" Label="Include non-seasonal"
+                              AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
+    </ChartOptionsGroup>
 </ChartOptions>
 
 @code {
@@ -59,19 +76,38 @@
 
     private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; set; } = SpecialsOnlyChartOptions.Defaults;
 
-    private EpisodesDataOptions DataOptions { get; } = new() { EpisodeFormatId = EpisodeFormats.Special };  // Specials only
+    private SpecialsOnlyDataOptions DataOptions { get; } = new()
+        {
+            AdjustForCurrentPopulation = false,
+            IncludeChristmas = true,
+            IncludeNewYear = true,
+            IncludeNonSeasonal = true
+        };
+
+    private EpisodesDataOptions EpisodeDataOptions => new()  // Rematch on access
+        {
+            EpisodeFormatIdFilter = EpisodeFormats.Special, // Specials only
+            CustomFilter = MatchesDateFilter
+        };
 
     private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
 
     protected override void OnInitialized()
     {
-        DataPoints = DataPointGenerator.Generate(DataOptions);
+        DataPoints = DataPointGenerator.Generate(EpisodeDataOptions);
     }
 
     private async Task AfterOptionChanged()
     {
-        DataPoints = DataPointGenerator.Generate(DataOptions);
+        DataPoints = DataPointGenerator.Generate(EpisodeDataOptions);
 
         await Chart.UpdateSeriesAsync();
+    }
+
+    public bool MatchesDateFilter(Episode episode)
+    {
+        return DataOptions.IncludeChristmas && episode.OriginalAirDate.IsChristmas() ||
+               DataOptions.IncludeNewYear && episode.OriginalAirDate.IsNewYear() ||
+               DataOptions.IncludeNonSeasonal && !episode.OriginalAirDate.IsSeasonal();
     }
 }

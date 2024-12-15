@@ -4,7 +4,9 @@ public class EpisodesDataOptions
 {
     public int? DoctorFilter { get; set; }
 
-    public int? EpisodeFormatId { get; set; }
+    public int? EpisodeFormatIdFilter { get; set; }
+
+    public Predicate<Episode>? CustomFilter { get; set; }
 
     public bool AdjustForCurrentPopulation { get; set; } = false;
 }
