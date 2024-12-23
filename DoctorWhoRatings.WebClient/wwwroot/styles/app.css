@@ -5,6 +5,9 @@ body {
     padding: 0;
     background-color: #1f2d50;
     color: #ffffff;
+    background-image: url(../images/background.webp);
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 a {
@@ -13,6 +16,10 @@ a {
 
 h1:focus {
     outline: none;
+}
+
+.text-shadow {
+    text-shadow: 0 0 4px #000;
 }
 
 .valid.modified:not([type=checkbox]) {

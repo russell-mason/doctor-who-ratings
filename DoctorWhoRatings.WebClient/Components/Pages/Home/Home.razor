@@ -4,19 +4,21 @@
 <PageTitle>Doctor Who Ratings</PageTitle>
 
 <main>
-    <header>
+    <header class="text-shadow">
         <span class="title-doctor-who">Doctor Who</span>
         <span class="title-ratings">RATINGS</span>
     </header>
 
     <nav>
-        <ul>
+        <ul class="nav-links">
             <li>
                 <ChartSelectionNavLink Url="charts/dashboard"
                                        IconUrl="images/dashboard.svg"
                                        Title="@DashboardCaptions.Title"
                                        Description="@DashboardCaptions.Description" />
             </li>
+        </ul>
+        <ul class="nav-links">
             <li>
                 <ChartSelectionNavLink Url="charts/timeline"
                                        IconUrl="images/timeline.svg"
@@ -29,6 +31,8 @@
                                        Title="@EpisodeGuideChartCaptions.Title"
                                        Description="@EpisodeGuideChartCaptions.Description" />
             </li>
+        </ul>
+        <ul class="nav-links">
             <li>
                 <ChartSelectionNavLink Url="charts/all-episodes"
                                        IconUrl="images/line-chart.svg"
@@ -89,6 +93,8 @@
                                        Title="@ByEraChartCaptions.Title"
                                        Description="@ByEraChartCaptions.Description" />
             </li>
+        </ul>
+        <ul class="nav-links">
             <li>
                 <ChartSelectionNavLink Url="charts/population"
                                        IconUrl="images/line-chart.svg"
@@ -102,5 +108,3 @@
         <a href="sources">Sources and methodology</a>
     </footer>
 </main>
-
-<div class="tardis-image"></div>

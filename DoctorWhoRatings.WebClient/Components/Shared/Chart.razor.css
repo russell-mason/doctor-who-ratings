@@ -1,8 +1,9 @@
-﻿.chart {
+﻿﻿.chart {
     position: relative;
     z-index: 1;
     height: 500px;
-    background: #f0f0f0;
+    background: #ffffffca;
+    backdrop-filter: blur(19px);
     color: #000000;
     border-radius: 5px;
     padding: 16px;

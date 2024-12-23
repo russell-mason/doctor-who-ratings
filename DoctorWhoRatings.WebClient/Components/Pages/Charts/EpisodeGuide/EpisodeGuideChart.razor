@@ -6,96 +6,84 @@
 <ChartHeading Title="@EpisodeGuideChartCaptions.Title"
               Description="@EpisodeGuideChartCaptions.Description" />
 
-<table>
-    <tbody>
-        @foreach (var doctorDataPoint in DataPoints)
+@foreach (var doctorDataPoint in DataPoints)
+{
+    <div id="doctor@(doctorDataPoint.Doctor)" class="doctor">
+        <div class="doctor-number">@Formatter.FormatPosition(doctorDataPoint.Doctor) doctor</div>
+        <div class="actor">@doctorDataPoint.Actor</div>
+
+        @foreach (var episodeDataPoint in doctorDataPoint.Episodes)
         {
-            <tr>
-                <td colspan="9">
-                    <div class="doctor no@(doctorDataPoint.Doctor)">@Formatter.FormatPosition(doctorDataPoint.Doctor) doctor</div>
-                    <div class="actor">@doctorDataPoint.Actor</div>
-                </td>
-            </tr>
+            var dataPointMetadata = episodeDataPoint.Metadata;
 
-            @foreach (var episodeDataPoint in doctorDataPoint.Episodes)
+            if (dataPointMetadata.ShowSeasonTitle)
             {
-                var dataPointMetadata = episodeDataPoint.Metadata;
+                <div class="season">@dataPointMetadata.SeasonTitle</div>
+            }
 
-                if (dataPointMetadata.ShowSeasonTitle)
-                {
-                    <tr>
-                        <td colspan="9">
-                            <div class="season">@dataPointMetadata.SeasonTitle</div>
-                        </td>
-                    </tr>
-                }
+            @if (dataPointMetadata.ShowStoryTitle)
+            {
+                <div class="story @dataPointMetadata.ConsecutiveSeasonStoryIndicator">
+                    <div class="story-title">@episodeDataPoint.StoryTitle</div>
 
-                if (dataPointMetadata.ShowStoryTitle)
-                {
-                    <tr>
-                        <td>
-                            <div class="story @dataPointMetadata.ConsecutiveSeasonStoryIndicator">@episodeDataPoint.StoryTitle</div>
-                        </td>
-                        <td>
-                            <div class="story-number">STORY @episodeDataPoint.Story</div>
-                        </td>
-                        <td>
-                            @if (dataPointMetadata.HasStoryWiki)
-                            {
+                    <div class="story-numbers">
+                        <div class="story-number">STORY @episodeDataPoint.Story</div>
+
+                        @if (dataPointMetadata.HasStoryWiki)
+                        {
+                            <div class="story-wiki">
                                 <a href="@episodeDataPoint.WikiUrl" target="_blank" title="Wikipedia - @episodeDataPoint.StoryTitle">
                                     <img class="wiki" src="images/wikipedia.svg" alt="Wikipedia" />
                                 </a>
-                            }
-                        </td>
-                        <td colspan="6"></td>
-                    </tr>
-                }
-
-                <tr>
-                    <td>
-                        <div class="episode @dataPointMetadata.EpisodeIndentIndicator">@dataPointMetadata.EpisodeTitle</div>
-                    </td>
-                    <td>
-                        @if (dataPointMetadata.ShowStoryNumber)
-                        {
-                            <div class="story-number">STORY @episodeDataPoint.Story</div>
+                            </div>
                         }
-                    </td>
-                    <td></td>
-                    <td>
-                        <div class="episode-number">EPISODE @episodeDataPoint.EpisodeNumber</div>
-                    </td>
-                    <td>
-                        @if (dataPointMetadata.HasEpisodeWiki)
-                        {
+                    </div>
+                </div>
+            }
+
+            <div class="episode @dataPointMetadata.EpisodeIndentIndicator">
+                <div class="episode-title">@dataPointMetadata.EpisodeTitle</div>
+                
+                <div class="episode-numbers">
+                    @if (dataPointMetadata.ShowStoryNumber)
+                    {
+                        <div class="episode-story-number">STORY @episodeDataPoint.Story</div>
+                    }
+
+                    <div class="episode-number">EPISODE @episodeDataPoint.EpisodeNumber</div>
+
+                    @if (dataPointMetadata.HasEpisodeWiki)
+                    {
+                        <div class="episode-wiki">
                             <a href="@episodeDataPoint.WikiUrl" target="_blank" title="Wikipedia - @episodeDataPoint.StoryTitle">
                                 <img class="wiki" src="images/wikipedia.svg" alt="Wikipedia" />
                             </a>
-                        }
-                    </td>
-                    <td>
-                        <div class="date">@Formatter.FormatDate(episodeDataPoint.OriginalAirDate)</div>
-                    </td>
-                    <td>
-                        <div class="rating">@Formatter.FormatNumber(episodeDataPoint.OvernightRatings) <span class="millions">million overnight</span></div>
-                    </td>
-                    <td>
-                        @if (episodeDataPoint.ConsolidatedRatings != null)
-                        {
-                            <div class="rating">@Formatter.FormatNumber(episodeDataPoint.ConsolidatedRatings) <span class="millions">million consolidated</span></div>
-                        }
-                    </td>
-                    <td>
-                        @if (episodeDataPoint.ExtendedRatings != null)
-                        {
-                            <div class="rating">@Formatter.FormatNumber(episodeDataPoint.ExtendedRatings) <span class="millions">million extended</span></div>
-                        }
-                    </td>
-                </tr>
-            }
+                        </div>
+                    }
+                </div>
+
+                <div class="date">@Formatter.FormatDate(episodeDataPoint.OriginalAirDate)</div>
+                
+                <div class="ratings">
+                    <div class="value">@Formatter.FormatNumber(episodeDataPoint.OvernightRatings)</div>
+                    <div class="millions">million overnight</div>
+                    
+                    @if (episodeDataPoint.ConsolidatedRatings != null)
+                    {
+                        <div class="value">@Formatter.FormatNumber(episodeDataPoint.ConsolidatedRatings)</div>
+                        <div class="millions">million consolidated</div>
+                    }
+
+                    @if (episodeDataPoint.ExtendedRatings != null)
+                    {
+                        <div class="value">@Formatter.FormatNumber(episodeDataPoint.ExtendedRatings)</div>
+                        <div class="millions">million extended</div>
+                    }
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+}
 
 @code {
     private List<EpisodeGuideDoctorDataPoint> DataPoints { get; set; } = default!;

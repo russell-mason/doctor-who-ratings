@@ -83,10 +83,11 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
 
         var showStoryNumber = currentEpisode.PartTitle == null && currentEpisode.PartInStory == 1;
 
-        var hasStoryWiki = showStoryTitle && !string.IsNullOrWhiteSpace(currentEpisode.WikiUrl);
+        var hasStoryWiki = currentEpisode.WikiFormatId == WikiFormats.Story && 
+                           !string.IsNullOrWhiteSpace(currentEpisode.WikiUrl);
 
-        var hasEpisodeWiki = currentEpisode.PartTitle == null && 
-                             !showStoryTitle && !string.IsNullOrWhiteSpace(currentEpisode.WikiUrl);
+        var hasEpisodeWiki = currentEpisode.WikiFormatId == WikiFormats.Episode &&
+                             !string.IsNullOrWhiteSpace(currentEpisode.WikiUrl);
 
         var episodeIndentIndicator = currentEpisode.PartTitle != null ? "indent" : string.Empty;
 

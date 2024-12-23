@@ -1,12 +1,12 @@
 ﻿.chart-link {
     border: 2px solid #909090;
-    border-radius: 5px;
+    border-radius: 6px;
     color: #ffffff;
-    margin-top: 16px;
+    backdrop-filter: blur(19px);
 }
 
     .chart-link:hover {
-        filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
+        box-shadow: 0 8px 8px #00000066;
     }
 
         .chart-link:hover .inner-text {
@@ -15,9 +15,9 @@
         }
 
 .chart-link-header {
-    padding: 8px 12px;
-    background-color: #1A2A45;
-    border-radius: 3px 3px 0 0;
+    padding: 9px 12px;
+    background-color: #1A2A4580;
+    border-radius: 4px 4px 0 0;
 }
 
 .chart-link-icon {
@@ -34,10 +34,10 @@
 }
 
 .chart-link-description {
-    background-color: #243A64;
+    background-color: #243A6480;
     font-size: 0.85rem;
-    border-radius: 0 0 3px 3px;
-    padding: 5px 12px 6px 12px;
+    border-radius: 0 0 4px 4px;
+    padding: 6px 12px 7px 12px;
 }
 
 .inner-text {

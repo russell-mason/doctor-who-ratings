@@ -1,5 +1,6 @@
 ﻿header {
-    margin-top: 24px;
+    margin-top: 20px;
+    margin-bottom: 36px;
 }
 
 main {
@@ -21,33 +22,38 @@ main {
     font-family: segoe-light, sans-serif;
 }
 
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    list-style-type: none;
+    padding: 0;
+}
+
+    .nav-links li {
+        box-sizing: border-box;
+    }
+
 nav ul {
-    width: 520px;
     list-style: none;
-    margin-top: 48px;
+    margin-top: 32px;
     padding-left: 6px;
 }
 
+    nav ul li {
+        width: calc(50% - 14px);
+        min-width: 540px;
+    }
+
 footer {
-    margin: 96px 0 0 8px;
+    margin: 32px 0 0 8px;
 }
 
     footer a {
         color: #ffffff;
+        text-shadow: 0 0 4px #000;
     }
 
         footer a:hover {
             text-decoration: underline;
         }
-
-.tardis-image {
-    position: absolute;
-    right: 0;
-    bottom: 34px;
-    height: 440px;
-    width: 440px;
-    background-image: url('images/tardis.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: bottom right;
-}

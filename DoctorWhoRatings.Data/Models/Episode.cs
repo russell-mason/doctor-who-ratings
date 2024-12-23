@@ -106,6 +106,10 @@ public record Episode
 
     public string? Note { get; init; }
 
+    public int? WikiFormatId { get; set; }
+
+    public string? WikiFormatDescription { get; init; }
+
     public string? WikiUrl { get; init; }
 }
 

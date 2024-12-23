@@ -1,5 +1,5 @@
 div.apexcharts-tooltip {
-    filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
+    box-shadow: 0 8px 8px #00000066;
 }
 
     div.apexcharts-tooltip.apexcharts-theme-light {
