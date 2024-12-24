@@ -42,7 +42,7 @@ nav ul {
 
     nav ul li {
         width: calc(50% - 14px);
-        min-width: 540px;
+        min-width: 518px;
     }
 
 footer {
@@ -51,7 +51,6 @@ footer {
 
     footer a {
         color: #ffffff;
-        text-shadow: 0 0 4px #000;
     }
 
         footer a:hover {

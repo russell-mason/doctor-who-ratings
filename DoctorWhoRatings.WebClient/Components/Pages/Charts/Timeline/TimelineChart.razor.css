@@ -2,6 +2,7 @@
     background: #ffffffca;
     backdrop-filter: blur(19px);
     box-shadow: 0 8px 8px #00000066;
+    border: 1px solid #ffffff;
     border-radius: 6px;
     padding: 36px 0 54px 0;
     margin: 0 auto;

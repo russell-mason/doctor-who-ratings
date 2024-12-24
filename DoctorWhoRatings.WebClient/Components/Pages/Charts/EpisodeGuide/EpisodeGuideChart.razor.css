@@ -3,6 +3,7 @@
     backdrop-filter: blur(19px);
     color: #505050;
     box-shadow: 0 8px 8px #00000066;
+    border: 1px solid #ffffff;
     border-radius: 6px;
     min-width: fit-content;
     margin: 0 auto 32px auto;
@@ -141,7 +142,7 @@
         }
 }
 
-@media (min-width: 576px) and (max-width: 1199.98px) {
+@media (min-width: 576px) and (max-width: 1179.98px) {
     .doctor {
         min-width: fit-content;
         max-width: fit-content;
@@ -215,11 +216,11 @@
         }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1180px) {
     .doctor {
         min-width: fit-content;
         max-width: fit-content;
-        padding: 32px 24px;
+        padding: 32px 16px;
     }
 
     .season {

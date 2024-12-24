@@ -3,6 +3,7 @@
     z-index: 1;
     background-color: #ffffffca;
     backdrop-filter: blur(19px);
+    border: 1px solid #ffffff;
     border-radius: 6px;
     padding: 16px;
     box-shadow: 0 8px 8px #00000066;
@@ -12,6 +13,7 @@
 
     .card.primary {
         background-color: #ffb080ca;
+        border-color: #ffb080ca;
     }
 
 .doctors-group {
