@@ -4,9 +4,8 @@
 
 .actor {
     text-transform: uppercase;
-    font-size: 0.8rem;
     font-family: segoe-bold, sans-serif;
-    font-weight: bold;
+    font-size: 0.8rem;
     color: #507dd7;
 }
 
@@ -20,14 +19,14 @@
 
 .high-low {
     text-transform: uppercase;
-    font-size: 0.7rem;
     font-family: segoe-light, sans-serif;
+    font-size: 0.7rem;
     margin: 10px 0 3px 0;
 }
 
 .story {
+    font-family: segoe-bold, sans-serif;
     font-size: 1.3rem;
-    font-weight: bold;
     color: #505050;
     margin-top: 4px;
 }
@@ -41,6 +40,6 @@
 }
 
 .highlighted-value {
-    font-weight: bold;
+    font-family: segoe-bold, sans-serif;
     color: #505050;
 }

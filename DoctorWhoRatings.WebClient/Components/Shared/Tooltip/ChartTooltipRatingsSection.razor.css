@@ -1,7 +1,7 @@
 ﻿h2 {
     text-transform: uppercase;
-    font-size: 0.7rem;
     font-family: segoe-light, sans-serif;
+    font-size: 0.7rem;
     font-weight: normal;
     margin: 0;
     padding: 13px 0 0 16px;
@@ -20,6 +20,6 @@
 }
 
 .highlighted-value {
-    font-weight: bold;
+    font-family: segoe-bold, sans-serif;
     color: #505050;
 }

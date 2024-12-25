@@ -3,7 +3,7 @@
 }
 
 .highlighted-value {
-    font-weight: bold;
+    font-family: segoe-bold, sans-serif;
     color: #505050;
 }
 

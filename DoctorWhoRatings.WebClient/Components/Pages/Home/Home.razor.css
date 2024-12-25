@@ -11,15 +11,15 @@ main {
 
 .title-doctor-who {
     padding-right: 0.8rem;
+    font-family: segoe-bold, sans-serif;
     font-size: 5rem;
-    font-weight: bold;
 }
 
 .title-ratings {
     top: 0.07rem;
     color: white;
-    font-size: 3.7rem;
     font-family: segoe-light, sans-serif;
+    font-size: 3.7rem;
 }
 
 .nav-links {

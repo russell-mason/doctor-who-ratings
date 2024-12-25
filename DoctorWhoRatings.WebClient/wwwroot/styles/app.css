@@ -7,7 +7,7 @@ body {
     color: #ffffff;
 }
 
-#background {
+.background {
     z-index: -1;
     position: fixed;
     top: 0;
@@ -15,7 +15,7 @@ body {
     height: 100%;
 }
 
-#background2 {
+.background-image {
     width: 100%;
     height: 100%;
     background-image: url(../images/background.webp);
@@ -31,7 +31,12 @@ h1:focus {
 }
 
 .text-shadow {
-    filter: drop-shadow(0 0 6px #000);
+    text-shadow: 0 0 6px #000;
+}
+
+strong {
+    font-family: segoe-bold, sans-serif;
+    font-weight: normal;
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -62,15 +67,18 @@ h1:focus {
 
 @font-face {
     font-family: segoe-regular;
-    src: url("../fonts/segoeui.woff");
+    src: url("../fonts/segoeui.woff") format('woff');
+    font-display: block;
 }
 
 @font-face {
     font-family: segoe-light;
-    src: url("../fonts/segoeuil.woff");
+    src: url("../fonts/segoeuil.woff") format('woff');
+    font-display: block;
 }
 
 @font-face {
     font-family: segoe-bold;
-    src: url("../fonts/segoeuib.woff");
+    src: url("../fonts/segoeuib.woff") format('woff');
+    font-display: block;
 }

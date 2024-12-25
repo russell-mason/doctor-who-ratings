@@ -19,7 +19,6 @@
 .actor {
     font-family: segoe-bold, sans-serif;
     font-size: 1.3rem;
-    font-weight: bold;
     text-transform: uppercase;
     color: #507dd7;
     margin-bottom: -4px;
@@ -61,7 +60,7 @@
 }
 
     .ratings .value {
-        font-weight: bold;
+        font-family: segoe-bold, sans-serif;
         justify-self: end;
     }
 
