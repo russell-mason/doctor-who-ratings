@@ -5,12 +5,16 @@ public class AverageByDoctorDataPointGenerator(IDoctorWhoDataProvider dataProvid
     public List<AverageByDoctorDataPoint> Generate(AverageByDoctorDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
+                                     .Where(episode => IsFormatIncluded(episode, options))
                                      .GroupBy(episode => episode.Doctor)
                                      .Select(group => CreateDataPoint(group, options))
                                      .ToList();
 
         return dataPoints;
     }
+
+    private static bool IsFormatIncluded(Episode episode, AverageByDoctorDataOptions options) =>
+        options.IncludeSpecials || episode.EpisodeFormatId != EpisodeFormats.Special;
 
     private static AverageByDoctorDataPoint CreateDataPoint(IGrouping<int, Episode> group, AverageByDoctorDataOptions options)
     {

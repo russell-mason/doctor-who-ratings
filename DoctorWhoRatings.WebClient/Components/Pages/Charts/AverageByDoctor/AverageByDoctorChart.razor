@@ -64,6 +64,13 @@
     </ChartOptionsGroup>
     
     <ChartOptionsGroup>
+        <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeSpecials"
+                              Id="specials" Label="Include specials"
+                              AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
+    </ChartOptionsGroup>
+    
+    <ChartOptionsGroup>
         <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
                               Id="population" Label="Adjust relative to current population"
                               AfterValueChanged="AfterOptionChanged">
