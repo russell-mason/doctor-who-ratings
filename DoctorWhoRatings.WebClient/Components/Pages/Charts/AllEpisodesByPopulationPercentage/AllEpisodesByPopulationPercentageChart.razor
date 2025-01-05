@@ -1,0 +1,54 @@
+﻿@page "/charts/all-episodes-by-population-percentage"
+@inject IEpisodesDataPointGenerator DataPointGenerator
+
+<PageTitle>@AllEpisodesByPopulationPercentageChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@AllEpisodesByPopulationPercentageChartCaptions.Title"
+              Description="@AllEpisodesByPopulationPercentageChartCaptions.Description" />
+
+<Chart>
+    <ApexChart @ref="Chart"
+               TItem="EpisodeDataPoint"
+               Title="@AllEpisodesByPopulationPercentageChartCaptions.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
+
+        <ApexPointTooltip>
+            <AllEpisodesByPopulationPercentageTooltip DataPoint="@context.DataPoint.Items.First()"
+                                                      SeriesIndex="@context.SeriesIndex" />
+        </ApexPointTooltip>
+
+        <ChildContent>
+            <ApexPointSeries TItem="EpisodeDataPoint"
+                             Items="DataPoints"
+                             Name="@AllEpisodesByPopulationPercentageChartCaptions.SeriesTitles[0]"
+                             SeriesType="SeriesType.Line"
+                             XValue="dataPoint => dataPoint.Id"
+                             YValue="dataPoint => dataPoint.PercentageOfPopulation" />
+        </ChildContent>
+    </ApexChart>
+</Chart>
+
+@code {
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesByPopulationPercentageChartOptions.Defaults;
+
+    private EpisodesDataOptions DataOptions { get; } = new();
+
+    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Chart.AddCustomAnnotations(AllEpisodesByPopulationPercentageChartOptions.CreateAnnotations(DataPoints));
+        }
+    }
+}

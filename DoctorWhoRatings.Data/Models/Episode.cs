@@ -95,6 +95,11 @@ public record Episode
     public decimal? PopulationAdjustedExtendedExcessRatings => PopulationAdjustedExtendedRatings - (PopulationAdjustedConsolidatedRatings ?? PopulationAdjustedOvernightRatings);
 
     /// <summary>
+    /// Ratings as a percentage of the UK population at the time of airing.
+    /// </summary>
+    public decimal? PercentageOfPopulation => ((OvernightRatings * 1000000) / Population) * 100;
+
+    /// <summary>
     /// UK population at the time of airing.
     /// </summary>
     public int Population { get; init; }

@@ -37,6 +37,10 @@ public class EpisodeDataPoint
     public decimal? PopulationAdjustedConsolidatedExcessRatings { get; init; }
 
     public decimal? PopulationAdjustedExtendedExcessRatings { get; init; }
-    
+
+    public int Population { get; init; }
+
+    public decimal? PercentageOfPopulation { get; init; }
+
     public string? Note { get; init; }
 }

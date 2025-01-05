@@ -1,0 +1,26 @@
+﻿<div class="ratings-section">
+    <ChartTooltipIconSection IconUrl="images/people.svg"
+                             IconAlt="Population %">
+        <div class="ratings">
+            <div class="rating">
+                <span class="highlighted-value">@Formatter.FormatNumber(Population / 1000000m)</span>
+                <span>million people</span>
+            </div>
+
+            @if (PercentageOfPopulation != null)
+            {
+                <div class="rating">
+                    <span class="highlighted-value">@Formatter.FormatNumber(PercentageOfPopulation)</span><span>% of the population</span>
+                </div>
+            }
+        </div>
+    </ChartTooltipIconSection>
+</div>
+
+@code {
+    [Parameter]
+    public int Population { get; set; }
+
+    [Parameter]
+    public decimal? PercentageOfPopulation { get; set; }
+}

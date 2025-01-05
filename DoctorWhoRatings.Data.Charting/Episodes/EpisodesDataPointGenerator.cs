@@ -41,6 +41,8 @@ public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
             PopulationAdjustedExtendedRatings = episode.PopulationAdjustedExtendedRatings,
             PopulationAdjustedConsolidatedExcessRatings = episode.PopulationAdjustedConsolidatedExcessRatings,
             PopulationAdjustedExtendedExcessRatings = episode.PopulationAdjustedExtendedExcessRatings,
+            Population = episode.Population,
+            PercentageOfPopulation = episode.PercentageOfPopulation,
             Note = episode.Note
         };
 

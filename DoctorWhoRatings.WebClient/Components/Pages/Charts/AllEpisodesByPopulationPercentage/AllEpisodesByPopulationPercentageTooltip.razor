@@ -1,0 +1,26 @@
+﻿<ChartTooltip>
+    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                               StoryTitle="@DataPoint.StoryTitle"
+                               PartTitle="@DataPoint.PartTitle"
+                               SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
+                               Season="@DataPoint.Season"
+                               OriginalAirDate="@DataPoint.OriginalAirDate" />
+
+    <ChartTooltipBreak />
+
+    <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings" />
+
+    <ChartTooltipBreak />
+
+    <ChartTooltipPercentageOfPopulationSection Population="@DataPoint.Population"
+                                               PercentageOfPopulation="@DataPoint.PercentageOfPopulation" />
+
+</ChartTooltip>
+
+@code {
+    [Parameter]
+    public required EpisodeDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required int SeriesIndex { get; set; }
+}
