@@ -5,7 +5,7 @@
             <div class="actor">@Actor</div>
         }
 
-        @if (EpisodeCount != null)
+        @if (EpisodeCountLocation == EpisodeCountLocation.AfterActor && EpisodeCount != null)
         {
             var episodeText = EpisodeCount == 1 ? "episode" : "episodes";
             
@@ -34,6 +34,16 @@
         @if (StoryTitle != null)
         {
             <div class="story">@StoryTitle</div>
+        }
+        
+        @if (EpisodeCountLocation == EpisodeCountLocation.AfterStoryTitle && EpisodeCount != null)
+        {
+            var episodeText = EpisodeCount == 1 ? "episode" : "episodes";
+            
+            <div class="episodes">
+                <span class="highlighted-value">@EpisodeCount</span>
+                <span>@episodeText</span>
+            </div>
         }
 
         @if (PartTitle != null)
@@ -78,6 +88,9 @@
 
     [Parameter]
     public int? EpisodeCount { get; set; }
+
+    [Parameter]
+    public EpisodeCountLocation EpisodeCountLocation { get; set; } = EpisodeCountLocation.AfterActor;
 
     [Parameter]
     public decimal? TotalEpisodeHours { get; set; }

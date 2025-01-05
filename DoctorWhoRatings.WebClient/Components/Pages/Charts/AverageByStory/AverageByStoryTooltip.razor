@@ -1,0 +1,36 @@
+﻿<ChartTooltip>
+    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                               EpisodeCount="@DataPoint.EpisodeCount"
+                               EpisodeCountLocation="@EpisodeCountLocation.AfterStoryTitle"
+                               StoryTitle="@DataPoint.StoryTitle"
+                               Season="@DataPoint.Season"
+                               OriginalAirDate="@DataPoint.OriginalAirDate" />
+
+    <ChartTooltipBreak />
+
+    <ChartTooltipIconSection IconUrl="images/calculator.svg"
+                             IconAlt="Calculation method"
+                             Title="Mean" />
+    <ChartTooltipBreak />
+
+    <ChartTooltipRatingsSection OvernightRatings="@DataPoint.CalculatedOvernightRatings" />
+</ChartTooltip>
+
+@if (ShowPopulationAdjusted)
+{
+    <ChartSecondaryTooltip>
+        <ChartTooltipRatingsSection Title="Population adjusted"
+                                    OvernightRatings="@DataPoint.CalculatedPopulationAdjustedOvernightRatings" />
+    </ChartSecondaryTooltip>
+}
+
+@code {
+    [Parameter]
+    public required AverageByStoryDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required int SeriesIndex { get; set; }
+
+    [Parameter]
+    public bool ShowPopulationAdjusted { get; set; }
+}

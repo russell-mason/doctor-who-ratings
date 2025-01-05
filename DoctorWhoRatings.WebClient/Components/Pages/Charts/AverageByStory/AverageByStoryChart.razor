@@ -1,0 +1,69 @@
+﻿@page "/charts/average-by-story"
+@inject IAverageByStoryDataPointGenerator DataPointGenerator
+
+<PageTitle>@AverageByStoryChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@AverageByStoryChartCaptions.Title"
+              Description="@(AverageByStoryChartCaptions.Description + " Only shows stories from the Classic era which have multiple episodes.")" />
+
+<Chart>
+    <ApexChart @ref="Chart"
+               TItem="AverageByStoryDataPoint"
+               Title="@AverageByStoryChartCaptions.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")">
+
+        <ApexPointTooltip>
+            <AverageByStoryTooltip DataPoint="@context.DataPoint.Items.First()"
+                                   SeriesIndex="@context.SeriesIndex"
+                                   ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation"/>
+        </ApexPointTooltip>
+
+        <ChildContent>
+            <ApexPointSeries TItem="AverageByStoryDataPoint"
+                             Items="DataPoints"
+                             Name="@AverageByStoryChartCaptions.SeriesTitles[0]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => dataPoint.Id"
+                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />
+        </ChildContent>
+    </ApexChart>
+</Chart>
+
+<ChartOptions>
+    <ChartOptionsGroup>
+        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                              Id="population" Label="Adjust relative to current population"
+                              AfterValueChanged="AfterOptionChanged">
+        </ChartOptionsCheckbox>
+    </ChartOptionsGroup>
+</ChartOptions>
+
+@code {
+    private ApexChart<AverageByStoryDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<AverageByStoryDataPoint> ChartOptions { get; } = AverageByStoryChartOptions.Defaults;
+
+    private AverageByStoryDataOptions DataOptions { get; } = new();
+
+    private List<AverageByStoryDataPoint> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        DataPoints = DataPointGenerator.Generate();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Chart.AddCustomAnnotations(AverageByStoryChartOptions.CreateAnnotations(DataPoints));
+        }
+    }
+
+    private async Task AfterOptionChanged()
+    {
+        await Chart.UpdateSeriesAsync();
+    }
+}
