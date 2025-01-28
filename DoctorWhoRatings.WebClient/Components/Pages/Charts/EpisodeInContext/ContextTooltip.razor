@@ -1,0 +1,33 @@
+﻿<ChartTooltip>
+    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                               StoryTitle="@DataPoint.StoryTitle"
+                               PartTitle="@DataPoint.PartTitle"
+                               SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
+                               Season="@DataPoint.Season"
+                               OriginalAirDate="@DataPoint.OriginalAirDate" />
+
+    <ChartTooltipBreak />
+
+    <ChartTooltipRatingsSection TargetRatings="@TargetExcessRatings"
+                                OvernightRatings="@DataPoint.OvernightRatings"
+                                ConsolidatedRatings="@DataPoint.ConsolidatedRatings"
+                                ExtendedRatings="@DataPoint.ExtendedRatings" />
+</ChartTooltip>
+
+@code {
+    private const int ConsolidatedSeriesIndex = 1;
+    private const int ExtendedSeriesIndex = 2;
+
+    [Parameter]
+    public required EpisodeDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required int SeriesIndex { get; set; }
+
+    private decimal? TargetExcessRatings => SeriesIndex switch
+    {
+        ConsolidatedSeriesIndex => DataPoint.ConsolidatedExcessRatings,
+        ExtendedSeriesIndex => DataPoint.ExtendedExcessRatings,
+        _ => null
+    };
+}

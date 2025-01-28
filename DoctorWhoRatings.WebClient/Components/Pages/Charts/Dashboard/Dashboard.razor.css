@@ -56,8 +56,8 @@
     flex: 100%;
 }
 
-.column-three-quarters {
-    flex: 75%;
+.column-four-fifths {
+    flex: 80%;
 }
 
 .column-episodes-half {
@@ -68,8 +68,8 @@
     flex: 33.33%;
 }
 
-.column-quarter {
-    flex: 25%;
+.column-fifth {
+    flex: 20%;
 }
 
 h1 {
@@ -101,15 +101,15 @@ h1 {
         text-align: right;
     }
 
-    .description.left {
-        text-align: left;
-    }
+.description.left {
+    text-align: left;
+}
 
-    .description {
-        font-family: segoe-light;
-        font-size: 1rem;
-        text-transform: uppercase;
-    }
+.description {
+    font-family: segoe-light;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
 
 .word {
     margin-right: 0.8rem;

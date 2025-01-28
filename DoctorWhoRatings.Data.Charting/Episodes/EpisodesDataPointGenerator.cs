@@ -4,17 +4,24 @@ public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
 {
     public List<EpisodeDataPoint> Generate(EpisodesDataOptions options)
     {
-        var dataPoints = dataProvider.DoctorWhoData.Episodes
-                                     .Where(episode => MatchesFilter(episode, options))
-                                     .Select(CreateDataPoint)
-                                     .ToList();
+        var dataPoints = Filter(options).Select(CreateDataPoint).ToList();
 
         return dataPoints;
     }
 
+    public EpisodeDataPoint Generate(Episode episode) => CreateDataPoint(episode);
+
+    public List<Episode> Filter(EpisodesDataOptions options) =>
+        dataProvider.DoctorWhoData.Episodes.Where(episode => MatchesFilter(episode, options)).ToList();
+
     private static bool MatchesFilter(Episode episode, EpisodesDataOptions options)
     {
-        return (options.DoctorFilter == null || episode.Doctor == options.DoctorFilter) &&
+        return (options.IdFilter == null || episode.Id == options.IdFilter) &&
+               (options.SlugFilter == null || episode.Slug == options.SlugFilter) &&
+               (options.EraId == null || episode.EraId == options.EraId) &&
+               (options.DoctorFilter == null || episode.Doctor == options.DoctorFilter) &&
+               (options.SeasonFilter == null || episode.Season == options.SeasonFilter) &&
+               (options.StoryFilter == null || episode.Story == options.StoryFilter) &&
                (options.EpisodeFormatIdFilter == null || episode.EpisodeFormatId == options.EpisodeFormatIdFilter) &&
                (options.CustomFilter == null || options.CustomFilter(episode));
     }
@@ -24,13 +31,22 @@ public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
         var dataPoint = new EpisodeDataPoint
         {
             Id = episode.Id,
+            EraDescription = episode.EraDescription,
             Doctor = episode.Doctor,
             Actor = episode.Actor,
             Season = episode.Season,
             SeasonFormatDescription = episode.SeasonFormatDescription,
+            SeasonDescription = episode.SeasonDescription,
+            Story = episode.Story,
+            StoryInSeason = episode.StoryInSeason,
             StoryTitle = episode.StoryTitle,
+            PartInStory = episode.PartInStory,
             PartTitle = episode.PartTitle,
+            EpisodeInSeason = episode.EpisodeInSeason,
+            FullTitle = episode.FullTitle,
+            Slug = episode.Slug,
             OriginalAirDate = episode.OriginalAirDate,
+            Runtime = episode.Runtime,
             OvernightRatings = episode.OvernightRatings,
             ConsolidatedRatings = episode.ConsolidatedRatings,
             ConsolidatedExcessRatings = episode.ConsolidatedExcessRatings,
@@ -43,7 +59,8 @@ public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
             PopulationAdjustedExtendedExcessRatings = episode.PopulationAdjustedExtendedExcessRatings,
             Population = episode.Population,
             PercentageOfPopulation = episode.PercentageOfPopulation,
-            Note = episode.Note
+            Note = episode.Note,
+            WikiUrl = episode.WikiUrl
         };
 
         return dataPoint;

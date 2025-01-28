@@ -34,7 +34,7 @@ public static class AllEpisodesByDoctorChartOptions
                     }
                 }
             ],
-            Chart =
+            Chart = new Chart
             {
                 Stacked = true
             },
@@ -47,11 +47,11 @@ public static class AllEpisodesByDoctorChartOptions
     public static Annotations CreateAnnotations(List<EpisodeDataPoint> dataPoints)
     {
         var xAxis = new List<(int id, string season)>();
-        
+
         // Can't be grouped because the same actor may have multiple specials at different points and 
         // Specials don't have a season
 
-        for (var index = 0 ; index < dataPoints.Count; index++)
+        for (var index = 0; index < dataPoints.Count; index++)
         {
             // Look back and ignore if it's the same as the last
             // Look forward only to determine if "Special" should be pluralised

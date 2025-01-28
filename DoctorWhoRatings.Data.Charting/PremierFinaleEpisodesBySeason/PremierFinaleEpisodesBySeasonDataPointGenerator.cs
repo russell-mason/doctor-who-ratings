@@ -13,12 +13,12 @@ public class PremierFinaleEpisodesBySeasonDataPointGenerator(IDoctorWhoDataProvi
         return dataPoints;
     }
 
-    private static (string, List<PremierFinaleEpisodeBySeasonDataPoint>) 
+    private static (string, List<PremierFinaleEpisodeBySeasonDataPoint>)
         CreateDataPoints(IGrouping<string, Episode> group, PremierFinaleEpisodesBySeasonDataOptions options)
     {
         var premierDataPoint = CreateDataPoint(true, group.First(), group.Count(), options);
         var finaleDataPoint = CreateDataPoint(false, group.Last(), group.Count(), options);
-        
+
         List<PremierFinaleEpisodeBySeasonDataPoint> dataPoints = [premierDataPoint, finaleDataPoint];
 
         return (premierDataPoint.SeasonDescription, dataPoints);
@@ -40,6 +40,7 @@ public class PremierFinaleEpisodesBySeasonDataPointGenerator(IDoctorWhoDataProvi
             SeasonDescription = episode.SeasonDescription,
             StoryTitle = episode.StoryTitle,
             StoryPartTitle = episode.PartTitle,
+            Slug = episode.Slug,
             OvernightRatings = episode.OvernightRatings,
             ConsolidatedRatings = episode.ConsolidatedRatings,
             ConsolidatedExcessRatings = episode.ConsolidatedExcessRatings,

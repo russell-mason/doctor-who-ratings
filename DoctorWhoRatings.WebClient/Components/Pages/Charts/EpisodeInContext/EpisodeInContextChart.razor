@@ -1,0 +1,154 @@
+﻿@page "/charts/episodes/{slug}"
+@layout CloseLayout
+@inject NavigationManager NavigationManager
+@inject IEpisodeInContextDataPointGenerator DataPointGenerator
+
+<PageTitle>@DataPoint.Episode.FullTitle - @Application.Name</PageTitle>
+
+<ChartHeading Title="@EpisodeInContextChartCaptions.Title"
+              Description="@EpisodeInContextChartCaptions.Description" />
+
+<div class="card">
+    <div class="story">
+        @DataPoint.Episode.FullTitle
+    </div>
+
+    @if (DataPoint.InStoryContext?.EpisodeCount > 1)
+    {
+        <div class="part-number">
+            Part @DataPoint.Episode.PartInStory of @DataPoint.InStoryContext?.EpisodeCount
+        </div>
+    }
+
+    <div class="doctor-number">
+        @Formatter.FormatPosition(DataPoint.Episode.Doctor) doctor
+    </div>
+
+    <div class="actor">
+        @DataPoint.Episode.Actor
+    </div>
+
+    <div class="season-block">
+        <div class="season">
+            @DataPoint.Episode.SeasonDescription
+        </div>
+
+        @if (@DataPoint.Episode.StoryInSeason != null)
+        {
+            <div class="story-number">
+                <span>Story @DataPoint.Episode.StoryInSeason</span>
+
+                @if (DataPoint.InSeasonContext?.StoryCount > 1)
+                {
+                    <span> of @DataPoint.InSeasonContext.StoryCount</span>
+                }
+            </div>
+        }
+
+        @if (@DataPoint.Episode.EpisodeInSeason != null && DataPoint.InSeasonContext != null)
+        {
+            <div class="episode-number">
+                Episode @DataPoint.Episode.EpisodeInSeason of @DataPoint.InSeasonContext.EpisodeCount
+            </div>
+        }
+    </div>
+
+    <div class="block">
+        Runtime of <span class="highlighted-value">@DataPoint.Episode.Runtime</span> minutes
+    </div>
+
+    <div class="block">
+        Broadcast on <span class="highlighted-value">@Formatter.FormatDate(DataPoint.Episode.OriginalAirDate)</span>
+    </div>
+
+    @if (DataPoint.Episode.OvernightRatings != null)
+    {
+        <div class="block">
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.OvernightRatings)</span> million viewers overnight
+        </div>
+    }
+
+    @if (DataPoint.Episode.ConsolidatedRatings != null)
+    {
+        <div class="block">
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.ConsolidatedRatings)</span> million viewers after seven days
+        </div>
+    }
+
+    @if (DataPoint.Episode.ExtendedRatings != null)
+    {
+        <div class="block">
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.ExtendedRatings)</span> million viewers after seven days on all devices
+        </div>
+    }
+
+    <div class="block">
+        Part of the <span class="highlighted-value">@DataPoint.Episode.EraDescription</span> era
+    </div>
+
+    <div class="block">
+        This is the
+        <span class="highlighted-value">@Formatter.FormatPosition(@DataPoint.Episode.Story)</span> story across all stories and the
+        <span class="highlighted-value">@Formatter.FormatPosition(DataPoint.Episode.Id)</span> episode across all episodes
+    </div>
+
+    @if (DataPoint.Episode.WikiUrl != null)
+    {
+        <div class="wiki-block">
+            <div class="wiki">
+                <a href="@DataPoint.Episode.WikiUrl" target="_blank" title="Wikipedia - @DataPoint.Episode.StoryTitle">
+                    <img class="wiki" src="images/wikipedia.svg" alt="Wikipedia" />
+                </a>
+            </div>
+            <div class="wiki-text">See more details on Wikipedia</div>
+        </div>
+    }
+</div>
+
+@if (DataPoint.InStoryContext != null)
+{
+    <ContextChart Title="Relative to other episodes in the same story"
+                  Context="@DataPoint.InStoryContext" />
+}
+
+@if (DataPoint.InSeasonContext != null)
+{
+    var title = DataPoint.InSeasonContext.IsSpecial 
+        ? "Relative to other specials featuring the same doctor"
+        : "Relative to other episodes in the same season";
+
+    <ContextChart Title=@title
+                  Context="@DataPoint.InSeasonContext" />
+}
+
+@if (DataPoint.InDoctorContext != null)
+{
+    <ContextChart Title="Relative to other episodes featuring the same doctor"
+                  Context="@DataPoint.InDoctorContext" />
+}
+
+<ContextChart Title="Relative to all episodes"
+              Context="@DataPoint.InFullContext" />
+
+@code {
+    private EpisodeInContextDataOptions DataOptions { get; } = new();
+
+    private EpisodeInContextDataPoint DataPoint { get; set; } = default!;
+
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        DataOptions.Slug = Slug;
+
+        try
+        {
+            DataPoint = DataPointGenerator.Generate(DataOptions);
+        }
+        catch
+        {
+            NavigationManager.NavigateTo("/"); ;
+        }
+    }
+}

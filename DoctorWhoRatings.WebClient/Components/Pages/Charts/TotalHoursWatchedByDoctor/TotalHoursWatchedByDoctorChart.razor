@@ -56,14 +56,12 @@
     </ChartOptionsGroup>
 </ChartOptions>
 
-<p class="text-shadow">
+<Info>
     * Ratings are based on "views", which can be as little as
-    <a href="https://www.radiotimes.com/tv/entertainment/how-do-uk-tv-viewing-figures-and-overnight-ratings-work/" target="_blank">
-        3 minutes.
-    </a>
+    <a href="https://www.radiotimes.com/tv/entertainment/how-do-uk-tv-viewing-figures-and-overnight-ratings-work/" target="_blank">3 minutes</a>.
     Beyond that, it's impossible to know how much of an episode someone actually watched, so this is a simple
     calculation based on <strong>ratings * episode length</strong>.
-</p>
+</Info>
 
 @code {
     private ApexChart<TotalHoursWatchedByDoctorDataPoint> Chart { get; set; } = default!;
@@ -78,7 +76,7 @@
     {
         var total = DataPoints.Sum(dataPoint => dataPoint.CalculatedTotalHoursWatched);
         var percent = currentDataPoint.CalculatedTotalHoursWatched / total * 100;
-        
+
         return percent;
     }
 

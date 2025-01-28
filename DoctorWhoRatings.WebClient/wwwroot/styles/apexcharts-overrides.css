@@ -16,3 +16,13 @@ div.apexcharts-legend.apx-legend-position-right {
     div.apexcharts-legend.apx-legend-position-right > div.apexcharts-legend-series {
         margin: 0 !important;
     }
+
+body.shift-on .chart.drill-down .apexcharts-bar-area,
+body.shift-on .chart.drill-down .apexcharts-series-markers {
+    cursor: pointer;
+}
+
+.apexcharts-bar-area[selected="true"],
+.apexcharts-series-markers path[selected="true"] {
+    filter: brightness(0.8);
+}

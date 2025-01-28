@@ -20,4 +20,8 @@
         <ProjectReference Include="..\DoctorWhoRatings.Data\DoctorWhoRatings.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="wwwroot\scripts\" />
+    </ItemGroup>
+
 </Project>

@@ -46,6 +46,7 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
             ConsolidatedRatings = currentEpisode.ConsolidatedRatings,
             ExtendedRatings = currentEpisode.ExtendedRatings,
             WikiUrl = currentEpisode.WikiUrl,
+            Slug = currentEpisode.Slug,
             Metadata = CreateEpisodeGuideDataPointMetadata(episodes, index)
         };
 
@@ -77,13 +78,13 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
             seasonTitle = $"{currentEpisode.SeasonFormatDescription}{plural} {currentEpisode.Season}";
         }
 
-        var showStoryTitle = (currentEpisode.PartInStory == 1 || currentEpisode.StoryTitle != previousEpisode?.StoryTitle) && 
+        var showStoryTitle = (currentEpisode.PartInStory == 1 || currentEpisode.StoryTitle != previousEpisode?.StoryTitle) &&
                              nextEpisode?.PartInStory > 1 &&
                              !string.IsNullOrWhiteSpace(currentEpisode.PartTitle);
 
         var showStoryNumber = currentEpisode.PartTitle == null && currentEpisode.PartInStory == 1;
 
-        var hasStoryWiki = currentEpisode.WikiFormatId == WikiFormats.Story && 
+        var hasStoryWiki = currentEpisode.WikiFormatId == WikiFormats.Story &&
                            !string.IsNullOrWhiteSpace(currentEpisode.WikiUrl);
 
         var hasEpisodeWiki = currentEpisode.WikiFormatId == WikiFormats.Episode &&

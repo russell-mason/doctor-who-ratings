@@ -1,25 +1,27 @@
 ﻿@page "/charts/premier-finale-by-season"
 @inject IPremierFinaleEpisodesBySeasonDataPointGenerator DataPointGenerator
+@inject IEpisodeContextDrillDown EpisodeContextDrillDown
 
 <PageTitle>@PremierFinaleEpisodesBySeasonChartCaptions.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@PremierFinaleEpisodesBySeasonChartCaptions.Title"
               Description="@(PremierFinaleEpisodesBySeasonChartCaptions.Description + ". Excludes specials and movies")" />
 
-<Chart>
+<Chart DrillDown="@true">
     <ApexChart @ref="Chart"
                TItem="PremierFinaleEpisodeBySeasonDataPoint"
                Title="@PremierFinaleEpisodesBySeasonChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
-               Width="@("100%")">
-            
+               Width="@("100%")"
+               OnDataPointSelection="OnDataPointSelection">
+
         <ApexPointTooltip>
             <PremierFinaleEpisodesBySeasonTooltip DataPoint="@context.DataPoint.Items.First()"
                                                   DataOptions="DataOptions"
                                                   ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
         </ApexPointTooltip>
-        
+
         <ChildContent>
             @foreach (var keyValues in DataPoints)
             {
@@ -28,7 +30,7 @@
                                  Name="@($"{keyValues.Value.First().Actor} - {keyValues.Key}")"
                                  SeriesType="SeriesType.Line"
                                  XValue="dataPoint => dataPoint.EpisodePosition"
-                                 YValue="dataPoint => dataPoint.CalculatedRatings ?? 0"/>
+                                 YValue="dataPoint => dataPoint.CalculatedRatings ?? 0" />
             }
         </ChildContent>
     </ApexChart>
@@ -72,6 +74,8 @@
     </ChartOptionsGroup>
 </ChartOptions>
 
+<DrillDownTip />
+
 @code {
     private ApexChart<PremierFinaleEpisodeBySeasonDataPoint> Chart { get; set; } = default!;
 
@@ -90,6 +94,9 @@
         await Chart.UpdateSeriesAsync();
     }
 
+    private void OnDataPointSelection(SelectedData<PremierFinaleEpisodeBySeasonDataPoint> selectedData) =>
+        InvokeAsync(async () => await EpisodeContextDrillDown.DrillDownAsync(selectedData, selectedData.DataPoint.Items.First().Slug));
+
     private async Task ToggleLegend(LegendSelectionAction action)
     {
         foreach (var chartSeries in Chart.Series)
@@ -103,11 +110,11 @@
                 case LegendSelectionAction.All:
                     await chartSeries.Show();
                     break;
-                
+
                 case LegendSelectionAction.Toggle:
                     await chartSeries.Toggle();
                     break;
-                
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(action));
             }

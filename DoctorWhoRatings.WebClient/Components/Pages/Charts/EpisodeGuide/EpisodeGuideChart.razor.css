@@ -43,6 +43,14 @@
     margin-top: 0.25rem;
 }
 
+.episode a {
+    color: #505050;
+}
+
+    .episode a:hover {
+        text-decoration: underline;
+    }
+
 .episode-story-number {
     font-size: 0.8rem;
     color: #ff5700;

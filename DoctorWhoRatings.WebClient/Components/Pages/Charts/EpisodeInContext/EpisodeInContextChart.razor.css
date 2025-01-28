@@ -1,0 +1,75 @@
+﻿﻿.card {
+    background: #ffffffca;
+    backdrop-filter: blur(19px);
+    color: #707070;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    padding: 16px;
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
+}
+
+.story {
+    font-family: segoe-bold, sans-serif;
+    font-size: 1.5rem;
+    color: #505050;
+    margin-bottom: 2px;
+}
+
+.doctor-number {
+    font-family: segoe-light, sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #000000;
+    margin-top: 12px;
+}
+
+.actor {
+    font-family: segoe-bold, sans-serif;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    color: #507dd7;
+}
+
+.season-block {
+    margin: 8px 0 12px 0;
+}
+
+.season {
+    font-family: segoe-light, sans-serif;
+    font-size: 1.5rem;
+    color: #ff5700;
+    margin-bottom: 4px;
+}
+
+.story-number,
+.episode-number,
+.part-number {
+    font-size: 0.9rem;
+    color: #ff5700;
+    margin-bottom: 4px;
+}
+
+.wiki-block {
+    margin-top: 16px;
+}
+
+.wiki {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+}
+
+.wiki-text {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 3px;
+}
+
+.block {
+    margin: 8px 0;
+}
+
+.highlighted-value {
+    font-family: segoe-bold, sans-serif;
+    color: #505050;
+}

@@ -1,18 +1,20 @@
 ﻿@page "/charts/specials-only"
 @inject IEpisodesDataPointGenerator DataPointGenerator
+@inject IEpisodeContextDrillDown EpisodeContextDrillDown
 
 <PageTitle>@SpecialsOnlyChartCaptions.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@SpecialsOnlyChartCaptions.Title"
               Description="@SpecialsOnlyChartCaptions.Description" />
 
-<Chart>
+<Chart DrillDown="@true">
     <ApexChart @ref="Chart"
                TItem="EpisodeDataPoint"
                Title="@SpecialsOnlyChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
-               Width="@("100%")">
+               Width="@("100%")"
+               OnDataPointSelection="OnDataPointSelection">
 
         <ApexPointTooltip>
             <SpecialsOnlyTooltip DataPoint="@context.DataPoint.Items.First()"
@@ -63,13 +65,15 @@
                               Id="includeNewYear" Label="Include New Year"
                               AfterValueChanged="AfterOptionChanged">
         </ChartOptionsCheckbox>
-        
+
         <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeNonSeasonal"
                               Id="includeNonSeasonal" Label="Include non-seasonal"
                               AfterValueChanged="AfterOptionChanged">
         </ChartOptionsCheckbox>
     </ChartOptionsGroup>
 </ChartOptions>
+
+<DrillDownTip />
 
 @code {
     private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
@@ -102,9 +106,14 @@
         DataPoints = DataPointGenerator.Generate(EpisodeDataOptions);
 
         await Chart.UpdateSeriesAsync();
+
+        await EpisodeContextDrillDown.DeselectAsync(Chart);
     }
 
-    public bool MatchesDateFilter(Episode episode)
+    private void OnDataPointSelection(SelectedData<EpisodeDataPoint> selectedData) =>
+        InvokeAsync(async () => await EpisodeContextDrillDown.DrillDownAsync(selectedData, selectedData.DataPoint.Items.First().Slug));
+
+    private bool MatchesDateFilter(Episode episode)
     {
         return DataOptions.IncludeChristmas && episode.OriginalAirDate.IsChristmas() ||
                DataOptions.IncludeNewYear && episode.OriginalAirDate.IsNewYear() ||

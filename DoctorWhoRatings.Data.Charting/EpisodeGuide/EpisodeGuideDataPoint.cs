@@ -9,7 +9,7 @@ public class EpisodeGuideDataPoint
     public required string SeasonFormatDescription { get; init; }
 
     public required int EpisodeNumber { get; init; }
-    
+
     public int Story { get; init; }
 
     public required string StoryTitle { get; init; }
@@ -27,6 +27,8 @@ public class EpisodeGuideDataPoint
     public decimal? ExtendedRatings { get; init; }
 
     public string? WikiUrl { get; init; }
+
+    public string? Slug { get; init; }
 
     public required EpisodeGuideDataPointMetadata Metadata { get; set; }
 }

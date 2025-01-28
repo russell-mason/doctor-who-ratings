@@ -20,6 +20,8 @@ public class PremierFinaleEpisodeBySeasonDataPoint
 
     public string? StoryPartTitle { get; set; }
 
+    public string? Slug { get; set; }
+
     public decimal? OvernightRatings { get; set; }
 
     public decimal? ConsolidatedRatings { get; set; }

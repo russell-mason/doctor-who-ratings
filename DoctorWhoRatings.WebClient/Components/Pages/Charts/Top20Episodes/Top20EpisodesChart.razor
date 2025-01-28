@@ -1,18 +1,20 @@
 ﻿@page "/charts/top-20-episodes"
 @inject ITop20EpisodesDataPointGenerator DataPointGenerator
+@inject IEpisodeContextDrillDown EpisodeContextDrillDown
 
 <PageTitle>@Top20EpisodesChartCaptions.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@Top20EpisodesChartCaptions.Title"
               Description="@Top20EpisodesChartCaptions.Description" />
 
-<Chart>
+<Chart DrillDown="@true">
     <ApexChart @ref="Chart"
                TItem="Top20EpisodesDataPoint"
                Title="@Top20EpisodesChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
-               Width="@("100%")">
+               Width="@("100%")"
+               OnDataPointSelection="OnDataPointSelection">
 
         <ApexPointTooltip>
             <Top20EpisodesTooltip DataPoint="@context.DataPoint.Items.First()"
@@ -69,14 +71,14 @@
                            AfterValueChanged="AfterOptionChanged">
         </ChartOptionsRadio>
     </ChartOptionsGroup>
-    
+
     <ChartOptionsGroup>
         <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeSpecials"
                               Id="specials" Label="Include specials/movie"
                               AfterValueChanged="AfterOptionChanged">
         </ChartOptionsCheckbox>
     </ChartOptionsGroup>
-    
+
     <ChartOptionsGroup>
         <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
                               Id="population" Label="Adjust relative to current population"
@@ -84,6 +86,8 @@
         </ChartOptionsCheckbox>
     </ChartOptionsGroup>
 </ChartOptions>
+
+<DrillDownTip />
 
 @code {
     private ApexChart<Top20EpisodesDataPoint> Chart { get; set; } = default!;
@@ -101,5 +105,10 @@
         DataPoints = DataPointGenerator.Generate(DataOptions);
 
         await Chart.UpdateSeriesAsync();
+
+        await EpisodeContextDrillDown.DeselectAsync(Chart);
     }
+
+    private void OnDataPointSelection(SelectedData<Top20EpisodesDataPoint> selectedData) =>
+        InvokeAsync(async () => await EpisodeContextDrillDown.DrillDownAsync(selectedData, selectedData.DataPoint.Items.First().Slug));
 }

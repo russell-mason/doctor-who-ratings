@@ -1,0 +1,27 @@
+﻿.nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    background-color: #243A64d0;
+    backdrop-filter: blur(19px);
+    padding: 14px 18px 11px 24px;
+    box-shadow: 0 8px 8px #00000066;
+}
+
+.nav-item {
+    display: inline-block;
+    color: #ffffff;
+}
+
+    .nav-item:after {
+        display: block;
+        content: '';
+        border-bottom: 3px solid #ffffff;
+        opacity: 0;
+    }
+
+    .nav-item:hover:after {
+        opacity: 1;
+    }

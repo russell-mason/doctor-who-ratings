@@ -20,6 +20,9 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IByEraDataPointGenerator, ByEraDataPointGenerator>();
         services.AddSingleton<ITimelineDataPointGenerator, TimelineDataPointGenerator>();
         services.AddSingleton<IEpisodeGuideDataPointGenerator, EpisodeGuideDataPointGenerator>();
+        services.AddSingleton<IEpisodeInContextDataPointGenerator, EpisodeInContextDataPointGenerator>();
+
+        services.AddScoped<IEpisodeContextDrillDown, EpisodeContextDrillDown>();
 
         return services;
     }

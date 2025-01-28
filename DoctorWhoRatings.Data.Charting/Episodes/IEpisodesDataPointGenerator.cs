@@ -14,4 +14,18 @@ public interface IEpisodesDataPointGenerator
     /// <param name="options">Options that determine how to filter the episodes.</param>
     /// <returns>A specific structure containing calculated episode data.</returns>
     List<EpisodeDataPoint> Generate(EpisodesDataOptions options);
+
+    /// <summary>
+    /// Generates the data source for a single episode.
+    /// </summary>
+    /// <param name="episode">The episode to generate the data point for.</param>
+    /// <returns>A specific structure containing calculated episode data.</returns>
+    EpisodeDataPoint Generate(Episode episode);
+
+    /// <summary>
+    /// Filters episodes based on the specified options.
+    /// </summary>
+    /// <param name="options">Options that determine how to filter the episodes.</param>
+    /// <returns>A specific structure containing calculated episode data.</returns>
+    List<Episode> Filter(EpisodesDataOptions options);
 }

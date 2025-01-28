@@ -1,26 +1,28 @@
 ﻿@page "/charts/high-low-by-doctor"
 @inject IHighLowEpisodesByDoctorDataPointGenerator DataPointGenerator
+@inject IEpisodeContextDrillDown EpisodeContextDrillDown
 
 <PageTitle>@HighLowEpisodesByDoctorChartCaptions.Title - @Application.Name</PageTitle>
 
 <ChartHeading Title="@HighLowEpisodesByDoctorChartCaptions.Title"
               Description="@HighLowEpisodesByDoctorChartCaptions.Description" />
 
-<Chart>
+<Chart DrillDown="@true">
     <ApexChart @ref="Chart"
                TItem="HighLowEpisodesByDoctorDataPoint"
                Title="@HighLowEpisodesByDoctorChartCaptions.YAxisTitle"
                Options="ChartOptions"
                Height="@("100%")"
-               Width="@("100%")">
-            
+               Width="@("100%")"
+               OnDataPointSelection="OnDataPointSelection">
+
         <ApexPointTooltip>
             <HighLowEpisodesByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
                                             SeriesIndex="@context.SeriesIndex"
                                             DataOptions="DataOptions"
                                             ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
         </ApexPointTooltip>
-        
+
         <ChildContent>
             <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
                              Items="DataPoints"
@@ -104,6 +106,8 @@
     </ChartOptionsGroup>
 </ChartOptions>
 
+<DrillDownTip />
+
 @code {
     private ApexChart<HighLowEpisodesByDoctorDataPoint> Chart { get; set; } = default!;
 
@@ -120,5 +124,15 @@
         DataPoints = DataPointGenerator.Generate(DataOptions);
 
         await Chart.UpdateSeriesAsync();
+
+        await EpisodeContextDrillDown.DeselectAsync(Chart);
+    }
+
+    private void OnDataPointSelection(SelectedData<HighLowEpisodesByDoctorDataPoint> selectedData)
+    {
+        var dataPoint = selectedData.DataPoint.Items.First();
+        var highLowDataPoint = selectedData.SeriesIndex == 0 ? dataPoint.HighEpisodeDataPoint : dataPoint.LowEpisodeDataPoint;
+
+        InvokeAsync(async () => await EpisodeContextDrillDown.DrillDownAsync(selectedData, highLowDataPoint.Slug));
     }
 }

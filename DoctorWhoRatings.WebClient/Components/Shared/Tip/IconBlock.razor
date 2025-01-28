@@ -1,0 +1,20 @@
+﻿<div class="icon-block">
+    <img class="icon" src="@IconUrl" alt="@IconAlt" />
+    <div class="content">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? IconUrl { get; set; }
+
+    [Parameter]
+    public string? IconAlt { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

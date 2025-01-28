@@ -1,9 +1,12 @@
-﻿<section class="chart">
+﻿<section class='chart @(DrillDown ? "drill-down" : "")'>
     <Overlay WaitOnCssSelector="div.apexcharts-canvas" />
     @ChildContent
 </section>
 
 @code {
+    [Parameter]
+    public bool DrillDown { get; set; }
+
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 }

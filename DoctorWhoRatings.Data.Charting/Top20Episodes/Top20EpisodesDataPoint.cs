@@ -14,6 +14,8 @@ public class Top20EpisodesDataPoint
 
     public string? PartTitle { get; init; }
 
+    public string? Slug { get; init; }
+
     public DateTime OriginalAirDate { get; init; }
 
     public decimal? OvernightRatings { get; init; }

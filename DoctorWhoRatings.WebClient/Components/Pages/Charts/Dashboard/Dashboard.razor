@@ -9,11 +9,11 @@
 <section class="dashboard-section">
     <div class="two-column-set">
         <div class="doctors-group">
-            <div class="card primary column-quarter">
+            <div class="card primary column-fifth">
                 <h1>Doctors</h1>
                 <div class="value highlighted-value">@Data.NumberOfDoctors</div>
             </div>
-            <div class="episodes-group column-three-quarters">
+            <div class="episodes-group column-four-fifths">
                 <div class="card column-episodes-half">
                     <h1>Seasons</h1>
                     <div class="value highlighted-value">@Data.NumberOfSeasons</div>
@@ -75,7 +75,7 @@
                 <div class="card colums-third">
                     @{
                         var totalEpisodeHours = Formatter.ToTimeSpan(Data.TotalEpisodeHours);
-                        var hours = (int) totalEpisodeHours.TotalHours;
+                        var hours = (int)totalEpisodeHours.TotalHours;
                         var minutes = totalEpisodeHours.Minutes;
                         var hoursText = Pluralize(hours, "hour");
                         var minutesText = Pluralize(minutes, "minute");
@@ -108,13 +108,11 @@
     </div>
 </section>
 
-<p class="text-shadow">
+<Info>
     * Ratings are based on "views", which can be as little as
-    <a href="https://www.radiotimes.com/tv/entertainment/how-do-uk-tv-viewing-figures-and-overnight-ratings-work/" target="_blank">
-        3 minutes.
-    </a>
+    <a href="https://www.radiotimes.com/tv/entertainment/how-do-uk-tv-viewing-figures-and-overnight-ratings-work/" target="_blank">3 minutes</a>.
     This is a simple calculation based on <strong>ratings * episode length</strong>.
-</p>
+</Info>
 
 @code {
     public DashboardData Data { get; set; } = default!;

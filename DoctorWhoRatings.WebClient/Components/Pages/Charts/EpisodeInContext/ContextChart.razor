@@ -1,0 +1,118 @@
+﻿@inject IJSRuntime JsRuntime
+
+<ChartHeading Title="@Title" />
+
+<Chart>
+    <ApexChart @ref="Chart"
+               TItem="EpisodeDataPoint"
+               Title="@EpisodeInContextChartCaptions.YAxisTitle"
+               Options="ChartOptions"
+               Height="@("100%")"
+               Width="@("100%")"
+               OnRendered="OnRendered">
+
+        <ApexPointTooltip>
+            <ContextTooltip DataPoint="@context.DataPoint.Items.First()"
+                            SeriesIndex="@context.SeriesIndex" />
+        </ApexPointTooltip>
+
+        <ChildContent>
+            <ApexPointSeries TItem="EpisodeDataPoint"
+                             Items="Context.Episodes"
+                             Name="@EpisodeInContextChartCaptions.SeriesTitles[0]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => GetDisplayTitle(dataPoint.FullTitle)"
+                             YValue="dataPoint => dataPoint.OvernightRatings" />
+
+            <ApexPointSeries TItem="EpisodeDataPoint"
+                             Items="Context.Episodes"
+                             Name="@EpisodeInContextChartCaptions.SeriesTitles[1]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => GetDisplayTitle(dataPoint.FullTitle)"
+                             YValue="dataPoint => dataPoint.ConsolidatedExcessRatings" />
+
+            <ApexPointSeries TItem="EpisodeDataPoint"
+                             Items="Context.Episodes"
+                             Name="@EpisodeInContextChartCaptions.SeriesTitles[2]"
+                             SeriesType="SeriesType.Bar"
+                             XValue="dataPoint => GetDisplayTitle(dataPoint.FullTitle)"
+                             YValue="dataPoint => dataPoint.ExtendedExcessRatings" />
+        </ChildContent>
+    </ApexChart>
+</Chart>
+
+<div class="card gutter">
+    <div class="block">
+        There @GetPlural(Context.PositionFromTop, "is", "are")
+        <span class="@(Context.PositionFromTop == 0 ? "" : "highlighted-value")">@GetPosition(Context.PositionFromTop)</span>
+        @GetPlural(Context.PositionFromTop, "episode", "episodes") with higher ratings,
+
+        and <span class="@(Context.PositionFromBottom == 0 ? "" : "highlighted-value")">@GetPosition(Context.PositionFromBottom)</span>
+        @GetPlural(Context.PositionFromBottom, "episode", "episodes") with lower ratings
+    </div>
+
+    @if (Context.RelativeToHighestRatings!.Value == 0)
+    {
+        <span>Ratings are equal to the highest, </span>
+    }
+    else
+    {
+        var value = Math.Abs(Context.RelativeToHighestRatings!.Value);
+
+        <span>
+            Ratings are
+            <span class="highlighted-value">@Formatter.FormatNumber(value)</span> million below the highest,
+        </span>
+    }
+
+    @if (Context.RelativeToAverageRatings!.Value == 0)
+    {
+        <span>equal to the average, </span>
+    }
+    else
+    {
+        var value = Math.Abs(Context.RelativeToAverageRatings!.Value);
+        var aboveBelow = Context.RelativeToAverageRatings!.Value > 0 ? "above" : "below";
+
+        <span>
+            <span class="highlighted-value">@Formatter.FormatNumber(value)</span> million @aboveBelow the average,
+        </span>
+    }
+
+    @if (Context.RelativeToLowestRatings!.Value == 0)
+    {
+        <span>and equal to the lowest</span>
+    }
+    else
+    {
+        var value = Math.Abs(Context.RelativeToLowestRatings!.Value);
+
+        <span>
+            and <span class="highlighted-value">@Formatter.FormatNumber(value)</span> million above the lowest
+        </span>
+    }
+</div>
+
+@code {
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = EpisodeInContextChartOptions.Defaults;
+
+    [Parameter, EditorRequired]
+    public required string Title { get; set; }
+
+    [Parameter, EditorRequired]
+    public required EpisodeContext Context { get; set; }
+
+    private string GetPosition(int position) => position == 0 ? "no" : position.ToString();
+
+    private string[] GetDisplayTitle(string fullTitle) => fullTitle.Split(":");
+
+    private string GetPlural(int count, string singular, string plural) => count == 1 ? singular : plural;
+
+    private async Task OnRendered()
+    {
+        await JsRuntime.InvokeVoidAsync("ApexChartExtensions.selectDataPoint", Chart.ChartId, Context.EpisodeIndex);
+        await JsRuntime.InvokeVoidAsync("ApexChartExtensions.disableDataPointSelection", Chart.ChartId);
+    }
+}

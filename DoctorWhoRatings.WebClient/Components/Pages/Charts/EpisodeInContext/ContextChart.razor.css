@@ -1,0 +1,23 @@
+﻿﻿.card {
+    background: #ffffffca;
+    backdrop-filter: blur(19px);
+    color: #505050;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    padding: 16px;
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
+}
+
+.gutter {
+    margin: 12px 0;
+    padding: 12px 24px;
+}
+
+.highlighted-value {
+    font-family: segoe-bold, sans-serif;
+    color: #505050;
+}
+
+.block {
+    margin: 8px 0;
+}

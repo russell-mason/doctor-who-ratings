@@ -10,6 +10,8 @@ public class HighLowEpisodeByDoctorDataPoint
 
     public string? StoryPartTitle { get; set; }
 
+    public string? Slug { get; init; }
+
     public decimal? OvernightRatings { get; set; }
 
     public decimal? ConsolidatedRatings { get; set; }

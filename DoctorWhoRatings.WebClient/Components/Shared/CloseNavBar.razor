@@ -1,0 +1,14 @@
+﻿@inject IJSRuntime JsRuntime
+
+<nav class="nav-bar">
+    <NavLink href="" Match="NavLinkMatch.All" @onclick="CloseTab">
+        <div class="nav-item">Close</div>
+    </NavLink>
+</nav>
+
+@code {
+    private async Task CloseTab()
+    {
+        await JsRuntime.InvokeVoidAsync("Browser.closeCurrentTab");
+    }
+}

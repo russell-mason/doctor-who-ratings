@@ -34,7 +34,7 @@ public static class SpecialsOnlyChartOptions
                     }
                 }
             ],
-            Chart =
+            Chart = new Chart
             {
                 Stacked = true
             },

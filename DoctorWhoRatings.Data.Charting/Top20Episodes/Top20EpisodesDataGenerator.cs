@@ -24,6 +24,7 @@ public class Top20EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider
             SeasonFormatDescription = episode.SeasonFormatDescription,
             StoryTitle = episode.StoryTitle,
             PartTitle = episode.PartTitle,
+            Slug = episode.Slug,
             OriginalAirDate = episode.OriginalAirDate,
             OvernightRatings = episode.OvernightRatings,
             ConsolidatedRatings = episode.ConsolidatedRatings,

@@ -40,6 +40,12 @@ public record Episode
 
     public string? PartTitle { get; init; }
 
+    public int? EpisodeInSeason { get; init; }
+
+    public string FullTitle => StoryTitle.Trim() + (PartTitle == null ? string.Empty : ": " + PartTitle.Trim());
+
+    public string Slug => FullTitle.Replace(": ", "-").Replace(" ", "-").ToLower();
+
     public DateTime OriginalAirDate { get; init; }
 
     public int Runtime { get; init; }
