@@ -13,9 +13,16 @@ public static class PopulationByYearChartOptions
             {
                 Curve = new CurveSelections(Curve.MonotoneCubic)
             },
-            Xaxis = new XAxis {
-                Tooltip = new XAxisTooltip { Enabled = false },
-                Crosshairs = new AxisCrosshairs { Show = false }
+            Xaxis = new XAxis
+            {
+                Tooltip = new XAxisTooltip
+                {
+                    Enabled = false
+                },
+                Crosshairs = new AxisCrosshairs
+                {
+                    Show = false
+                }
             },
             Yaxis =
             [

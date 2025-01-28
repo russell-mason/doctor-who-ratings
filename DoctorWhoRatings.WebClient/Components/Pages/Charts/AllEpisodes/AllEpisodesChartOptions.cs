@@ -26,8 +26,14 @@ public static class AllEpisodesChartOptions
                     }
                 },
                 TickPlacement = TickPlacement.On,
-                Tooltip = new XAxisTooltip { Enabled = false },
-                Crosshairs = new AxisCrosshairs { Show = false }
+                Tooltip = new XAxisTooltip
+                {
+                    Enabled = false
+                },
+                Crosshairs = new AxisCrosshairs
+                {
+                    Show = false
+                }
             },
             Yaxis =
             [

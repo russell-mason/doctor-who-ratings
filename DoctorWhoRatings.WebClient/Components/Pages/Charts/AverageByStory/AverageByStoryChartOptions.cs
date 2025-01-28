@@ -29,9 +29,9 @@ public static class AverageByStoryChartOptions
                 new YAxis
                 {
                     Labels = new YAxisLabels
-                             {
-                                 Formatter = "function(value) { return value.toFixed(2); }"
-                             }
+                    {
+                        Formatter = "function(value) { return value.toFixed(2); }"
+                    }
                 }
             ],
             Tooltip = new Tooltip

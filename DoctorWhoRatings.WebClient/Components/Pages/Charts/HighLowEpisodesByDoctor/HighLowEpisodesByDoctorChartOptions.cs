@@ -22,7 +22,7 @@ public static class HighLowEpisodesByDoctorChartOptions
                     }
                 }
             ],
-            Chart =
+            Chart = new Chart
             {
                 Stacked = true
             },

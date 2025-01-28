@@ -34,10 +34,16 @@ public static class PremierFinaleEpisodesBySeasonChartOptions
                     ColumnWidth = "90%"
                 }
             },
-            Xaxis = new XAxis()
+            Xaxis = new XAxis
             {
-                Tooltip = new XAxisTooltip { Enabled = false },
-                Crosshairs = new AxisCrosshairs { Show = false }
+                Tooltip = new XAxisTooltip
+                {
+                    Enabled = false
+                },
+                Crosshairs = new AxisCrosshairs
+                {
+                    Show = false
+                }
             },
             Yaxis =
             [
@@ -54,7 +60,7 @@ public static class PremierFinaleEpisodesBySeasonChartOptions
             {
                 FollowCursor = true
             },
-            Legend = new Legend()
+            Legend = new Legend
             {
                 Width = 450,
                 Position = LegendPosition.Right

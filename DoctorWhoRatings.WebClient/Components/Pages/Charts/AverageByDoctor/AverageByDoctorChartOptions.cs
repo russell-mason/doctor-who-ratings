@@ -22,7 +22,7 @@ public static class AverageByDoctorChartOptions
                     }
                 }
             ],
-            Chart =
+            Chart = new Chart
             {
                 Stacked = true
             },

@@ -22,7 +22,7 @@ public static class Top20EpisodesChartOptions
                     }
                 }
             ],
-            Chart =
+            Chart = new Chart
             {
                 Stacked = true
             },
