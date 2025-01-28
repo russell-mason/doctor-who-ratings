@@ -31,7 +31,7 @@ public class EpisodeContextDrillDown(IJSRuntime jsRuntime) : IEpisodeContextDril
             // This will be reapplied when the tab gets focus again
             await jsRuntime.InvokeVoidAsync("KeyboardEvents.untrack");
 
-            await jsRuntime.InvokeVoidAsync("Browser.openTab", $"/charts/episodes/{slug}", slug);
+            await jsRuntime.InvokeVoidAsync("Browser.openTab", $"./charts/episodes/{slug}", slug);
         }
     }
 }
