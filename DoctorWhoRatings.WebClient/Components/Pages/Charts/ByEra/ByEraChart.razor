@@ -6,77 +6,79 @@
 <ChartHeading Title="@ByEraChartCaptions.Title"
               Description="@ByEraChartCaptions.Description" />
 
-<Chart>
-    <ApexChart @ref="Chart"
-               TItem="ByEraDataPoint"
-               Title="@ByEraChartCaptions.YAxisTitle"
-               Options="ChartOptions"
-               Height="@("100%")"
-               Width="@("100%")">
+<FullScreenZone>
+    <Chart>
+        <ApexChart @ref="Chart"
+                   TItem="ByEraDataPoint"
+                   Title="@ByEraChartCaptions.YAxisTitle"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
 
-        <ApexPointTooltip>
-            <ByEraTooltip DataPoint="@context.DataPoint.Items.First()"
-                          DataOptions="DataOptions"
-                          PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
-        </ApexPointTooltip>
+            <ApexPointTooltip>
+                <ByEraTooltip DataPoint="@context.DataPoint.Items.First()"
+                              DataOptions="DataOptions"
+                              PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
+            </ApexPointTooltip>
 
-        <ChildContent>
-            <ApexPointSeries TItem="ByEraDataPoint"
-                             Items="DataPoints"
-                             Name="@ByEraChartCaptions.SeriesTitles[0]"
-                             SeriesType="SeriesType.Pie"
-                             XValue="dataPoint => dataPoint.Era"
-                             YValue="dataPoint => dataPoint.CalculatedRatings"
-                             ShowDataLabels />
-        </ChildContent>
-    </ApexChart>
-</Chart>
+            <ChildContent>
+                <ApexPointSeries TItem="ByEraDataPoint"
+                                 Items="DataPoints"
+                                 Name="@ByEraChartCaptions.SeriesTitles[0]"
+                                 SeriesType="SeriesType.Pie"
+                                 XValue="dataPoint => dataPoint.Era"
+                                 YValue="dataPoint => dataPoint.CalculatedRatings"
+                                 ShowDataLabels />
+            </ChildContent>
+        </ApexChart>
+    </Chart>
 
-<ChartOptions>
-    <ChartOptionsGroup>
-        <ChartOptionsText Label="Calculate using" />
-        
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="total" Group="ratingsOption" Label="@ByEraCalculationMethod.Sum.Humanize()"
-                           CheckedValue="@ByEraCalculationMethod.Sum"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Calculate using" />
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="perEpisode" Group="ratingsOption" Label="@ByEraCalculationMethod.MeanPerEpisode.Humanize()"
-                           CheckedValue="@ByEraCalculationMethod.MeanPerEpisode"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="total" Group="ratingsOption" Label="@ByEraCalculationMethod.Sum.Humanize()"
+                               CheckedValue="@ByEraCalculationMethod.Sum"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="peHour" Group="ratingsOption" Label="@ByEraCalculationMethod.MeanPerHour.Humanize()"
-                           CheckedValue="@ByEraCalculationMethod.MeanPerHour"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
-    </ChartOptionsGroup>
-    
-    <ChartOptionsGroup>
-        <ChartOptionsText Label="Over" />
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="perEpisode" Group="ratingsOption" Label="@ByEraCalculationMethod.MeanPerEpisode.Humanize()"
+                               CheckedValue="@ByEraCalculationMethod.MeanPerEpisode"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
-                           Id="overnight" Group="overOption"
-                           CheckedValue="@ByEraOverCalculationMethod.Overnight"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="peHour" Group="ratingsOption" Label="@ByEraCalculationMethod.MeanPerHour.Humanize()"
+                               CheckedValue="@ByEraCalculationMethod.MeanPerHour"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
-                           Id="consolidated" Group="overOption"
-                           CheckedValue="@ByEraOverCalculationMethod.Consolidated"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Over" />
 
-        <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
-                           Id="extended" Group="overOption"
-                           CheckedValue="@ByEraOverCalculationMethod.Extended"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
-    </ChartOptionsGroup>
-</ChartOptions>
+            <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
+                               Id="overnight" Group="overOption"
+                               CheckedValue="@ByEraOverCalculationMethod.Overnight"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
+                               Id="consolidated" Group="overOption"
+                               CheckedValue="@ByEraOverCalculationMethod.Consolidated"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
+                               Id="extended" Group="overOption"
+                               CheckedValue="@ByEraOverCalculationMethod.Extended"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
 
 @code {
     private ApexChart<ByEraDataPoint> Chart { get; set; } = default!;

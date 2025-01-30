@@ -6,39 +6,41 @@
 <ChartHeading Title="@AverageByStoryChartCaptions.Title"
               Description="@(AverageByStoryChartCaptions.Description + " Only shows stories from the Classic era which have multiple episodes.")" />
 
-<Chart>
-    <ApexChart @ref="Chart"
-               TItem="AverageByStoryDataPoint"
-               Title="@AverageByStoryChartCaptions.YAxisTitle"
-               Options="ChartOptions"
-               Height="@("100%")"
-               Width="@("100%")">
+<FullScreenZone>
+    <Chart>
+        <ApexChart @ref="Chart"
+                   TItem="AverageByStoryDataPoint"
+                   Title="@AverageByStoryChartCaptions.YAxisTitle"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
 
-        <ApexPointTooltip>
-            <AverageByStoryTooltip DataPoint="@context.DataPoint.Items.First()"
-                                   SeriesIndex="@context.SeriesIndex"
-                                   ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation"/>
-        </ApexPointTooltip>
+            <ApexPointTooltip>
+                <AverageByStoryTooltip DataPoint="@context.DataPoint.Items.First()"
+                                       SeriesIndex="@context.SeriesIndex"
+                                       ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
+            </ApexPointTooltip>
 
-        <ChildContent>
-            <ApexPointSeries TItem="AverageByStoryDataPoint"
-                             Items="DataPoints"
-                             Name="@AverageByStoryChartCaptions.SeriesTitles[0]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Id"
-                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />
-        </ChildContent>
-    </ApexChart>
-</Chart>
+            <ChildContent>
+                <ApexPointSeries TItem="AverageByStoryDataPoint"
+                                 Items="DataPoints"
+                                 Name="@AverageByStoryChartCaptions.SeriesTitles[0]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Id"
+                                 YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />
+            </ChildContent>
+        </ApexChart>
+    </Chart>
 
-<ChartOptions>
-    <ChartOptionsGroup>
-        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
-                              Id="population" Label="Adjust relative to current population"
-                              AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsCheckbox>
-    </ChartOptionsGroup>
-</ChartOptions>
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                                  Id="population" Label="Adjust relative to current population"
+                                  AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsCheckbox>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
 
 @code {
     private ApexChart<AverageByStoryDataPoint> Chart { get; set; } = default!;

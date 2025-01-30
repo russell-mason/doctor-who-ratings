@@ -6,29 +6,31 @@
 <ChartHeading Title="@AllEpisodesByPopulationPercentageChartCaptions.Title"
               Description="@AllEpisodesByPopulationPercentageChartCaptions.Description" />
 
-<Chart>
-    <ApexChart @ref="Chart"
-               TItem="EpisodeDataPoint"
-               Title="@AllEpisodesByPopulationPercentageChartCaptions.YAxisTitle"
-               Options="ChartOptions"
-               Height="@("100%")"
-               Width="@("100%")">
+<FullScreenZone>
+    <Chart>
+        <ApexChart @ref="Chart"
+                   TItem="EpisodeDataPoint"
+                   Title="@AllEpisodesByPopulationPercentageChartCaptions.YAxisTitle"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
 
-        <ApexPointTooltip>
-            <AllEpisodesByPopulationPercentageTooltip DataPoint="@context.DataPoint.Items.First()"
-                                                      SeriesIndex="@context.SeriesIndex" />
-        </ApexPointTooltip>
+            <ApexPointTooltip>
+                <AllEpisodesByPopulationPercentageTooltip DataPoint="@context.DataPoint.Items.First()"
+                                                          SeriesIndex="@context.SeriesIndex" />
+            </ApexPointTooltip>
 
-        <ChildContent>
-            <ApexPointSeries TItem="EpisodeDataPoint"
-                             Items="DataPoints"
-                             Name="@AllEpisodesByPopulationPercentageChartCaptions.SeriesTitles[0]"
-                             SeriesType="SeriesType.Line"
-                             XValue="dataPoint => dataPoint.Id"
-                             YValue="dataPoint => dataPoint.PercentageOfPopulation" />
-        </ChildContent>
-    </ApexChart>
-</Chart>
+            <ChildContent>
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                                 Items="DataPoints"
+                                 Name="@AllEpisodesByPopulationPercentageChartCaptions.SeriesTitles[0]"
+                                 SeriesType="SeriesType.Line"
+                                 XValue="dataPoint => dataPoint.Id"
+                                 YValue="dataPoint => dataPoint.PercentageOfPopulation" />
+            </ChildContent>
+        </ApexChart>
+    </Chart>
+</FullScreenZone>
 
 @code {
     private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;

@@ -6,82 +6,84 @@
 <ChartHeading Title="@AverageByDoctorChartCaptions.Title"
               Description="@AverageByDoctorChartCaptions.Description" />
 
-<Chart>
-    <ApexChart @ref="Chart"
-               TItem="AverageByDoctorDataPoint"
-               Title="@AverageByDoctorChartCaptions.YAxisTitle"
-               Options="ChartOptions"
-               Height="@("100%")"
-               Width="@("100%")">
+<FullScreenZone>
+    <Chart>
+        <ApexChart @ref="Chart"
+                   TItem="AverageByDoctorDataPoint"
+                   Title="@AverageByDoctorChartCaptions.YAxisTitle"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
 
-        <ApexPointTooltip>
-            <AverageByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
-                                    SeriesIndex="@context.SeriesIndex"
-                                    DataOptions="DataOptions"
-                                    ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
-        </ApexPointTooltip>
+            <ApexPointTooltip>
+                <AverageByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
+                                        SeriesIndex="@context.SeriesIndex"
+                                        DataOptions="DataOptions"
+                                        ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
+            </ApexPointTooltip>
 
-        <ChildContent>
-            <ApexPointSeries TItem="AverageByDoctorDataPoint"
-                             Items="DataPoints"
-                             Name="@AverageByDoctorChartCaptions.SeriesTitles[0]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Actor"
-                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />
+            <ChildContent>
+                <ApexPointSeries TItem="AverageByDoctorDataPoint"
+                                 Items="DataPoints"
+                                 Name="@AverageByDoctorChartCaptions.SeriesTitles[0]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Actor"
+                                 YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />
 
-            <ApexPointSeries TItem="AverageByDoctorDataPoint"
-                             Items="DataPoints"
-                             Name="@AverageByDoctorChartCaptions.SeriesTitles[1]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Actor"
-                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings : dataPoint.CalculatedConsolidatedExcessRatings" />
+                <ApexPointSeries TItem="AverageByDoctorDataPoint"
+                                 Items="DataPoints"
+                                 Name="@AverageByDoctorChartCaptions.SeriesTitles[1]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Actor"
+                                 YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings : dataPoint.CalculatedConsolidatedExcessRatings" />
 
-            <ApexPointSeries TItem="AverageByDoctorDataPoint"
-                             Items="DataPoints"
-                             Name="@AverageByDoctorChartCaptions.SeriesTitles[2]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Actor"
-                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedExtendedExcessRatings : dataPoint.CalculatedExtendedExcessRatings" />
-        </ChildContent>
-    </ApexChart>
-</Chart>
+                <ApexPointSeries TItem="AverageByDoctorDataPoint"
+                                 Items="DataPoints"
+                                 Name="@AverageByDoctorChartCaptions.SeriesTitles[2]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Actor"
+                                 YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedExtendedExcessRatings : dataPoint.CalculatedExtendedExcessRatings" />
+            </ChildContent>
+        </ApexChart>
+    </Chart>
 
-<ChartOptions>
-    <ChartOptionsGroup>
-        <ChartOptionsText Label="Calculate using" />
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Calculate using" />
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="mean" Group="midpointOption"
-                           CheckedValue="@AverageByDoctorCalculationMethod.Mean"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="mean" Group="midpointOption"
+                               CheckedValue="@AverageByDoctorCalculationMethod.Mean"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="median" Group="midpointOption"
-                           CheckedValue="@AverageByDoctorCalculationMethod.Median"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
-    </ChartOptionsGroup>
-    
-    <ChartOptionsGroup>
-        <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeSpecials"
-                              Id="specials" Label="Include specials"
-                              AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsCheckbox>
-    </ChartOptionsGroup>
-    
-    <ChartOptionsGroup>
-        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
-                              Id="population" Label="Adjust relative to current population"
-                              AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsCheckbox>
-    </ChartOptionsGroup>
-</ChartOptions>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="median" Group="midpointOption"
+                               CheckedValue="@AverageByDoctorCalculationMethod.Median"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
+
+        <ChartOptionsGroup>
+            <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeSpecials"
+                                  Id="specials" Label="Include specials"
+                                  AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsCheckbox>
+        </ChartOptionsGroup>
+
+        <ChartOptionsGroup>
+            <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                                  Id="population" Label="Adjust relative to current population"
+                                  AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsCheckbox>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
 
 @code {
     private ApexChart<AverageByDoctorDataPoint> Chart { get; set; } = default!;
 
-    private ApexChartOptions<AverageByDoctorDataPoint> ChartOptions { get; } = AverageByDoctorChartOptions.Defaults; 
+    private ApexChartOptions<AverageByDoctorDataPoint> ChartOptions { get; } = AverageByDoctorChartOptions.Defaults;
 
     private AverageByDoctorDataOptions DataOptions { get; } = new();
 

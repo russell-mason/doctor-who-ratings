@@ -7,85 +7,87 @@
 <ChartHeading Title="@Bottom20EpisodesChartCaptions.Title"
               Description="@Bottom20EpisodesChartCaptions.Description" />
 
-<Chart DrillDown="@true">
-    <ApexChart @ref="Chart"
-               TItem="Bottom20EpisodesDataPoint"
-               Title="@Bottom20EpisodesChartCaptions.YAxisTitle"
-               Options="ChartOptions"
-               Height="@("100%")"
-               Width="@("100%")"
-               OnDataPointSelection="OnDataPointSelection">
+<FullScreenZone>
+    <Chart DrillDown="@true">
+        <ApexChart @ref="Chart"
+                   TItem="Bottom20EpisodesDataPoint"
+                   Title="@Bottom20EpisodesChartCaptions.YAxisTitle"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")"
+                   OnDataPointSelection="OnDataPointSelection">
 
-        <ApexPointTooltip>
-            <Bottom20EpisodesTooltip DataPoint="@context.DataPoint.Items.First()"
-                                     SeriesIndex="@context.SeriesIndex"
-                                     DataPointIndex="@context.DataPointIndex"
-                                     DataOptions="DataOptions"
-                                     ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
-        </ApexPointTooltip>
+            <ApexPointTooltip>
+                <Bottom20EpisodesTooltip DataPoint="@context.DataPoint.Items.First()"
+                                         SeriesIndex="@context.SeriesIndex"
+                                         DataPointIndex="@context.DataPointIndex"
+                                         DataOptions="DataOptions"
+                                         ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
+            </ApexPointTooltip>
 
-        <ChildContent>
-            <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
-                             Items="DataPoints"
-                             Name="@Bottom20EpisodesChartCaptions.SeriesTitles[0]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Actor"
-                             YValue="dataPoint => dataPoint.CalculatedOvernightRatings" />
+            <ChildContent>
+                <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
+                                 Items="DataPoints"
+                                 Name="@Bottom20EpisodesChartCaptions.SeriesTitles[0]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Actor"
+                                 YValue="dataPoint => dataPoint.CalculatedOvernightRatings" />
 
-            <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
-                             Items="DataPoints"
-                             Name="@Bottom20EpisodesChartCaptions.SeriesTitles[1]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Actor"
-                             YValue="dataPoint => dataPoint.CalculatedConsolidatedExcessRatings" />
+                <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
+                                 Items="DataPoints"
+                                 Name="@Bottom20EpisodesChartCaptions.SeriesTitles[1]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Actor"
+                                 YValue="dataPoint => dataPoint.CalculatedConsolidatedExcessRatings" />
 
-            <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
-                             Items="DataPoints"
-                             Name="@Bottom20EpisodesChartCaptions.SeriesTitles[2]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Actor"
-                             YValue="dataPoint => dataPoint.CalculatedExtendedExcessRatings" />
-        </ChildContent>
-    </ApexChart>
-</Chart>
+                <ApexPointSeries TItem="Bottom20EpisodesDataPoint"
+                                 Items="DataPoints"
+                                 Name="@Bottom20EpisodesChartCaptions.SeriesTitles[2]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Actor"
+                                 YValue="dataPoint => dataPoint.CalculatedExtendedExcessRatings" />
+            </ChildContent>
+        </ApexChart>
+    </Chart>
 
-<ChartOptions>
-    <ChartOptionsGroup>
-        <ChartOptionsText Label="Calculate using" />
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Calculate using" />
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="overnight" Group="ratingsOption"
-                           CheckedValue="@Bottom20EpisodesCalculationMethod.Overnight"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="overnight" Group="ratingsOption"
+                               CheckedValue="@Bottom20EpisodesCalculationMethod.Overnight"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="consolidated" Group="ratingsOption"
-                           CheckedValue="@Bottom20EpisodesCalculationMethod.Consolidated"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="consolidated" Group="ratingsOption"
+                               CheckedValue="@Bottom20EpisodesCalculationMethod.Consolidated"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="extended" Group="ratingsOption"
-                           CheckedValue="@Bottom20EpisodesCalculationMethod.Extended"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
-    </ChartOptionsGroup>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="extended" Group="ratingsOption"
+                               CheckedValue="@Bottom20EpisodesCalculationMethod.Extended"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
 
-    <ChartOptionsGroup>
-        <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeSpecials"
-                              Id="specials" Label="Include specials/movie"
-                              AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsCheckbox>
-    </ChartOptionsGroup>
+        <ChartOptionsGroup>
+            <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeSpecials"
+                                  Id="specials" Label="Include specials/movie"
+                                  AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsCheckbox>
+        </ChartOptionsGroup>
 
-    <ChartOptionsGroup>
-        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
-                              Id="population" Label="Adjust relative to current population"
-                              AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsCheckbox>
-    </ChartOptionsGroup>
-</ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                                  Id="population" Label="Adjust relative to current population"
+                                  AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsCheckbox>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
 
 <DrillDownTip />
 

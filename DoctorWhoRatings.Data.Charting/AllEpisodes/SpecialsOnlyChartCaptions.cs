@@ -2,7 +2,7 @@
 
 public static class SpecialsOnlyChartCaptions
 {
-    public const string Title = "Specials Only";
+    public const string Title = "All Specials";
 
     public const string Description = "Shows ratings filtered to only include the specials.";
 

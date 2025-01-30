@@ -8,60 +8,62 @@
 <ChartHeading Title="@AllEpisodesByDoctorChartCaptions.Title"
               Description="@AllEpisodesByDoctorChartCaptions.Description" />
 
-<Chart DrillDown="@true">
-    <ApexChart @ref="Chart"
-               TItem="EpisodeDataPoint"
-               Title="@AllEpisodesByDoctorChartCaptions.YAxisTitle"
-               Options="ChartOptions"
-               Height="@("100%")"
-               Width="@("100%")"
-               OnDataPointSelection="OnDataPointSelection">
+<FullScreenZone>
+    <Chart DrillDown="@true">
+        <ApexChart @ref="Chart"
+                   TItem="EpisodeDataPoint"
+                   Title="@AllEpisodesByDoctorChartCaptions.YAxisTitle"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")"
+                   OnDataPointSelection="OnDataPointSelection">
 
-        <ApexPointTooltip>
-            <AllEpisodesByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
-                                        SeriesIndex="@context.SeriesIndex"
-                                        ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
-        </ApexPointTooltip>
+            <ApexPointTooltip>
+                <AllEpisodesByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
+                                            SeriesIndex="@context.SeriesIndex"
+                                            ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation"/>
+            </ApexPointTooltip>
 
-        <ChildContent>
-            <ApexPointSeries TItem="EpisodeDataPoint"
-                             Items="DataPoints"
-                             Name="@AllEpisodesByDoctorChartCaptions.SeriesTitles[0]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Id"
-                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedOvernightRatings : dataPoint.OvernightRatings" />
+            <ChildContent>
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                                 Items="DataPoints"
+                                 Name="@AllEpisodesByDoctorChartCaptions.SeriesTitles[0]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Id"
+                                 YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedOvernightRatings : dataPoint.OvernightRatings"/>
 
-            <ApexPointSeries TItem="EpisodeDataPoint"
-                             Items="DataPoints"
-                             Name="@AllEpisodesByDoctorChartCaptions.SeriesTitles[1]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Id"
-                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedConsolidatedExcessRatings : dataPoint.ConsolidatedExcessRatings" />
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                                 Items="DataPoints"
+                                 Name="@AllEpisodesByDoctorChartCaptions.SeriesTitles[1]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Id"
+                                 YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedConsolidatedExcessRatings : dataPoint.ConsolidatedExcessRatings"/>
 
-            <ApexPointSeries TItem="EpisodeDataPoint"
-                             Items="DataPoints"
-                             Name="@AllEpisodesByDoctorChartCaptions.SeriesTitles[2]"
-                             SeriesType="SeriesType.Bar"
-                             XValue="dataPoint => dataPoint.Id"
-                             YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedExtendedExcessRatings : dataPoint.ExtendedExcessRatings" />
-        </ChildContent>
-    </ApexChart>
-</Chart>
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                                 Items="DataPoints"
+                                 Name="@AllEpisodesByDoctorChartCaptions.SeriesTitles[2]"
+                                 SeriesType="SeriesType.Bar"
+                                 XValue="dataPoint => dataPoint.Id"
+                                 YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedExtendedExcessRatings : dataPoint.ExtendedExcessRatings"/>
+            </ChildContent>
+        </ApexChart>
+    </Chart>
 
-<ChartOptions>
-    <ChartOptionsGroup>
-        <ChartOptionsSelect @bind-Value="DataOptionsDoctorFilter"
-                            Id="doctor" Label="Filter by" Values="DoctorsDataSource"
-                            AfterValueChanged="AfterOptionChanged" />
-    </ChartOptionsGroup>
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsSelect @bind-Value="DataOptionsDoctorFilter"
+                                Id="doctor" Label="Filter by" Values="DoctorsDataSource"
+                                AfterValueChanged="AfterOptionChanged"/>
+        </ChartOptionsGroup>
 
-    <ChartOptionsGroup>
-        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
-                              Id="population" Label="Adjust relative to current population"
-                              AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsCheckbox>
-    </ChartOptionsGroup>
-</ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                                  Id="population" Label="Adjust relative to current population"
+                                  AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsCheckbox>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
 
 <DrillDownTip />
 

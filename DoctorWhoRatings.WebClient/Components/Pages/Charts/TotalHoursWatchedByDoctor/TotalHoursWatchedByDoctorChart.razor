@@ -6,55 +6,57 @@
 <ChartHeading Title="@TotalHoursWatchedByDoctorChartCaptions.Title"
               Description="@(TotalHoursWatchedByDoctorChartCaptions.Description + " *")" />
 
-<Chart>
-    <ApexChart @ref="Chart"
-               TItem="TotalHoursWatchedByDoctorDataPoint"
-               Title="@TotalHoursWatchedByDoctorChartCaptions.YAxisTitle"
-               Options="ChartOptions"
-               Height="@("100%")"
-               Width="@("100%")">
+<FullScreenZone>
+    <Chart>
+        <ApexChart @ref="Chart"
+                   TItem="TotalHoursWatchedByDoctorDataPoint"
+                   Title="@TotalHoursWatchedByDoctorChartCaptions.YAxisTitle"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
 
-        <ApexPointTooltip>
-            <TotalHoursWatchedByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
-                                              DataOptions="DataOptions"
-                                              PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
-        </ApexPointTooltip>
+            <ApexPointTooltip>
+                <TotalHoursWatchedByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
+                                                  DataOptions="DataOptions"
+                                                  PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
+            </ApexPointTooltip>
 
-        <ChildContent>
-            <ApexPointSeries TItem="TotalHoursWatchedByDoctorDataPoint"
-                             Items="DataPoints"
-                             Name="@TotalHoursWatchedByDoctorChartCaptions.SeriesTitles[0]"
-                             SeriesType="SeriesType.Pie"
-                             XValue="dataPoint => dataPoint.Actor"
-                             YValue="dataPoint => dataPoint.CalculatedTotalHoursWatched"
-                             ShowDataLabels />
-        </ChildContent>
-    </ApexChart>
-</Chart>
+            <ChildContent>
+                <ApexPointSeries TItem="TotalHoursWatchedByDoctorDataPoint"
+                                 Items="DataPoints"
+                                 Name="@TotalHoursWatchedByDoctorChartCaptions.SeriesTitles[0]"
+                                 SeriesType="SeriesType.Pie"
+                                 XValue="dataPoint => dataPoint.Actor"
+                                 YValue="dataPoint => dataPoint.CalculatedTotalHoursWatched"
+                                 ShowDataLabels />
+            </ChildContent>
+        </ApexChart>
+    </Chart>
 
-<ChartOptions>
-    <ChartOptionsGroup>
-        <ChartOptionsText Label="Calculate using" />
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Calculate using" />
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="overnight" Group="ratingsOption"
-                           CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Overnight"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="overnight" Group="ratingsOption"
+                               CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Overnight"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="consolidated" Group="ratingsOption"
-                           CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Consolidated"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="consolidated" Group="ratingsOption"
+                               CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Consolidated"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="extended" Group="ratingsOption"
-                           CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Extended"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
-    </ChartOptionsGroup>
-</ChartOptions>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="extended" Group="ratingsOption"
+                               CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Extended"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
 
 <Info>
     * Ratings are based on "views", which can be as little as

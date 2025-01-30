@@ -7,72 +7,74 @@
 <ChartHeading Title="@PremierFinaleEpisodesBySeasonChartCaptions.Title"
               Description="@(PremierFinaleEpisodesBySeasonChartCaptions.Description + ". Excludes specials and movies")" />
 
-<Chart DrillDown="@true">
-    <ApexChart @ref="Chart"
-               TItem="PremierFinaleEpisodeBySeasonDataPoint"
-               Title="@PremierFinaleEpisodesBySeasonChartCaptions.YAxisTitle"
-               Options="ChartOptions"
-               Height="@("100%")"
-               Width="@("100%")"
-               OnDataPointSelection="OnDataPointSelection">
+<FullScreenZone>
+    <Chart DrillDown="@true">
+        <ApexChart @ref="Chart"
+                   TItem="PremierFinaleEpisodeBySeasonDataPoint"
+                   Title="@PremierFinaleEpisodesBySeasonChartCaptions.YAxisTitle"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")"
+                   OnDataPointSelection="OnDataPointSelection">
 
-        <ApexPointTooltip>
-            <PremierFinaleEpisodesBySeasonTooltip DataPoint="@context.DataPoint.Items.First()"
-                                                  DataOptions="DataOptions"
-                                                  ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
-        </ApexPointTooltip>
+            <ApexPointTooltip>
+                <PremierFinaleEpisodesBySeasonTooltip DataPoint="@context.DataPoint.Items.First()"
+                                                      DataOptions="DataOptions"
+                                                      ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
+            </ApexPointTooltip>
 
-        <ChildContent>
-            @foreach (var keyValues in DataPoints)
-            {
-                <ApexPointSeries TItem="PremierFinaleEpisodeBySeasonDataPoint"
-                                 Items="@keyValues.Value"
-                                 Name="@($"{keyValues.Value.First().Actor} - {keyValues.Key}")"
-                                 SeriesType="SeriesType.Line"
-                                 XValue="dataPoint => dataPoint.EpisodePosition"
-                                 YValue="dataPoint => dataPoint.CalculatedRatings ?? 0" />
-            }
-        </ChildContent>
-    </ApexChart>
-</Chart>
+            <ChildContent>
+                @foreach (var keyValues in DataPoints)
+                {
+                    <ApexPointSeries TItem="PremierFinaleEpisodeBySeasonDataPoint"
+                                     Items="@keyValues.Value"
+                                     Name="@($"{keyValues.Value.First().Actor} - {keyValues.Key}")"
+                                     SeriesType="SeriesType.Line"
+                                     XValue="dataPoint => dataPoint.EpisodePosition"
+                                     YValue="dataPoint => dataPoint.CalculatedRatings ?? 0" />
+                }
+            </ChildContent>
+        </ApexChart>
+    </Chart>
 
-<ChartOptions>
-    <ChartOptionsGroup>
-        <ChartOptionsText Label="Calculate using" />
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Calculate using" />
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="overnight" Group="ratingsOption"
-                           CheckedValue="@PremierFinaleEpisodesBySeasonCalculationMethod.Overnight"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="overnight" Group="ratingsOption"
+                               CheckedValue="@PremierFinaleEpisodesBySeasonCalculationMethod.Overnight"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="consolidated" Group="ratingsOption"
-                           CheckedValue="@PremierFinaleEpisodesBySeasonCalculationMethod.Consolidated"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="consolidated" Group="ratingsOption"
+                               CheckedValue="@PremierFinaleEpisodesBySeasonCalculationMethod.Consolidated"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
 
-        <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                           Id="extended" Group="ratingsOption"
-                           CheckedValue="@PremierFinaleEpisodesBySeasonCalculationMethod.Extended"
-                           AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsRadio>
-    </ChartOptionsGroup>
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="extended" Group="ratingsOption"
+                               CheckedValue="@PremierFinaleEpisodesBySeasonCalculationMethod.Extended"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
 
-    <ChartOptionsGroup>
-        <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
-                              Id="population" Label="Adjust relative to current population"
-                              AfterValueChanged="AfterOptionChanged">
-        </ChartOptionsCheckbox>
-    </ChartOptionsGroup>
+        <ChartOptionsGroup>
+            <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+                                  Id="population" Label="Adjust relative to current population"
+                                  AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsCheckbox>
+        </ChartOptionsGroup>
 
-    <ChartOptionsGroup>
-        <ChartOptionsText Label="Selection"></ChartOptionsText>
-        <button type="button" @onclick="() => ToggleLegend(LegendSelectionAction.None)">None</button>
-        <button type="button" @onclick="() => ToggleLegend(LegendSelectionAction.All)">All</button>
-        <button type="button" @onclick="() => ToggleLegend(LegendSelectionAction.Toggle)">Toggle</button>
-    </ChartOptionsGroup>
-</ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Selection"></ChartOptionsText>
+            <button type="button" @onclick="() => ToggleLegend(LegendSelectionAction.None)">None</button>
+            <button type="button" @onclick="() => ToggleLegend(LegendSelectionAction.All)">All</button>
+            <button type="button" @onclick="() => ToggleLegend(LegendSelectionAction.Toggle)">Toggle</button>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
 
 <DrillDownTip />
 

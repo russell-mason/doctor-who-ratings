@@ -1,4 +1,5 @@
 ﻿.nav-bar {
+    display: flex;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -24,4 +25,19 @@
 
     .nav-item:hover:after {
         opacity: 1;
+    }
+
+.nav-fill {
+    flex-grow: 1;
+}
+
+.icon {
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    background-image: url(./images/screen.svg);
+}
+
+    .icon:hover {
+        background-image: url(./images/full-screen.svg);
     }

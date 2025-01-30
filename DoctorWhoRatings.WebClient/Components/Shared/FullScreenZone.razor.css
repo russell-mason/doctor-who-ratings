@@ -1,0 +1,9 @@
+﻿#fullScreenZone {
+    display: flex;
+    flex-direction: column;
+}
+
+body.full-screen-on #fullScreenZone {
+    background-image: url(./images/background.webp);
+    background-size: cover;
+}
