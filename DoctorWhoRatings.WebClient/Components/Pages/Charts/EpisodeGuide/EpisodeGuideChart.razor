@@ -15,7 +15,7 @@
         @foreach (var episodeDataPoint in doctorDataPoint.Episodes)
         {
             var dataPointMetadata = episodeDataPoint.Metadata;
-            var episodeUrl = $"/charts/episodes/{episodeDataPoint.Slug}";
+            var episodeUrl = $"./charts/episodes/{episodeDataPoint.Slug}";
 
 
             if (dataPointMetadata.ShowSeasonTitle)
