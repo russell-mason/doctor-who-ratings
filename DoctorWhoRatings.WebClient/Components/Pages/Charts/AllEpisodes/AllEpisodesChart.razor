@@ -1,5 +1,6 @@
 ﻿@page "/charts/all-episodes"
 @inject IEpisodesDataPointGenerator DataPointGenerator
+@inject ITrendDataPointGenerator TrendDataPointGenerator;
 
 <PageTitle>@AllEpisodesChartCaptions.Title - @Application.Name</PageTitle>
 
@@ -8,7 +9,7 @@
 
 <FullScreenZone>
     <Chart>
-        <ApexChart @ref="Chart" 
+        <ApexChart @ref="Chart"
                    TItem="EpisodeDataPoint"
                    Title="@AllEpisodesChartCaptions.YAxisTitle"
                    Options="ChartOptions"
@@ -26,10 +27,66 @@
                                  Name="@AllEpisodesChartCaptions.SeriesTitles[0]"
                                  SeriesType="SeriesType.Line"
                                  XValue="dataPoint => dataPoint.Id"
-                                 YValue="dataPoint => dataPoint.OvernightRatings" />
+                                 YValue="dataPoint => dataPoint.OvernightRatings"
+                                 Stroke="@(new SeriesStroke { Color = "#008FFBD8", Width = 2 })" />
+
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                                 Items="@TrendDataPoints.alternating1"
+                                 Name="@($"Trend")"
+                                 SeriesType="SeriesType.Line"
+                                 XValue="dataPoint => dataPoint.Id"
+                                 YValue="dataPoint => dataPoint.OvernightRatings"
+                                 Stroke="@(new SeriesStroke { Color = "#FF0080", Width = 3 })" 
+                                 PointColor="@((_) => "#FF0000")"/>
+                
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                                 Items="@TrendDataPoints.alternating2"
+                                 Name="@($"Trend")"
+                                 SeriesType="SeriesType.Line"
+                                 XValue="dataPoint => dataPoint.Id"
+                                 YValue="dataPoint => dataPoint.OvernightRatings"
+                                 Stroke="@(new SeriesStroke { Color = "#FF0080", Width = 3 })"
+                                 PointColor="@((_) => "#FF0000")" />
+
             </ChildContent>
         </ApexChart>
     </Chart>
+
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Show trendline by" />
+
+            <ChartOptionsRadio @bind-Value="TrendDataOptions.Range"
+                               Id="none" Group="trend"
+                               CheckedValue="@TrendRange.None"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+            
+            <ChartOptionsRadio @bind-Value="TrendDataOptions.Range"
+                               Id="season" Group="trend"
+                               CheckedValue="@TrendRange.Season"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="TrendDataOptions.Range"
+                               Id="doctor" Group="trend"
+                               CheckedValue="@TrendRange.Doctor"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="TrendDataOptions.Range"
+                               Id="era" Group="trend"
+                               CheckedValue="@TrendRange.Era"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="TrendDataOptions.Range"
+                               Id="all" Group="trend"
+                               CheckedValue="@TrendRange.All"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
+    </ChartOptions>
 </FullScreenZone>
 
 @code {
@@ -41,9 +98,14 @@
 
     private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
 
+    private TrendDataOptions TrendDataOptions { get; } = new();
+
+    private (List<TrendDataPoint?> alternating1, List<TrendDataPoint?> alternating2) TrendDataPoints { get; set; }
+
     protected override void OnInitialized()
     {
         DataPoints = DataPointGenerator.Generate(DataOptions);
+        TrendDataPoints = TrendDataPointGenerator.GenerateAlternating(DataPoints, TrendDataOptions);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -52,5 +114,12 @@
         {
             await Chart.AddCustomAnnotations(AllEpisodesChartOptions.CreateAnnotations(DataPoints));
         }
+    }
+
+    private async Task AfterOptionChanged()
+    {
+        TrendDataPoints = TrendDataPointGenerator.GenerateAlternating(DataPoints, TrendDataOptions);
+
+        await Chart.RenderAsync();
     }
 }

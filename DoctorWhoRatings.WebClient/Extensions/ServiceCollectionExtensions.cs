@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ITimelineDataPointGenerator, TimelineDataPointGenerator>();
         services.AddSingleton<IEpisodeGuideDataPointGenerator, EpisodeGuideDataPointGenerator>();
         services.AddSingleton<IEpisodeInContextDataPointGenerator, EpisodeInContextDataPointGenerator>();
+        services.AddSingleton<ITrendDataPointGenerator, TrendDataPointGenerator>();
 
         services.AddScoped<IEpisodeContextDrillDown, EpisodeContextDrillDown>();
 

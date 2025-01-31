@@ -17,6 +17,7 @@ global using DoctorWhoRatings.Data.Charting.SpecialsOnly;
 global using DoctorWhoRatings.Data.Charting.Timeline;
 global using DoctorWhoRatings.Data.Charting.Top20Episodes;
 global using DoctorWhoRatings.Data.Charting.TotalHoursWatchedByDoctor;
+global using DoctorWhoRatings.Data.Charting.Trend;
 global using DoctorWhoRatings.Data.Excel;
 global using DoctorWhoRatings.Data.Models;
 global using DoctorWhoRatings.WebClient.Components;

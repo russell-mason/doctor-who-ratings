@@ -1,16 +1,27 @@
 ﻿<ChartTooltip>
-    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
-                               StoryTitle="@DataPoint.StoryTitle"
-                               PartTitle="@DataPoint.PartTitle"
-                               SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
-                               Season="@DataPoint.Season"
-                               OriginalAirDate="@DataPoint.OriginalAirDate" />
+    @if (DataPoint is TrendDataPoint)
+    {
+        <ChartTooltipIconSection IconUrl="images/trend.svg" IconAlt="Trend" Title="TREND"></ChartTooltipIconSection>
+        
+        <ChartTooltipBreak />
+        
+        <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings" />
+    }
+    else
+    {
+        <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                                   StoryTitle="@DataPoint.StoryTitle"
+                                   PartTitle="@DataPoint.PartTitle"
+                                   SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
+                                   Season="@DataPoint.Season"
+                                   OriginalAirDate="@DataPoint.OriginalAirDate"/>
 
-    <ChartTooltipBreak />
+        <ChartTooltipBreak/>
 
-    <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings" />
-    
-    <ChartTooltipNoteSection Note="@DataPoint.Note" />
+        <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings"/>
+
+        <ChartTooltipNoteSection Note="@DataPoint.Note"/>
+    }
 </ChartTooltip>
 
 @code {

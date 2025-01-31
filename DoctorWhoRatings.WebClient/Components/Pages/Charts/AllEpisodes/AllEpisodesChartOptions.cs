@@ -11,10 +11,6 @@ public static class AllEpisodesChartOptions
                 StrokeWidth = 0,
                 Colors = "#1E5EAB"
             },
-            Stroke = new Stroke
-            {
-                Width = 2
-            },
             Xaxis = new XAxis
             {
                 Labels = new XAxisLabels
@@ -49,6 +45,10 @@ public static class AllEpisodesChartOptions
             Tooltip = new Tooltip
             {
                 FollowCursor = true
+            },
+            Legend = new Legend
+            {
+                Show = false
             }
         };
 
