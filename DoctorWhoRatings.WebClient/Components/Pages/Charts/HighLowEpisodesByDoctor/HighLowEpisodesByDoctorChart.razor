@@ -11,7 +11,7 @@
     <Chart DrillDown="@true">
         <ApexChart @ref="Chart"
                    TItem="HighLowEpisodesByDoctorDataPoint"
-                   Title="@HighLowEpisodesByDoctorChartCaptions.YAxisTitle"
+                   Title="@HighLowEpisodesByDoctorChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")"
@@ -27,7 +27,7 @@
             <ChildContent>
                 <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[0]"
+                                 Name="@("Overnight viewers (High)")"
                                  Group="High"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Actor"
@@ -35,7 +35,7 @@
 
                 <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[1]"
+                                 Name="@("Additional viewers after seven days (High)")"
                                  Group="High"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Actor"
@@ -43,7 +43,7 @@
 
                 <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[2]"
+                                 Name="@("Additional viewers on all devices (High)")"
                                  Group="High"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Actor"
@@ -51,7 +51,7 @@
 
                 <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[3]"
+                                 Name="@("Overnight viewers (Low)")"
                                  Group="Low"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Actor"
@@ -59,7 +59,7 @@
 
                 <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[4]"
+                                 Name="@("Additional viewers after seven days (Low)")"
                                  Group="Low"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Actor"
@@ -67,7 +67,7 @@
 
                 <ApexPointSeries TItem="HighLowEpisodesByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@HighLowEpisodesByDoctorChartCaptions.SeriesTitles[5]"
+                                 Name="@("Additional viewers on all devices (Low)")"
                                  Group="Low"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Actor"

@@ -11,7 +11,7 @@
     <Chart DrillDown="@true">
         <ApexChart @ref="Chart"
                    TItem="PremierFinaleEpisodeBySeasonDataPoint"
-                   Title="@PremierFinaleEpisodesBySeasonChartCaptions.YAxisTitle"
+                   Title="@PremierFinaleEpisodesBySeasonChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")"
@@ -28,7 +28,6 @@
                 {
                     <ApexPointSeries TItem="PremierFinaleEpisodeBySeasonDataPoint"
                                      Items="@keyValues.Value"
-                                     Name="@($"{keyValues.Value.First().Actor} - {keyValues.Key}")"
                                      SeriesType="SeriesType.Line"
                                      XValue="dataPoint => dataPoint.EpisodePosition"
                                      YValue="dataPoint => dataPoint.CalculatedRatings ?? 0" />

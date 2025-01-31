@@ -10,7 +10,7 @@
     <Chart>
         <ApexChart @ref="Chart"
                    TItem="AverageByDoctorDataPoint"
-                   Title="@AverageByDoctorChartCaptions.YAxisTitle"
+                   Title="@AverageByDoctorChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")">
@@ -25,21 +25,21 @@
             <ChildContent>
                 <ApexPointSeries TItem="AverageByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@AverageByDoctorChartCaptions.SeriesTitles[0]"
+                                 Name="@("Overnight viewers")"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Actor"
                                  YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />
 
                 <ApexPointSeries TItem="AverageByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@AverageByDoctorChartCaptions.SeriesTitles[1]"
+                                 Name="@("Additional viewers after seven days")"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Actor"
                                  YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings : dataPoint.CalculatedConsolidatedExcessRatings" />
 
                 <ApexPointSeries TItem="AverageByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@AverageByDoctorChartCaptions.SeriesTitles[2]"
+                                 Name="@("Additional viewers on all devices")"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Actor"
                                  YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedExtendedExcessRatings : dataPoint.CalculatedExtendedExcessRatings" />

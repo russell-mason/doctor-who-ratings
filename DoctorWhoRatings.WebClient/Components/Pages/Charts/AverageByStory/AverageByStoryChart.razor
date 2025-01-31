@@ -10,7 +10,7 @@
     <Chart>
         <ApexChart @ref="Chart"
                    TItem="AverageByStoryDataPoint"
-                   Title="@AverageByStoryChartCaptions.YAxisTitle"
+                   Title="@AverageByStoryChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")">
@@ -24,7 +24,7 @@
             <ChildContent>
                 <ApexPointSeries TItem="AverageByStoryDataPoint"
                                  Items="DataPoints"
-                                 Name="@AverageByStoryChartCaptions.SeriesTitles[0]"
+                                 Name="@("Overnight viewers")"
                                  SeriesType="SeriesType.Bar"
                                  XValue="dataPoint => dataPoint.Id"
                                  YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />

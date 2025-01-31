@@ -9,7 +9,7 @@
 <FullScreenZone>
     <Chart>
         <ApexChart TItem="PopulationByYearDataPoint"
-                   Title="@PopulationByYearChartCaptions.YAxisTitle"
+                   Title="@PopulationByYearChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")">
@@ -21,7 +21,6 @@
             <ChildContent>
                 <ApexPointSeries TItem="PopulationByYearDataPoint"
                                  Items="DataPoints"
-                                 Name="@PopulationByYearChartCaptions.SeriesTitles[0]"
                                  SeriesType="SeriesType.Area"
                                  XValue="dataPoint => dataPoint.Year"
                                  YValue="dataPoint => dataPoint.Population" />

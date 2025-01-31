@@ -10,7 +10,7 @@
     <Chart>
         <ApexChart @ref="Chart"
                    TItem="ByEraDataPoint"
-                   Title="@ByEraChartCaptions.YAxisTitle"
+                   Title="@ByEraChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")">
@@ -24,7 +24,6 @@
             <ChildContent>
                 <ApexPointSeries TItem="ByEraDataPoint"
                                  Items="DataPoints"
-                                 Name="@ByEraChartCaptions.SeriesTitles[0]"
                                  SeriesType="SeriesType.Pie"
                                  XValue="dataPoint => dataPoint.Era"
                                  YValue="dataPoint => dataPoint.CalculatedRatings"

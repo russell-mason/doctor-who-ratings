@@ -10,7 +10,7 @@
     <Chart>
         <ApexChart @ref="Chart"
                    TItem="TotalHoursWatchedByDoctorDataPoint"
-                   Title="@TotalHoursWatchedByDoctorChartCaptions.YAxisTitle"
+                   Title="@TotalHoursWatchedByDoctorChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")">
@@ -24,7 +24,6 @@
             <ChildContent>
                 <ApexPointSeries TItem="TotalHoursWatchedByDoctorDataPoint"
                                  Items="DataPoints"
-                                 Name="@TotalHoursWatchedByDoctorChartCaptions.SeriesTitles[0]"
                                  SeriesType="SeriesType.Pie"
                                  XValue="dataPoint => dataPoint.Actor"
                                  YValue="dataPoint => dataPoint.CalculatedTotalHoursWatched"

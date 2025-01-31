@@ -12,6 +12,14 @@ public static class AverageByDoctorChartOptions
                     ColumnWidth = "90%"
                 }
             },
+            Xaxis = new XAxis
+            {
+                Title = new AxisTitle
+                {
+                    Text = "Doctor",
+                    OffsetY = -8
+                }
+            },
             Yaxis =
             [
                 new YAxis
@@ -19,6 +27,10 @@ public static class AverageByDoctorChartOptions
                     Labels = new YAxisLabels
                     {
                         Formatter = "function(value) { return value.toFixed(2); }"
+                    },
+                    Title = new AxisTitle
+                    {
+                        Text = "Ratings (millions)"
                     }
                 }
             ],

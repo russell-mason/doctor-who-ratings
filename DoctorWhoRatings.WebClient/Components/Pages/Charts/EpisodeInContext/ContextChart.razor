@@ -5,7 +5,7 @@
 <Chart>
     <ApexChart @ref="Chart"
                TItem="EpisodeDataPoint"
-               Title="@EpisodeInContextChartCaptions.YAxisTitle"
+               Title="@EpisodeInContextChartCaptions.Title"
                Options="ChartOptions"
                Height="@("100%")"
                Width="@("100%")"
@@ -19,21 +19,21 @@
         <ChildContent>
             <ApexPointSeries TItem="EpisodeDataPoint"
                              Items="Context.Episodes"
-                             Name="@EpisodeInContextChartCaptions.SeriesTitles[0]"
+                             Name="@("Overnight viewers")"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => GetDisplayTitle(dataPoint.FullTitle)"
                              YValue="dataPoint => dataPoint.OvernightRatings" />
 
             <ApexPointSeries TItem="EpisodeDataPoint"
                              Items="Context.Episodes"
-                             Name="@EpisodeInContextChartCaptions.SeriesTitles[1]"
+                             Name="@("Additional viewers after seven days")"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => GetDisplayTitle(dataPoint.FullTitle)"
                              YValue="dataPoint => dataPoint.ConsolidatedExcessRatings" />
 
             <ApexPointSeries TItem="EpisodeDataPoint"
                              Items="Context.Episodes"
-                             Name="@EpisodeInContextChartCaptions.SeriesTitles[2]"
+                             Name="@("Additional viewers on all devices")"
                              SeriesType="SeriesType.Bar"
                              XValue="dataPoint => GetDisplayTitle(dataPoint.FullTitle)"
                              YValue="dataPoint => dataPoint.ExtendedExcessRatings" />

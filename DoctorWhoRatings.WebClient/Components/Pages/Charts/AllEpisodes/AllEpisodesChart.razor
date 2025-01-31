@@ -11,7 +11,7 @@
     <Chart>
         <ApexChart @ref="Chart"
                    TItem="EpisodeDataPoint"
-                   Title="@AllEpisodesChartCaptions.YAxisTitle"
+                   Title="@AllEpisodesChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")">
@@ -24,7 +24,6 @@
             <ChildContent>
                 <ApexPointSeries TItem="EpisodeDataPoint"
                                  Items="DataPoints"
-                                 Name="@AllEpisodesChartCaptions.SeriesTitles[0]"
                                  SeriesType="SeriesType.Line"
                                  XValue="dataPoint => dataPoint.Id"
                                  YValue="dataPoint => dataPoint.OvernightRatings"
@@ -32,7 +31,6 @@
 
                 <ApexPointSeries TItem="EpisodeDataPoint"
                                  Items="@TrendDataPoints.alternating1"
-                                 Name="@($"Trend")"
                                  SeriesType="SeriesType.Line"
                                  XValue="dataPoint => dataPoint.Id"
                                  YValue="dataPoint => dataPoint.OvernightRatings"
@@ -41,7 +39,6 @@
                 
                 <ApexPointSeries TItem="EpisodeDataPoint"
                                  Items="@TrendDataPoints.alternating2"
-                                 Name="@($"Trend")"
                                  SeriesType="SeriesType.Line"
                                  XValue="dataPoint => dataPoint.Id"
                                  YValue="dataPoint => dataPoint.OvernightRatings"

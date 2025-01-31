@@ -29,6 +29,11 @@ public static class AllEpisodesChartOptions
                 Crosshairs = new AxisCrosshairs
                 {
                     Show = false
+                },
+                Title = new AxisTitle
+                {
+                    Text = "Episode",
+                    OffsetY = 8
                 }
             },
             Yaxis =
@@ -39,6 +44,10 @@ public static class AllEpisodesChartOptions
                     Labels = new YAxisLabels
                     {
                         Formatter = "function(value) { return value.toFixed(2); }"
+                    },
+                    Title = new AxisTitle
+                    {
+                        Text = "Ratings (millions)"
                     }
                 }
             ],

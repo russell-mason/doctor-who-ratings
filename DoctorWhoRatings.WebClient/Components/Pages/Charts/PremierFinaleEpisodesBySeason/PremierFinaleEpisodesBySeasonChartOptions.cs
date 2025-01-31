@@ -43,6 +43,10 @@ public static class PremierFinaleEpisodesBySeasonChartOptions
                 Crosshairs = new AxisCrosshairs
                 {
                     Show = false
+                },
+                Title = new AxisTitle
+                {
+                    Text = "Episode"
                 }
             },
             Yaxis =
@@ -53,6 +57,10 @@ public static class PremierFinaleEpisodesBySeasonChartOptions
                     Labels = new YAxisLabels
                     {
                         Formatter = "function(value) { return value.toFixed(2); }"
+                    },
+                    Title = new AxisTitle
+                    {
+                        Text = "Ratings (millions)"
                     }
                 }
             ],

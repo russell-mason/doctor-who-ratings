@@ -33,6 +33,11 @@ public static class AllEpisodesByPopulationPercentageChartOptions
                 Crosshairs = new AxisCrosshairs
                 {
                     Show = false
+                },
+                Title = new AxisTitle
+                {
+                    Text = "Episode",
+                    OffsetY = 8
                 }
             },
             Yaxis =
@@ -43,6 +48,10 @@ public static class AllEpisodesByPopulationPercentageChartOptions
                     Labels = new YAxisLabels
                     {
                         Formatter = "function(value) { return value.toFixed(2); }"
+                    },
+                    Title = new AxisTitle
+                    {
+                        Text = "% of Population"
                     }
                 }
             ],

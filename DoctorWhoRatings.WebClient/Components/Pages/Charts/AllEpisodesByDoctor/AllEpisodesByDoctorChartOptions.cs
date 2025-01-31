@@ -22,7 +22,12 @@ public static class AllEpisodesByDoctorChartOptions
                         FontSize = "0"
                     }
                 },
-                TickPlacement = TickPlacement.On
+                TickPlacement = TickPlacement.On,
+                Title = new AxisTitle
+                {
+                    Text = "Episode",
+                    OffsetY = 8
+                }
             },
             Yaxis =
             [
@@ -31,6 +36,10 @@ public static class AllEpisodesByDoctorChartOptions
                     Labels = new YAxisLabels
                     {
                         Formatter = "function(value) { return value.toFixed(2); }"
+                    },
+                    Title = new AxisTitle
+                    {
+                        Text = "Ratings (millions)"
                     }
                 }
             ],

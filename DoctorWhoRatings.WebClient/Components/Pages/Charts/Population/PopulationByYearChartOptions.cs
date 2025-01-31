@@ -22,6 +22,11 @@ public static class PopulationByYearChartOptions
                 Crosshairs = new AxisCrosshairs
                 {
                     Show = false
+                },
+                Title = new AxisTitle
+                {
+                    Text = "Year",
+                    OffsetY = -8
                 }
             },
             Yaxis =
@@ -31,6 +36,10 @@ public static class PopulationByYearChartOptions
                     Labels = new YAxisLabels
                     {
                         Formatter = "function(value) { return Math.round(value / 1000000, 0); }"
+                    },
+                    Title = new AxisTitle
+                    {
+                        Text = "Population (millions)"
                     }
                 }
             ],
