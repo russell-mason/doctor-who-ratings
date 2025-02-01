@@ -1,14 +1,18 @@
 ﻿<ChartTooltip>
     <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
-                               EpisodeCount="@DataPoint.EpisodeCount" />
-    
+                               EpisodeCount="@DataPoint.EpisodeCount"
+                               EpisodeCountLocation="@EpisodeCountLocation.AfterStoryTitle"
+                               SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
+                               Season="@DataPoint.Season"
+                               OriginalAirDate="@DataPoint.OriginalAirDate" />
+
     <ChartTooltipBreak />
 
-    <ChartTooltipIconSection IconUrl="images/calculator.svg" 
+    <ChartTooltipIconSection IconUrl="images/calculator.svg"
                              IconAlt="Calculation method"
                              Title="@DataOptions.CalculationMethod.ToString()" />
     <ChartTooltipBreak />
-    
+
     <ChartTooltipRatingsSection TargetRatings="@TargetExcessRatings"
                                 OvernightRatings="@DataPoint.CalculatedOvernightRatings"
                                 ConsolidatedRatings="@DataPoint.CalculatedConsolidatedRatings"
@@ -22,7 +26,7 @@
                                     TargetRatings="@TargetPopulationAdjustedExcessRatings"
                                     OvernightRatings="@DataPoint.CalculatedPopulationAdjustedOvernightRatings"
                                     ConsolidatedRatings="@DataPoint.CalculatedPopulationAdjustedConsolidatedRatings"
-                                    ExtendedRatings="@DataPoint.CalculatedPopulationAdjustedExtendedRatings"/>
+                                    ExtendedRatings="@DataPoint.CalculatedPopulationAdjustedExtendedRatings" />
     </ChartSecondaryTooltip>
 }
 
@@ -31,13 +35,13 @@
     private const int ExtendedSeriesIndex = 2;
 
     [Parameter]
-    public required AverageByDoctorDataPoint DataPoint { get; set; }
+    public required AverageBySeasonDataPoint DataPoint { get; set; }
 
     [Parameter]
     public required int SeriesIndex { get; set; }
 
     [Parameter]
-    public required AverageByDoctorDataOptions DataOptions { get; set; }
+    public required AverageBySeasonDataOptions DataOptions { get; set; }
 
     private decimal? TargetExcessRatings => SeriesIndex switch
     {

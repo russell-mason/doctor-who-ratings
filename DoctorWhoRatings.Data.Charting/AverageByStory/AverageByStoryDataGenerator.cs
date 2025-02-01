@@ -20,6 +20,8 @@ public class AverageByStoryDataPointGenerator(IDoctorWhoDataProvider dataProvide
         {
             Id = index + 1,
             Actor = group.First().Actor,
+            Season = group.First().Season!.Value,
+            SeasonFormatDescription = group.First().SeasonFormatDescription,
             StoryTitle = group.First().StoryTitle,
             OriginalAirDate = group.First().OriginalAirDate,
             EpisodeCount = group.Count(),

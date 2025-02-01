@@ -3,6 +3,7 @@
                                EpisodeCount="@DataPoint.EpisodeCount"
                                EpisodeCountLocation="@EpisodeCountLocation.AfterStoryTitle"
                                StoryTitle="@DataPoint.StoryTitle"
+                               SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
                                Season="@DataPoint.Season"
                                OriginalAirDate="@DataPoint.OriginalAirDate" />
 
@@ -16,7 +17,7 @@
     <ChartTooltipRatingsSection OvernightRatings="@DataPoint.CalculatedOvernightRatings" />
 </ChartTooltip>
 
-@if (ShowPopulationAdjusted)
+@if (DataOptions.AdjustForCurrentPopulation)
 {
     <ChartSecondaryTooltip>
         <ChartTooltipRatingsSection Title="Population adjusted"
@@ -29,8 +30,5 @@
     public required AverageByStoryDataPoint DataPoint { get; set; }
 
     [Parameter]
-    public required int SeriesIndex { get; set; }
-
-    [Parameter]
-    public bool ShowPopulationAdjusted { get; set; }
+    public required AverageByStoryDataOptions DataOptions { get; set; }
 }

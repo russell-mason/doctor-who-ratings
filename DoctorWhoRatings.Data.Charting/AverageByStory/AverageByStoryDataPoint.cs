@@ -10,6 +10,8 @@ public class AverageByStoryDataPoint
 
     public int Season { get; init; }
 
+    public required string SeasonFormatDescription { get; init; }
+
     public DateTime OriginalAirDate { get; init; }
 
     public int EpisodeCount { get; init; }

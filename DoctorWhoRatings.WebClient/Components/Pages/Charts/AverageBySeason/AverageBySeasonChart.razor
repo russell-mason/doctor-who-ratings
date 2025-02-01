@@ -1,73 +1,66 @@
-﻿@page "/charts/average-by-doctor"
-@inject IAverageByDoctorDataPointGenerator DataPointGenerator
+﻿@page "/charts/average-by-season"
+@inject IAverageBySeasonDataPointGenerator DataPointGenerator
 
-<PageTitle>@AverageByDoctorChartCaptions.Title - @Application.Name</PageTitle>
+<PageTitle>@AverageBySeasonChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@AverageByDoctorChartCaptions.Title"
-              Description="@AverageByDoctorChartCaptions.Description" />
+<ChartHeading Title="@AverageBySeasonChartCaptions.Title"
+              Description="@(AverageBySeasonChartCaptions.Description + " The Movie and specials are not part of a season so are excluded.")" />
 
 <FullScreenZone>
     <Chart>
         <ApexChart @ref="Chart"
-                   TItem="AverageByDoctorDataPoint"
-                   Title="@AverageByDoctorChartCaptions.Title"
+                   TItem="AverageBySeasonDataPoint"
+                   Title="@AverageBySeasonChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")">
 
             <ApexPointTooltip>
-                <AverageByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
+                <AverageBySeasonTooltip DataPoint="@context.DataPoint.Items.First()"
                                         SeriesIndex="@context.SeriesIndex"
                                         DataOptions="DataOptions" />
             </ApexPointTooltip>
 
             <ChildContent>
-                <ApexPointSeries TItem="AverageByDoctorDataPoint"
+                <ApexPointSeries TItem="AverageBySeasonDataPoint"
                                  Items="DataPoints"
                                  Name="@("Overnight viewers")"
                                  SeriesType="SeriesType.Bar"
-                                 XValue="dataPoint => dataPoint.Actor"
+                                 XValue="dataPoint => dataPoint.Id"
                                  YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedOvernightRatings : dataPoint.CalculatedOvernightRatings" />
-
-                <ApexPointSeries TItem="AverageByDoctorDataPoint"
+            
+                <ApexPointSeries TItem="AverageBySeasonDataPoint"
                                  Items="DataPoints"
                                  Name="@("Additional viewers after seven days")"
                                  SeriesType="SeriesType.Bar"
-                                 XValue="dataPoint => dataPoint.Actor"
+                                 XValue="dataPoint => dataPoint.Id"
                                  YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings : dataPoint.CalculatedConsolidatedExcessRatings" />
 
-                <ApexPointSeries TItem="AverageByDoctorDataPoint"
+                <ApexPointSeries TItem="AverageBySeasonDataPoint"
                                  Items="DataPoints"
                                  Name="@("Additional viewers on all devices")"
                                  SeriesType="SeriesType.Bar"
-                                 XValue="dataPoint => dataPoint.Actor"
+                                 XValue="dataPoint => dataPoint.Id"
                                  YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.CalculatedPopulationAdjustedExtendedExcessRatings : dataPoint.CalculatedExtendedExcessRatings" />
             </ChildContent>
         </ApexChart>
     </Chart>
-
+    
     <ChartOptions>
         <ChartOptionsGroup>
             <ChartOptionsText Label="Calculate using" />
 
             <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                                Id="mean" Group="midpointOption"
-                               CheckedValue="@AverageByDoctorCalculationMethod.Mean"
+                               CheckedValue="@AverageBySeasonCalculationMethod.Mean"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
 
             <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                                Id="median" Group="midpointOption"
-                               CheckedValue="@AverageByDoctorCalculationMethod.Median"
+                               CheckedValue="@AverageBySeasonCalculationMethod.Median"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
-        </ChartOptionsGroup>
-
-        <ChartOptionsGroup>
-            <ChartOptionsCheckbox @bind-Value="DataOptions.IncludeSpecials"
-                                  Id="specials" Label="Include specials"
-                                  AfterValueChanged="AfterOptionChanged">
-            </ChartOptionsCheckbox>
         </ChartOptionsGroup>
 
         <ChartOptionsGroup>
@@ -80,15 +73,26 @@
 </FullScreenZone>
 
 @code {
-    private ApexChart<AverageByDoctorDataPoint> Chart { get; set; } = default!;
+    private ApexChart<AverageBySeasonDataPoint> Chart { get; set; } = default!;
 
-    private ApexChartOptions<AverageByDoctorDataPoint> ChartOptions { get; } = AverageByDoctorChartOptions.Defaults;
+    private ApexChartOptions<AverageBySeasonDataPoint> ChartOptions { get; } = AverageBySeasonChartOptions.Defaults;
 
-    private AverageByDoctorDataOptions DataOptions { get; } = new();
+    private AverageBySeasonDataOptions DataOptions { get; } = new();
 
-    private List<AverageByDoctorDataPoint> DataPoints { get; set; } = default!;
+    private List<AverageBySeasonDataPoint> DataPoints { get; set; } = default!;
 
-    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
+    protected override void OnInitialized()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Chart.AddCustomAnnotations(AverageBySeasonChartOptions.CreateAnnotations(DataPoints));
+        }
+    }
 
     private async Task AfterOptionChanged()
     {
