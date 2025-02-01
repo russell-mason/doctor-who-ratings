@@ -1,6 +1,7 @@
 ﻿@page "/charts/all-episodes"
 @inject IEpisodesDataPointGenerator DataPointGenerator
 @inject ITrendDataPointGenerator TrendDataPointGenerator;
+@inject IEpisodeContextDrillDown EpisodeContextDrillDown
 
 <PageTitle>@AllEpisodesChartCaptions.Title - @Application.Name</PageTitle>
 
@@ -8,13 +9,14 @@
               Description="@(AllEpisodesChartCaptions.Description + " Only shows like-for-like overnight ratings.")" />
 
 <FullScreenZone>
-    <Chart>
+    <Chart DrillDown="@true">
         <ApexChart @ref="Chart"
                    TItem="EpisodeDataPoint"
                    Title="@AllEpisodesChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
-                   Width="@("100%")">
+                   Width="@("100%")"
+                   OnDataPointSelection="OnDataPointSelection">
 
             <ApexPointTooltip>
                 <AllEpisodeTooltip DataPoint="@context.DataPoint.Items.First()"
@@ -118,5 +120,10 @@
         TrendDataPoints = TrendDataPointGenerator.GenerateAlternating(DataPoints, TrendDataOptions);
 
         await Chart.RenderAsync();
+
+        await EpisodeContextDrillDown.DeselectAsync(Chart);
     }
+
+    private void OnDataPointSelection(SelectedData<EpisodeDataPoint> selectedData) =>
+        InvokeAsync(async () => await EpisodeContextDrillDown.DrillDownAsync(selectedData, selectedData.DataPoint.Items.First().Slug));
 }

@@ -18,7 +18,8 @@ div.apexcharts-legend.apx-legend-position-right {
     }
 
 body.shift-on .chart.drill-down .apexcharts-bar-area,
-body.shift-on .chart.drill-down .apexcharts-series-markers {
+body.shift-on .chart.drill-down .apexcharts-series-markers,
+body.shift-on .chart.drill-down .apexcharts-marker {
     cursor: pointer;
 }
 

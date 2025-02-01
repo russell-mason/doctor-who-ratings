@@ -1,5 +1,6 @@
 ﻿@page "/charts/all-episodes-by-population-percentage"
 @inject IEpisodesDataPointGenerator DataPointGenerator
+@inject IEpisodeContextDrillDown EpisodeContextDrillDown
 
 <PageTitle>@AllEpisodesByPopulationPercentageChartCaptions.Title - @Application.Name</PageTitle>
 
@@ -7,13 +8,14 @@
               Description="@AllEpisodesByPopulationPercentageChartCaptions.Description" />
 
 <FullScreenZone>
-    <Chart>
+    <Chart DrillDown="@true">
         <ApexChart @ref="Chart"
                    TItem="EpisodeDataPoint"
                    Title="@AllEpisodesByPopulationPercentageChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
-                   Width="@("100%")">
+                   Width="@("100%")"
+                   OnDataPointSelection="OnDataPointSelection">
 
             <ApexPointTooltip>
                 <AllEpisodesByPopulationPercentageTooltip DataPoint="@context.DataPoint.Items.First()"
@@ -52,4 +54,7 @@
             await Chart.AddCustomAnnotations(AllEpisodesByPopulationPercentageChartOptions.CreateAnnotations(DataPoints));
         }
     }
+
+    private void OnDataPointSelection(SelectedData<EpisodeDataPoint> selectedData) =>
+        InvokeAsync(async () => await EpisodeContextDrillDown.DrillDownAsync(selectedData, selectedData.DataPoint.Items.First().Slug));
 }
