@@ -1,19 +1,17 @@
-﻿namespace DoctorWhoRatings.Data.Charting.Episodes;
+﻿namespace DoctorWhoRatings.Data.Charting.Trend;
 
 public class TrendDataPoint : EpisodeDataPoint
 {
-    public static TrendDataPoint Create(int id, decimal value) => CreateTrendDataPoint(id, value);
-
     public static TrendDataPoint Create(int id) => CreateTrendDataPoint(id, null);
 
-    public static List<TrendDataPoint> From(Trendline trendline) =>
+    public static List<TrendDataPoint> From(Trendline trendline, TrendContext context) =>
     [
-        Create((int) trendline.StartX, trendline.StartY),
-        Create((int) trendline.EndX, trendline.EndY)
+        CreateTrendDataPoint((int) trendline.StartX, trendline.StartY, context),
+        CreateTrendDataPoint((int) trendline.EndX, trendline.EndY, context)
     ];
 
     // EpisodeDataPoint uses init fields so this can't use a constructor
-    private static TrendDataPoint CreateTrendDataPoint(int id, decimal? value) =>
+    private static TrendDataPoint CreateTrendDataPoint(int id, decimal? value, TrendContext? context = null) =>
         new TrendDataPoint
         {
             // The TrendDataPoint needs to mimic the EpisodeDataPoint because the chart requires the same data point type for
@@ -22,10 +20,11 @@ public class TrendDataPoint : EpisodeDataPoint
             OvernightRatings = value,
 
             // All other properties are for normal required values
-            EraDescription = string.Empty,
+            EraDescription = context?.EraDescription ?? string.Empty,
             Doctor = 0,
-            Actor = string.Empty,
-            SeasonFormatDescription = string.Empty,
+            Actor = context?.Actor ?? string.Empty,
+            Season = context?.Season,
+            SeasonFormatDescription = context?.SeasonFormatDescription ?? string.Empty,
             SeasonDescription = string.Empty,
             StoryTitle = string.Empty,
             PartInStory = 0,

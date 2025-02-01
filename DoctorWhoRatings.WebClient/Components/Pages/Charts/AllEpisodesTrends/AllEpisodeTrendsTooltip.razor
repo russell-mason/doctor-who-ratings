@@ -1,0 +1,22 @@
+﻿<ChartTooltip>
+    <ChartTooltipIconSection IconUrl="images/trend.svg" IconAlt="Trend" Title="TREND"></ChartTooltipIconSection>
+
+    <ChartTooltipBreak />
+
+    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                               SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
+                               Season="@DataPoint.Season"
+                               EraDescription="@DataPoint.EraDescription" />
+
+    <ChartTooltipBreak />
+
+    <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings" />
+</ChartTooltip>
+
+@code {
+    [Parameter]
+    public required EpisodeDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required int SeriesIndex { get; set; }
+}

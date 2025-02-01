@@ -2,7 +2,9 @@
 
 public class EpisodeDataPoint
 {
-    public int Id { get; init; }
+    private int _id;
+
+    public int Id { get => _id; init => _id = value; }
 
     public required string EraDescription { get; init; }
 
@@ -63,4 +65,9 @@ public class EpisodeDataPoint
     public string? Note { get; init; }
 
     public string? WikiUrl { get; init; }
+
+    public void ForceId(int newId)
+    {
+        _id = newId;
+    }
 }

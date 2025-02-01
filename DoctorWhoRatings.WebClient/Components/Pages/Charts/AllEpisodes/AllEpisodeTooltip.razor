@@ -4,8 +4,11 @@
         <ChartTooltipIconSection IconUrl="images/trend.svg" IconAlt="Trend" Title="TREND"></ChartTooltipIconSection>
         
         <ChartTooltipBreak />
-        
-        <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings" />
+
+        <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                                   SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
+                                   Season="@DataPoint.Season"
+                                   EraDescription="@DataPoint.EraDescription" />
     }
     else
     {
@@ -15,13 +18,13 @@
                                    SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
                                    Season="@DataPoint.Season"
                                    OriginalAirDate="@DataPoint.OriginalAirDate"/>
-
-        <ChartTooltipBreak/>
-
-        <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings"/>
-
-        <ChartTooltipNoteSection Note="@DataPoint.Note"/>
     }
+    
+    <ChartTooltipBreak/>
+
+    <ChartTooltipRatingsSection OvernightRatings="@DataPoint.OvernightRatings"/>
+
+    <ChartTooltipNoteSection Note="@DataPoint.Note"/>
 </ChartTooltip>
 
 @code {

@@ -1,6 +1,6 @@
 ﻿<div class="episode-section">
     <div class="episode">
-        @if (Actor != null)
+        @if (!string.IsNullOrWhiteSpace(Actor))
         {
             <div class="actor">@Actor</div>
         }
@@ -31,7 +31,7 @@
             </div>
         }
 
-        @if (StoryTitle != null)
+        @if (!string.IsNullOrWhiteSpace(StoryTitle))
         {
             <div class="story">@StoryTitle</div>
         }
@@ -46,14 +46,19 @@
             </div>
         }
 
-        @if (PartTitle != null)
+        @if (!string.IsNullOrWhiteSpace(PartTitle))
         {
             <div class="part">@PartTitle</div>
         }
 
-        @if (SeasonFormatDescription != null)
+        @if (!string.IsNullOrWhiteSpace(SeasonFormatDescription))
         {
             <div class="season">@SeasonFormatDescription @Season</div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(EraDescription))
+        {
+            <div class="era">@EraDescription Who</div>
         }
     </div>
     
@@ -106,6 +111,9 @@
 
     [Parameter]
     public int? Season { get; set; }
+
+    [Parameter]
+    public string? EraDescription { get; set; }
 
     [Parameter]
     public DateTime? OriginalAirDate { get; set; }

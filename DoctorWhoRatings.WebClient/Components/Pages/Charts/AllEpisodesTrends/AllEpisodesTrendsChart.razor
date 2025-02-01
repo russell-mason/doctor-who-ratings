@@ -1,0 +1,109 @@
+﻿@page "/charts/trends-all-episodes"
+@inject IEpisodesDataPointGenerator DataPointGenerator
+@inject ITrendDataPointGenerator TrendDataPointGenerator;
+
+<PageTitle>@AllEpisodesTrendsChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@AllEpisodesTrendsChartCaptions.Title"
+              Description="@(AllEpisodesTrendsChartCaptions.Description + " Only shows like-for-like overnight ratings.")" />
+
+<FullScreenZone>
+    <Chart>
+        <ApexChart @ref="Chart"
+                   TItem="EpisodeDataPoint"
+                   Title="@AllEpisodesTrendsChartCaptions.Title"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
+
+            <ApexPointTooltip>
+                <AllEpisodeTrendsTooltip DataPoint="@context.DataPoint.Items.First()"
+                                         SeriesIndex="@context.SeriesIndex" />
+            </ApexPointTooltip>
+
+            <ChildContent>
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                                 Items="@TrendDataPoints.alternating1"
+                                 SeriesType="SeriesType.Line"
+                                 XValue="dataPoint => dataPoint.Id"
+                                 YValue="dataPoint => dataPoint.OvernightRatings"
+                                 Stroke="@(new SeriesStroke { Color = "#FF0080", Width = 3 })"
+                                 PointColor="@((_) => "#FF0000")" />
+
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                                 Items="@TrendDataPoints.alternating2"
+                                 SeriesType="SeriesType.Line"
+                                 XValue="dataPoint => dataPoint.Id"
+                                 YValue="dataPoint => dataPoint.OvernightRatings"
+                                 Stroke="@(new SeriesStroke { Color = "#FF0080", Width = 3 })"
+                                 PointColor="@((_) => "#FF0000")" />
+
+            </ChildContent>
+        </ApexChart>
+    </Chart>
+
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Show trendline by" />
+
+            <ChartOptionsRadio @bind-Value="TrendDataOptions.Range"
+                               Id="season" Group="trend"
+                               CheckedValue="@TrendRange.Season"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="TrendDataOptions.Range"
+                               Id="doctor" Group="trend"
+                               CheckedValue="@TrendRange.Doctor"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="TrendDataOptions.Range"
+                               Id="era" Group="trend"
+                               CheckedValue="@TrendRange.Era"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
+
+@code {
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesTrendsChartOptions.Defaults;
+
+    private EpisodesDataOptions DataOptions { get; } = new();
+
+    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
+
+    private TrendDataOptions TrendDataOptions { get; } = new() { Range = TrendRange.Season, Sequential = true };
+
+    private (List<TrendDataPoint?> alternating1, List<TrendDataPoint?> alternating2) TrendDataPoints { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+        TrendDataPoints = TrendDataPointGenerator.GenerateAlternating(DataPoints, TrendDataOptions);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var annotations = AllEpisodesTrendsChartOptions.CreateAnnotations(DataPoints, TrendDataOptions.Range);
+
+            await Chart.AddCustomAnnotations(annotations);
+        }
+    }
+
+    private async Task AfterOptionChanged()
+    {
+        TrendDataPoints = TrendDataPointGenerator.GenerateAlternating(DataPoints, TrendDataOptions);
+
+        var annotations = AllEpisodesTrendsChartOptions.CreateAnnotations(DataPoints, TrendDataOptions.Range);
+
+        await Chart.RenderAsync();
+
+        await Chart.AddCustomAnnotations(annotations);
+    }
+}
