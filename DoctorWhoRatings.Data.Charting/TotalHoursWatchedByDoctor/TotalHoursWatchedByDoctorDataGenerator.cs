@@ -12,8 +12,8 @@ public class TotalHoursWatchedByDoctorDataPointGenerator(IDoctorWhoDataProvider 
         return dataPoints;
     }
 
-    private static TotalHoursWatchedByDoctorDataPoint CreateDataPoint(IGrouping<int, Episode> group, 
-                                                                      TotalHoursWatchedByDoctorDataOptions options)
+    private TotalHoursWatchedByDoctorDataPoint CreateDataPoint(IGrouping<int, Episode> group, 
+                                                               TotalHoursWatchedByDoctorDataOptions options)
     {
         const int minutesInHour = 60;
 
@@ -30,9 +30,12 @@ public class TotalHoursWatchedByDoctorDataPointGenerator(IDoctorWhoDataProvider 
             _ => throw new InvalidOperationException(nameof(options.CalculationMethod))
         };
 
+        var referenceEpisode = group.First();
+
         var dataPoint = new TotalHoursWatchedByDoctorDataPoint
         {
-            Actor = group.First().Actor,
+            Actor = referenceEpisode.Actor,
+            UnambiguousActor = referenceEpisode.DisambiguateActor(dataProvider.DoctorWhoData.Doctors),
             EpisodeCount = group.Count(),
             TotalEpisodeHours = (decimal) totalEpisodeMinutes / minutesInHour,
             TotalOvernightHoursWatched = totalOvernightMinutes / minutesInHour,

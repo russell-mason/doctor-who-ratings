@@ -4,6 +4,8 @@ public class ShareByContentDataPoint
 {
     public int Doctor { get; init; }
 
+    public required string UnambiguousActor { get; init; }
+
     public required string Actor { get; init; }
 
     public int EpisodeCount { get; init; }

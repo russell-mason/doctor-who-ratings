@@ -29,6 +29,7 @@
                     <ApexPointSeries TItem="PremierFinaleEpisodeBySeasonDataPoint"
                                      Items="@keyValues.Value"
                                      SeriesType="SeriesType.Line"
+                                     Name="@($"{keyValues.Value.First().Actor} - {keyValues.Key}")"
                                      XValue="dataPoint => dataPoint.EpisodePosition"
                                      YValue="dataPoint => dataPoint.CalculatedRatings ?? 0" />
                 }
