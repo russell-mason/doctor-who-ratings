@@ -15,6 +15,7 @@ global using DoctorWhoRatings.Data.Charting.Extensions;
 global using DoctorWhoRatings.Data.Charting.HighLowEpisodesByDoctor;
 global using DoctorWhoRatings.Data.Charting.PopulationByYear;
 global using DoctorWhoRatings.Data.Charting.PremierFinaleEpisodesBySeason;
+global using DoctorWhoRatings.Data.Charting.ShareByContent;
 global using DoctorWhoRatings.Data.Charting.SpecialsOnly;
 global using DoctorWhoRatings.Data.Charting.Timeline;
 global using DoctorWhoRatings.Data.Charting.Top20Episodes;

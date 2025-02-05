@@ -1,0 +1,70 @@
+﻿@page "/charts/by-content"
+@inject IShareByContentDataPointGenerator DataPointGenerator
+
+<PageTitle>@ShareByContentChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@ShareByContentChartCaptions.Title"
+              Description="@ShareByContentChartCaptions.Description" />
+
+<FullScreenZone>
+    <Chart>
+        <ApexChart @ref="Chart"
+                   TItem="ShareByContentDataPoint"
+                   Title="@ShareByContentChartCaptions.Title"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
+
+            <ApexPointTooltip>
+                <ShareByContentTooltip DataPoint="@context.DataPoint.Items.First()"
+                                       DataOptions="DataOptions"/>
+            </ApexPointTooltip>
+
+            <ChildContent>
+                <ApexPointSeries TItem="ShareByContentDataPoint"
+                                 Items="DataPoints"
+                                 SeriesType="SeriesType.Pie"
+                                 XValue="dataPoint => dataPoint.Actor"
+                                 YValue="dataPoint => dataPoint.CalculatedPercentageShare"
+                                 ShowDataLabels />
+            </ChildContent>
+        </ApexChart>
+    </Chart>
+
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Calculate by" />
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="doctor" Group="ratingsOption" Label="@ShareByContentCalculationMethod.Episodes.Humanize()"
+                               CheckedValue="@ShareByContentCalculationMethod.Episodes"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="episodes" Group="ratingsOption" Label="@ShareByContentCalculationMethod.Hours.Humanize()"
+                               CheckedValue="@ShareByContentCalculationMethod.Hours"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
+
+@code {
+    private ApexChart<ShareByContentDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<ShareByContentDataPoint> ChartOptions { get; } = ShareByContentChartOptions.Defaults;
+
+    private ShareByContentDataOptions DataOptions { get; } = new();
+
+    private List<ShareByContentDataPoint> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
+
+    private async Task AfterOptionChanged()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+
+        await Chart.UpdateSeriesAsync();
+    }
+}

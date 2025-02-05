@@ -1,0 +1,31 @@
+﻿<ChartTooltip>
+    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
+                               EpisodeCount="@DataPoint.EpisodeCount"
+                               TotalEpisodeHours="@DataPoint.TotalEpisodeHours" />
+
+    <ChartTooltipBreak />
+    
+    <ChartTooltipIconSection IconUrl="images/pie-chart.svg"
+                             IconAlt="Share">
+        <div class="share">
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.CalculatedPercentageShare)</span>
+            <span>% share of the total </span>
+            @if (DataOptions.CalculationMethod == ShareByContentCalculationMethod.Episodes)
+            {
+                <span>number of episodes</span>
+            }
+            else
+            {
+                <span>hours of content</span>
+            }
+        </div>
+    </ChartTooltipIconSection>
+</ChartTooltip>
+
+@code {
+    [Parameter]
+    public required ShareByContentDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required ShareByContentDataOptions DataOptions { get; set; }
+}

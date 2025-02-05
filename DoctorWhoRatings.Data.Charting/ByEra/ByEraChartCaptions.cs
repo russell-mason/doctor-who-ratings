@@ -2,7 +2,7 @@
 
 public class ByEraChartCaptions
 {
-    public const string Title = "Share (by Era)";
+    public const string Title = "Share (by era)";
 
-    public const string Description = "Shows share of ratings by era.";
+    public const string Description = "Shows the share of ratings for each era.";
 }
