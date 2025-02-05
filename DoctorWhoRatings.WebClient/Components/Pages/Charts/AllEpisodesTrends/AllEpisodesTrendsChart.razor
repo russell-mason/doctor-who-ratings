@@ -25,7 +25,7 @@
                 <ApexPointSeries TItem="EpisodeDataPoint"
                                  Items="@TrendDataPoints.alternating1"
                                  SeriesType="SeriesType.Line"
-                                 XValue="dataPoint => dataPoint.Id"
+                                 XValue="dataPoint => dataPoint.Index"
                                  YValue="dataPoint => dataPoint.OvernightRatings"
                                  Stroke="@(new SeriesStroke { Color = "#FF0080", Width = 3 })"
                                  PointColor="@((_) => "#FF0000")" />
@@ -33,7 +33,7 @@
                 <ApexPointSeries TItem="EpisodeDataPoint"
                                  Items="@TrendDataPoints.alternating2"
                                  SeriesType="SeriesType.Line"
-                                 XValue="dataPoint => dataPoint.Id"
+                                 XValue="dataPoint => dataPoint.Index"
                                  YValue="dataPoint => dataPoint.OvernightRatings"
                                  Stroke="@(new SeriesStroke { Color = "#FF0080", Width = 3 })"
                                  PointColor="@((_) => "#FF0000")" />

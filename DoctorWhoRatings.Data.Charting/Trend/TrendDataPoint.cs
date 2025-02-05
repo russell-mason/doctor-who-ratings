@@ -2,7 +2,13 @@
 
 public class TrendDataPoint : EpisodeDataPoint
 {
-    public static TrendDataPoint Create(int id) => CreateTrendDataPoint(id, null);
+    public static TrendDataPoint Create(int id, int index)
+    {
+        var dataPoint = CreateTrendDataPoint(id, null);
+        dataPoint.SetIndex(index);
+
+        return dataPoint;
+    }
 
     public static List<TrendDataPoint> From(Trendline trendline, TrendContext context) =>
     [

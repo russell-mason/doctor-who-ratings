@@ -1,33 +1,35 @@
-﻿@page "/charts/all-episodes-by-population-percentage"
+﻿@page "/charts/all-episodes-by-popularity"
 @inject IEpisodesDataPointGenerator DataPointGenerator
+@inject ITrendDataPointGenerator TrendDataPointGenerator;
 @inject IEpisodeContextDrillDown EpisodeContextDrillDown
 
-<PageTitle>@AllEpisodesByPopulationPercentageChartCaptions.Title - @Application.Name</PageTitle>
+<PageTitle>@AllEpisodesChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@AllEpisodesByPopulationPercentageChartCaptions.Title"
-              Description="@AllEpisodesByPopulationPercentageChartCaptions.Description" />
+<ChartHeading Title="@AllEpisodesByPopularityChartCaptions.Title"
+              Description="@(AllEpisodesByPopularityChartCaptions.Description + " Only shows like-for-like overnight ratings.")" />
 
 <FullScreenZone>
     <Chart DrillDown="@true">
         <ApexChart @ref="Chart"
                    TItem="EpisodeDataPoint"
-                   Title="@AllEpisodesByPopulationPercentageChartCaptions.Title"
+                   Title="@AllEpisodesByPopularityChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")"
                    OnDataPointSelection="OnDataPointSelection">
 
             <ApexPointTooltip>
-                <AllEpisodesByPopulationPercentageTooltip DataPoint="@context.DataPoint.Items.First()"
-                                                          SeriesIndex="@context.SeriesIndex" />
+                <AllEpisodesByPopularityTooltip DataPoint="@context.DataPoint.Items.First()"
+                                                SeriesIndex="@context.SeriesIndex" />
             </ApexPointTooltip>
 
             <ChildContent>
                 <ApexPointSeries TItem="EpisodeDataPoint"
                                  Items="DataPoints"
                                  SeriesType="SeriesType.Line"
-                                 XValue="dataPoint => dataPoint.Id"
-                                 YValue="dataPoint => dataPoint.PercentageOfPopulation" />
+                                 XValue="dataPoint => dataPoint.Index"
+                                 YValue="dataPoint => dataPoint.OvernightRatings" />
+
             </ChildContent>
         </ApexChart>
     </Chart>
@@ -38,7 +40,7 @@
 @code {
     private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
 
-    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesByPopulationPercentageChartOptions.Defaults;
+    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesByPopularityChartOptions.Defaults;
 
     private EpisodesDataOptions DataOptions { get; } = new();
 
@@ -46,15 +48,10 @@
 
     protected override void OnInitialized()
     {
-        DataPoints = DataPointGenerator.Generate(DataOptions);
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await Chart.AddCustomAnnotations(AllEpisodesByPopulationPercentageChartOptions.CreateAnnotations(DataPoints));
-        }
+        DataPoints = DataPointGenerator.Generate(DataOptions)
+                                       .OrderByDescending(episode => episode.OvernightRatings)
+                                       .Select((dataPoint, index) => { dataPoint.SetIndex(index); return dataPoint; })
+                                       .ToList();
     }
 
     private void OnDataPointSelection(SelectedData<EpisodeDataPoint> selectedData) =>

@@ -38,7 +38,7 @@ public class TrendDataPointGenerator : ITrendDataPointGenerator
             }
             else
             {
-                alternates.Add(TrendDataPoint.Create(source[index].Id));
+                alternates.Add(TrendDataPoint.Create(source[index].Id, source[index].Index));
             }
         }
 
@@ -101,8 +101,8 @@ public class TrendDataPointGenerator : ITrendDataPointGenerator
 
         for (var index = 0; index < trendLineDataPoints.Count; index += 2)
         {
-            trendLineDataPoints[index].ForceId(counter);
-            trendLineDataPoints[index + 1].ForceId(counter + 1);
+            trendLineDataPoints[index].SetIndex(counter);
+            trendLineDataPoints[index + 1].SetIndex(counter + 1);
 
             counter++;
         }
