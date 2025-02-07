@@ -1,8 +1,8 @@
-﻿namespace DoctorWhoRatings.Data.Charting.ByEra;
+﻿namespace DoctorWhoRatings.Data.Charting.ShareByEra;
 
-public class ByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IByEraDataPointGenerator
+public class ShareByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IShareByEraDataPointGenerator
 {
-    public List<ByEraDataPoint> Generate(ByEraDataOptions options)
+    public List<ShareByEraDataPoint> Generate(ShareByEraDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
                                      .GroupBy(episode => episode.EraDescription)
@@ -12,17 +12,17 @@ public class ByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IByE
         return dataPoints;
     }
 
-    private static ByEraDataPoint CreateDataPoint(IGrouping<string, Episode> group, ByEraDataOptions options)
+    private static ShareByEraDataPoint CreateDataPoint(IGrouping<string, Episode> group, ShareByEraDataOptions options)
     {
-        var calculatedOvernightRatings = CalculatedRatings(group, options, ByEraOverCalculationMethod.Overnight);
-        var calculatedConsolidatedRatings = CalculatedRatings(group, options, ByEraOverCalculationMethod.Consolidated);
-        var calculatedExtendedRatings = CalculatedRatings(group, options, ByEraOverCalculationMethod.Extended);
+        var calculatedOvernightRatings = CalculatedRatings(group, options, ShareByEraOverCalculationMethod.Overnight);
+        var calculatedConsolidatedRatings = CalculatedRatings(group, options, ShareByEraOverCalculationMethod.Consolidated);
+        var calculatedExtendedRatings = CalculatedRatings(group, options, ShareByEraOverCalculationMethod.Extended);
 
         var calculatedRatings = options.OverCalculationMethod switch
         {
-            ByEraOverCalculationMethod.Overnight => calculatedOvernightRatings,
-            ByEraOverCalculationMethod.Consolidated => calculatedConsolidatedRatings,
-            ByEraOverCalculationMethod.Extended => calculatedExtendedRatings,
+            ShareByEraOverCalculationMethod.Overnight => calculatedOvernightRatings,
+            ShareByEraOverCalculationMethod.Consolidated => calculatedConsolidatedRatings,
+            ShareByEraOverCalculationMethod.Extended => calculatedExtendedRatings,
             _ => throw new InvalidOperationException(nameof(options.OverCalculationMethod))
         };
 
@@ -35,8 +35,8 @@ public class ByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IByE
         decimal? useCalculatedExtendedRatings = (calculatedExtendedRatings == calculatedConsolidatedRatings) 
             ? null : calculatedExtendedRatings;
 
-        var dataPoint = new ByEraDataPoint
-                        {
+        var dataPoint = new ShareByEraDataPoint
+        {
                             Era = group.Key,
                             EpisodeCount = group.Count(),
                             CalculatedOvernightRatings = calculatedOvernightRatings,
@@ -48,28 +48,28 @@ public class ByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IByE
         return dataPoint;
     }
 
-    private static decimal CalculatedRatings(IGrouping<string, Episode> group, 
-                                             ByEraDataOptions options,
-                                             ByEraOverCalculationMethod method)
+    private static decimal CalculatedRatings(IGrouping<string, Episode> group,
+                                             ShareByEraDataOptions options,
+                                             ShareByEraOverCalculationMethod method)
     {
         var calculatedOvernightRatings = options.CalculationMethod switch
         {
-            ByEraCalculationMethod.Sum => SumRatings(group, method),
-            ByEraCalculationMethod.MeanPerEpisode => MeanPerEpisode(group, method),
-            ByEraCalculationMethod.MeanPerHour => MeanPerHour(group, method),
+            ShareByEraCalculationMethod.Sum => SumRatings(group, method),
+            ShareByEraCalculationMethod.MeanPerEpisode => MeanPerEpisode(group, method),
+            ShareByEraCalculationMethod.MeanPerHour => MeanPerHour(group, method),
             _ => throw new InvalidOperationException(nameof(options.CalculationMethod))
         };
 
         return calculatedOvernightRatings;
     }
 
-    private static decimal SumRatings(IGrouping<string, Episode> group, ByEraOverCalculationMethod method) =>
+    private static decimal SumRatings(IGrouping<string, Episode> group, ShareByEraOverCalculationMethod method) =>
         group.Sum(episode => SelectRating(episode, method));
 
-    private static decimal MeanPerEpisode(IGrouping<string, Episode> group, ByEraOverCalculationMethod method) =>
+    private static decimal MeanPerEpisode(IGrouping<string, Episode> group, ShareByEraOverCalculationMethod method) =>
         group.Average(episode => SelectRating(episode, method));
 
-    private static decimal MeanPerHour(IGrouping<string, Episode> group, ByEraOverCalculationMethod method)
+    private static decimal MeanPerHour(IGrouping<string, Episode> group, ShareByEraOverCalculationMethod method)
     {
         const decimal minutesInHour = 60m;  // Force decimal division
 
@@ -79,12 +79,12 @@ public class ByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IByE
         return totalRatings / totalHours;
     }
 
-    private static decimal SelectRating(Episode episode, ByEraOverCalculationMethod method) =>
+    private static decimal SelectRating(Episode episode, ShareByEraOverCalculationMethod method) =>
         method switch
         {
-            ByEraOverCalculationMethod.Overnight => episode.OvernightRatings ?? 0,
-            ByEraOverCalculationMethod.Consolidated => episode.ConsolidatedRatings ?? episode.OvernightRatings ?? 0,
-            ByEraOverCalculationMethod.Extended => episode.ExtendedRatings ?? episode.ConsolidatedRatings ?? episode.OvernightRatings ?? 0,
+            ShareByEraOverCalculationMethod.Overnight => episode.OvernightRatings ?? 0,
+            ShareByEraOverCalculationMethod.Consolidated => episode.ConsolidatedRatings ?? episode.OvernightRatings ?? 0,
+            ShareByEraOverCalculationMethod.Extended => episode.ExtendedRatings ?? episode.ConsolidatedRatings ?? episode.OvernightRatings ?? 0,
             _ => throw new InvalidOperationException(nameof(method))
         };
 }

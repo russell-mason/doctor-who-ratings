@@ -1,6 +1,6 @@
-﻿namespace DoctorWhoRatings.Data.Charting.TotalHoursWatchedByDoctor;
+﻿namespace DoctorWhoRatings.Data.Charting.ShareByHoursWatched;
 
-public class TotalHoursWatchedByDoctorChartCaptions
+public class ShareByHoursWatchedChartCaptions
 {
     public const string Title = "Share (by hours watched)";
 

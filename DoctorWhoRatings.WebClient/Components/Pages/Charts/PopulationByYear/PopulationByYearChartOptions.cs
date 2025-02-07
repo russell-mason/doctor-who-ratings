@@ -1,4 +1,4 @@
-﻿namespace DoctorWhoRatings.WebClient.Components.Pages.Charts.Population;
+﻿namespace DoctorWhoRatings.WebClient.Components.Pages.Charts.PopulationByYear;
 
 public static class PopulationByYearChartOptions
 {

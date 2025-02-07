@@ -1,6 +1,6 @@
-﻿namespace DoctorWhoRatings.Data.Charting.ByEra;
+﻿namespace DoctorWhoRatings.Data.Charting.ShareByEra;
 
-public class ByEraDataPoint
+public class ShareByEraDataPoint
 {
     public required string Era { get; init; }
 

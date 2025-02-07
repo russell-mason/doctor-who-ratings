@@ -1,8 +1,8 @@
-﻿namespace DoctorWhoRatings.WebClient.Components.Pages.Charts.TotalHoursWatchedByDoctor;
+﻿namespace DoctorWhoRatings.WebClient.Components.Pages.Charts.ShareByHoursWatched;
 
-public static class TotalHoursWatchedByDoctorChartOptions
+public static class ShareByHoursWatchedChartOptions
 {
-    public static ApexChartOptions<TotalHoursWatchedByDoctorDataPoint> Defaults =>
+    public static ApexChartOptions<ShareByHoursWatchedDataPoint> Defaults =>
         new()
         {
             DataLabels = new DataLabels

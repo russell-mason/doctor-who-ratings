@@ -1,28 +1,28 @@
 ﻿@page "/charts/total-hours-watched-by-doctor"
-@inject ITotalHoursWatchedByDoctorDataPointGenerator DataPointGenerator
+@inject IShareByHoursWatchedDataPointGenerator DataPointGenerator
 
-<PageTitle>@TotalHoursWatchedByDoctorChartCaptions.Title - @Application.Name</PageTitle>
+<PageTitle>@ShareByHoursWatchedChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@TotalHoursWatchedByDoctorChartCaptions.Title"
-              Description="@(TotalHoursWatchedByDoctorChartCaptions.Description + " *")" />
+<ChartHeading Title="@ShareByHoursWatchedChartCaptions.Title"
+              Description="@(ShareByHoursWatchedChartCaptions.Description + " *")" />
 
 <FullScreenZone>
     <Chart>
         <ApexChart @ref="Chart"
-                   TItem="TotalHoursWatchedByDoctorDataPoint"
-                   Title="@TotalHoursWatchedByDoctorChartCaptions.Title"
+                   TItem="ShareByHoursWatchedDataPoint"
+                   Title="@ShareByHoursWatchedChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")">
 
             <ApexPointTooltip>
-                <TotalHoursWatchedByDoctorTooltip DataPoint="@context.DataPoint.Items.First()"
-                                                  DataOptions="DataOptions"
-                                                  PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
+                <ShareByHoursWatchedTooltip DataPoint="@context.DataPoint.Items.First()"
+                                            DataOptions="DataOptions"
+                                            PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
             </ApexPointTooltip>
 
             <ChildContent>
-                <ApexPointSeries TItem="TotalHoursWatchedByDoctorDataPoint"
+                <ApexPointSeries TItem="ShareByHoursWatchedDataPoint"
                                  Items="DataPoints"
                                  SeriesType="SeriesType.Pie"
                                  XValue="dataPoint => dataPoint.UnambiguousActor"
@@ -38,19 +38,19 @@
 
             <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                                Id="overnight" Group="ratingsOption"
-                               CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Overnight"
+                               CheckedValue="@ShareByHoursWatchedCalculationMethod.Overnight"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
 
             <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                                Id="consolidated" Group="ratingsOption"
-                               CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Consolidated"
+                               CheckedValue="@ShareByHoursWatchedCalculationMethod.Consolidated"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
 
             <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
                                Id="extended" Group="ratingsOption"
-                               CheckedValue="@TotalHoursWatchedByDoctorCalculationMethod.Extended"
+                               CheckedValue="@ShareByHoursWatchedCalculationMethod.Extended"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
         </ChartOptionsGroup>
@@ -65,15 +65,15 @@
 </Info>
 
 @code {
-    private ApexChart<TotalHoursWatchedByDoctorDataPoint> Chart { get; set; } = default!;
+    private ApexChart<ShareByHoursWatchedDataPoint> Chart { get; set; } = default!;
 
-    private ApexChartOptions<TotalHoursWatchedByDoctorDataPoint> ChartOptions { get; } = TotalHoursWatchedByDoctorChartOptions.Defaults;
+    private ApexChartOptions<ShareByHoursWatchedDataPoint> ChartOptions { get; } = ShareByHoursWatchedChartOptions.Defaults;
 
-    private TotalHoursWatchedByDoctorDataOptions DataOptions { get; } = new();
+    private ShareByHoursWatchedDataOptions DataOptions { get; } = new();
 
-    private List<TotalHoursWatchedByDoctorDataPoint> DataPoints { get; set; } = default!;
+    private List<ShareByHoursWatchedDataPoint> DataPoints { get; set; } = default!;
 
-    private decimal GetPercentageShare(TotalHoursWatchedByDoctorDataPoint currentDataPoint)
+    private decimal GetPercentageShare(ShareByHoursWatchedDataPoint currentDataPoint)
     {
         var total = DataPoints.Sum(dataPoint => dataPoint.CalculatedTotalHoursWatched);
         var percent = currentDataPoint.CalculatedTotalHoursWatched / total * 100;

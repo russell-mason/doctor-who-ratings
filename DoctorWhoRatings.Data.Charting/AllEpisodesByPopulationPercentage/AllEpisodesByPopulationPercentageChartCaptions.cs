@@ -1,4 +1,4 @@
-﻿namespace DoctorWhoRatings.Data.Charting.AllEpisodes;
+﻿namespace DoctorWhoRatings.Data.Charting.AllEpisodesByPopulationPercentage;
 
 public static class AllEpisodesByPopulationPercentageChartCaptions
 {

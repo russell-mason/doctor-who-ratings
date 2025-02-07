@@ -1,8 +1,8 @@
-﻿namespace DoctorWhoRatings.Data.Charting.TotalHoursWatchedByDoctor;
+﻿namespace DoctorWhoRatings.Data.Charting.ShareByHoursWatched;
 
-public class TotalHoursWatchedByDoctorDataPointGenerator(IDoctorWhoDataProvider dataProvider) : ITotalHoursWatchedByDoctorDataPointGenerator
+public class ShareByHoursWatchedDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IShareByHoursWatchedDataPointGenerator
 {
-    public List<TotalHoursWatchedByDoctorDataPoint> Generate(TotalHoursWatchedByDoctorDataOptions options)
+    public List<ShareByHoursWatchedDataPoint> Generate(ShareByHoursWatchedDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
                                      .GroupBy(episode => episode.Doctor)
@@ -12,8 +12,8 @@ public class TotalHoursWatchedByDoctorDataPointGenerator(IDoctorWhoDataProvider 
         return dataPoints;
     }
 
-    private TotalHoursWatchedByDoctorDataPoint CreateDataPoint(IGrouping<int, Episode> group, 
-                                                               TotalHoursWatchedByDoctorDataOptions options)
+    private ShareByHoursWatchedDataPoint CreateDataPoint(IGrouping<int, Episode> group,
+                                                               ShareByHoursWatchedDataOptions options)
     {
         const int minutesInHour = 60;
 
@@ -24,15 +24,15 @@ public class TotalHoursWatchedByDoctorDataPointGenerator(IDoctorWhoDataProvider 
 
         var calculatedTotalMinutesWatched = options.CalculationMethod switch
         {
-            TotalHoursWatchedByDoctorCalculationMethod.Overnight => totalOvernightMinutes,
-            TotalHoursWatchedByDoctorCalculationMethod.Consolidated => totalConsolidatedMinutes ?? totalOvernightMinutes,
-            TotalHoursWatchedByDoctorCalculationMethod.Extended => totalExtendedMinutes ?? totalConsolidatedMinutes ?? totalOvernightMinutes,
+            ShareByHoursWatchedCalculationMethod.Overnight => totalOvernightMinutes,
+            ShareByHoursWatchedCalculationMethod.Consolidated => totalConsolidatedMinutes ?? totalOvernightMinutes,
+            ShareByHoursWatchedCalculationMethod.Extended => totalExtendedMinutes ?? totalConsolidatedMinutes ?? totalOvernightMinutes,
             _ => throw new InvalidOperationException(nameof(options.CalculationMethod))
         };
 
         var referenceEpisode = group.First();
 
-        var dataPoint = new TotalHoursWatchedByDoctorDataPoint
+        var dataPoint = new ShareByHoursWatchedDataPoint
         {
             Actor = referenceEpisode.Actor,
             UnambiguousActor = referenceEpisode.DisambiguateActor(dataProvider.DoctorWhoData.Doctors),

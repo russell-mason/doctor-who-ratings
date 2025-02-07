@@ -1,6 +1,6 @@
-﻿namespace DoctorWhoRatings.Data.Charting.TotalHoursWatchedByDoctor;
+﻿namespace DoctorWhoRatings.Data.Charting.ShareByHoursWatched;
 
-public class TotalHoursWatchedByDoctorDataPoint
+public class ShareByHoursWatchedDataPoint
 {
     public required string Actor { get; init; }
 

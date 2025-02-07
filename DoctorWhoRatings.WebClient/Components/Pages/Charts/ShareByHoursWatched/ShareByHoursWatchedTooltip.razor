@@ -4,7 +4,7 @@
                                TotalEpisodeHours="@DataPoint.TotalEpisodeHours" />
 
     <ChartTooltipBreak />
-    
+
     <ChartTooltipIconSection IconUrl="images/pie-chart.svg"
                              IconAlt="Share">
         <div class="share">
@@ -14,7 +14,7 @@
     </ChartTooltipIconSection>
 
     <ChartTooltipBreak />
-    
+
     <ChartTooltipWatchedHoursSection OvernightHoursWatched="@DataPoint.TotalOvernightHoursWatched"
                                      ConsolidatedHoursWatched="@DataPoint.TotalConsolidatedHoursWatched"
                                      ExtendedHoursWatched="@DataPoint.TotalExtendedHoursWatched" />
@@ -22,10 +22,10 @@
 
 @code {
     [Parameter]
-    public required TotalHoursWatchedByDoctorDataPoint DataPoint { get; set; }
+    public required ShareByHoursWatchedDataPoint DataPoint { get; set; }
 
     [Parameter]
-    public required TotalHoursWatchedByDoctorDataOptions DataOptions { get; set; }
+    public required ShareByHoursWatchedDataOptions DataOptions { get; set; }
 
     [Parameter]
     public decimal PercentageShare { get; set; }

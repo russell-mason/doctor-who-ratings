@@ -1,28 +1,28 @@
 ﻿@page "/charts/by-era"
-@inject IByEraDataPointGenerator DataPointGenerator
+@inject IShareByEraDataPointGenerator DataPointGenerator
 
-<PageTitle>@ByEraChartCaptions.Title - @Application.Name</PageTitle>
+<PageTitle>@ShareByEraChartCaptions.Title - @Application.Name</PageTitle>
 
-<ChartHeading Title="@ByEraChartCaptions.Title"
-              Description="@ByEraChartCaptions.Description" />
+<ChartHeading Title="@ShareByEraChartCaptions.Title"
+              Description="@ShareByEraChartCaptions.Description" />
 
 <FullScreenZone>
     <Chart>
         <ApexChart @ref="Chart"
-                   TItem="ByEraDataPoint"
-                   Title="@ByEraChartCaptions.Title"
+                   TItem="ShareByEraDataPoint"
+                   Title="@ShareByEraChartCaptions.Title"
                    Options="ChartOptions"
                    Height="@("100%")"
                    Width="@("100%")">
 
             <ApexPointTooltip>
-                <ByEraTooltip DataPoint="@context.DataPoint.Items.First()"
-                              DataOptions="DataOptions"
-                              PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
+                <ShareByEraTooltip DataPoint="@context.DataPoint.Items.First()"
+                                   DataOptions="DataOptions"
+                                   PercentageShare="@GetPercentageShare(@context.DataPoint.Items.First())" />
             </ApexPointTooltip>
 
             <ChildContent>
-                <ApexPointSeries TItem="ByEraDataPoint"
+                <ApexPointSeries TItem="ShareByEraDataPoint"
                                  Items="DataPoints"
                                  SeriesType="SeriesType.Pie"
                                  XValue="dataPoint => dataPoint.Era"
@@ -37,20 +37,20 @@
             <ChartOptionsText Label="Calculate using" />
 
             <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                               Id="total" Group="ratingsOption" Label="@ByEraCalculationMethod.Sum.Humanize()"
-                               CheckedValue="@ByEraCalculationMethod.Sum"
+                               Id="total" Group="ratingsOption" Label="@ShareByEraCalculationMethod.Sum.Humanize()"
+                               CheckedValue="@ShareByEraCalculationMethod.Sum"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
 
             <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                               Id="perEpisode" Group="ratingsOption" Label="@ByEraCalculationMethod.MeanPerEpisode.Humanize()"
-                               CheckedValue="@ByEraCalculationMethod.MeanPerEpisode"
+                               Id="perEpisode" Group="ratingsOption" Label="@ShareByEraCalculationMethod.MeanPerEpisode.Humanize()"
+                               CheckedValue="@ShareByEraCalculationMethod.MeanPerEpisode"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
 
             <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
-                               Id="perHour" Group="ratingsOption" Label="@ByEraCalculationMethod.MeanPerHour.Humanize()"
-                               CheckedValue="@ByEraCalculationMethod.MeanPerHour"
+                               Id="perHour" Group="ratingsOption" Label="@ShareByEraCalculationMethod.MeanPerHour.Humanize()"
+                               CheckedValue="@ShareByEraCalculationMethod.MeanPerHour"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
         </ChartOptionsGroup>
@@ -60,19 +60,19 @@
 
             <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
                                Id="overnight" Group="overOption"
-                               CheckedValue="@ByEraOverCalculationMethod.Overnight"
+                               CheckedValue="@ShareByEraOverCalculationMethod.Overnight"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
 
             <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
                                Id="consolidated" Group="overOption"
-                               CheckedValue="@ByEraOverCalculationMethod.Consolidated"
+                               CheckedValue="@ShareByEraOverCalculationMethod.Consolidated"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
 
             <ChartOptionsRadio @bind-Value="DataOptions.OverCalculationMethod"
                                Id="extended" Group="overOption"
-                               CheckedValue="@ByEraOverCalculationMethod.Extended"
+                               CheckedValue="@ShareByEraOverCalculationMethod.Extended"
                                AfterValueChanged="AfterOptionChanged">
             </ChartOptionsRadio>
         </ChartOptionsGroup>
@@ -80,15 +80,15 @@
 </FullScreenZone>
 
 @code {
-    private ApexChart<ByEraDataPoint> Chart { get; set; } = default!;
+    private ApexChart<ShareByEraDataPoint> Chart { get; set; } = default!;
 
-    private ApexChartOptions<ByEraDataPoint> ChartOptions { get; } = ByEraChartOptions.Defaults;
+    private ApexChartOptions<ShareByEraDataPoint> ChartOptions { get; } = ShareByEraChartOptions.Defaults;
 
-    private ByEraDataOptions DataOptions { get; } = new();
+    private ShareByEraDataOptions DataOptions { get; } = new();
 
-    private List<ByEraDataPoint> DataPoints { get; set; } = default!;
+    private List<ShareByEraDataPoint> DataPoints { get; set; } = default!;
 
-    private decimal GetPercentageShare(ByEraDataPoint currentDataPoint)
+    private decimal GetPercentageShare(ShareByEraDataPoint currentDataPoint)
     {
         var total = DataPoints.Sum(dataPoint => dataPoint.CalculatedRatings);
         var percent = currentDataPoint.CalculatedRatings / total * 100;

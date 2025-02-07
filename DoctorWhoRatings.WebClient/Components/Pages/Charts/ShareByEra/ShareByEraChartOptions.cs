@@ -1,8 +1,8 @@
-﻿namespace DoctorWhoRatings.WebClient.Components.Pages.Charts.ByEra;
+﻿namespace DoctorWhoRatings.WebClient.Components.Pages.Charts.ShareByEra;
 
-public static class ByEraChartOptions
+public static class ShareByEraChartOptions
 {
-    public static ApexChartOptions<ByEraDataPoint> Defaults =>
+    public static ApexChartOptions<ShareByEraDataPoint> Defaults =>
         new()
         {
             DataLabels = new DataLabels

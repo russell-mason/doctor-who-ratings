@@ -1,6 +1,6 @@
-﻿namespace DoctorWhoRatings.Data.Charting.ByEra;
+﻿namespace DoctorWhoRatings.Data.Charting.ShareByEra;
 
-public class ByEraChartCaptions
+public class ShareByEraChartCaptions
 {
     public const string Title = "Share (by era)";
 
