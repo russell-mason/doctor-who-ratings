@@ -4,6 +4,7 @@ global using DoctorWhoRatings.Data.Charting.AllEpisodes;
 global using DoctorWhoRatings.Data.Charting.AllEpisodesByDoctor;
 global using DoctorWhoRatings.Data.Charting.AllEpisodesByPopularity;
 global using DoctorWhoRatings.Data.Charting.AllEpisodesByPopulationPercentage;
+global using DoctorWhoRatings.Data.Charting.AllEpisodesBySeason;
 global using DoctorWhoRatings.Data.Charting.AllEpisodesTrends;
 global using DoctorWhoRatings.Data.Charting.AverageByDoctor;
 global using DoctorWhoRatings.Data.Charting.AverageBySeason;

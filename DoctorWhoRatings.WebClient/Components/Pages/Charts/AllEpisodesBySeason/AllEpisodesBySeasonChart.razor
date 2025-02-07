@@ -1,0 +1,125 @@
+﻿@page "/charts/all-episodes-by-season"
+@inject IEpisodesDataPointGenerator DataPointGenerator
+@inject IDoctorWhoDataProvider DataProvider
+@inject IEpisodeContextDrillDown EpisodeContextDrillDown
+
+<PageTitle>@AllEpisodesBySeasonChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@AllEpisodesBySeasonChartCaptions.Title"
+Description="@(AllEpisodesBySeasonChartCaptions.Description + " The Movie and specials are not part of a season so are excluded.")" />
+
+<FullScreenZone>
+    <Chart DrillDown="@true">
+        <ApexChart @ref="Chart"
+        TItem="EpisodeDataPoint"
+        Title="@AllEpisodesBySeasonChartCaptions.Title"
+        Options="ChartOptions"
+        Height="@("100%")"
+        Width="@("100%")"
+        OnDataPointSelection="OnDataPointSelection">
+
+            <ApexPointTooltip>
+                <AllEpisodesBySeasonTooltip DataPoint="@context.DataPoint.Items.First()"
+                SeriesIndex="@context.SeriesIndex"
+                ShowPopulationAdjusted="@DataOptions.AdjustForCurrentPopulation" />
+            </ApexPointTooltip>
+
+            <ChildContent>
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                Items="DataPoints"
+                Name="@("Overnight viewers")"
+                SeriesType="SeriesType.Bar"
+                XValue="dataPoint => dataPoint.Id"
+                YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedOvernightRatings : dataPoint.OvernightRatings" />
+
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                Items="DataPoints"
+                Name="@("Additional viewers after seven days")"
+                SeriesType="SeriesType.Bar"
+                XValue="dataPoint => dataPoint.Id"
+                YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedConsolidatedExcessRatings : dataPoint.ConsolidatedExcessRatings" />
+
+                <ApexPointSeries TItem="EpisodeDataPoint"
+                Items="DataPoints"
+                Name="@("Additional viewers on all devices")"
+                SeriesType="SeriesType.Bar"
+                XValue="dataPoint => dataPoint.Id"
+                YValue="dataPoint => DataOptions.AdjustForCurrentPopulation ? dataPoint.PopulationAdjustedExtendedExcessRatings : dataPoint.ExtendedExcessRatings" />
+            </ChildContent>
+        </ApexChart>
+    </Chart>
+
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsSelect @bind-Value="DataOptionsSeasonFilter"
+            Id="season" Label="Filter by" Values="SeasonsDataSource"
+            AfterValueChanged="AfterOptionChanged" />
+        </ChartOptionsGroup>
+
+        <ChartOptionsGroup>
+            <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
+            Id="population" Label="Adjust relative to current population"
+            AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsCheckbox>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
+
+<DrillDownTip />
+
+@code {
+    private int _selectedValue = KeyFromValues(1, 1);
+
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; set; } = AllEpisodesBySeasonChartOptions.Defaults;
+
+    private EpisodesDataOptions DataOptions { get; } = new() { DoctorFilter = 1, SeasonFilter = 1 };  // Default to the first season
+
+    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
+
+    /// <summary>
+    /// The underlying options filter allows null, meaning do not filter. For this chart, there will always be a
+    /// pre-defined set of values so this just wraps it to allow correct binding.
+    /// </summary>
+    private int DataOptionsSeasonFilter
+    {
+        get => _selectedValue;
+        set
+        {
+            _selectedValue = value;
+
+            var values = ValuesFromKey(_selectedValue);
+
+            DataOptions.DoctorFilter = values.doctor; 
+            DataOptions.SeasonFilter = values.seson; 
+        }
+    }
+
+    private IEnumerable<(int, string)> SeasonsDataSource =>
+        DataProvider.DoctorWhoData.Episodes
+                    .Where(episode => episode.Season != null)
+                    .DistinctBy(episode => (episode.Doctor, episode.Season))
+                    .Select(episode => (KeyFromValues(episode.Doctor, episode.Season), $"{episode.Actor} - {episode.SeasonDescription}"));
+
+    protected override void OnInitialized()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+    }
+
+    private async Task AfterOptionChanged()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+
+        await Chart.UpdateSeriesAsync();
+
+        await EpisodeContextDrillDown.DeselectAsync(Chart);
+    }
+
+    private void OnDataPointSelection(SelectedData<EpisodeDataPoint> selectedData) =>
+        InvokeAsync(async () => await EpisodeContextDrillDown.DrillDownAsync(selectedData, selectedData.DataPoint.Items.First().Slug));
+
+    private static int KeyFromValues(int doctor, int? season) => doctor * 100 + (season ?? 0);
+
+    private static (int doctor, int seson) ValuesFromKey(int key) => (key / 100, key % 100);
+}
