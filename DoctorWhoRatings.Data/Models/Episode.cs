@@ -101,9 +101,19 @@ public record Episode
     public decimal? PopulationAdjustedExtendedExcessRatings => PopulationAdjustedExtendedRatings - (PopulationAdjustedConsolidatedRatings ?? PopulationAdjustedOvernightRatings);
 
     /// <summary>
-    /// Ratings as a percentage of the UK population at the time of airing.
+    /// Overnight viewers as a percentage of the UK population at the time of airing.
     /// </summary>
-    public decimal? PercentageOfPopulation => ((OvernightRatings * 1000000) / Population) * 100;
+    public decimal? OvernightPercentageOfPopulation => ((OvernightRatings * 1000000) / Population) * 100;
+
+    /// <summary>
+    /// Viewers after seven day as a percentage of the UK population at the time of airing.
+    /// </summary>
+    public decimal? ConsolidatedPercentageOfPopulation => ((ConsolidatedRatings * 1000000) / Population) * 100;
+
+    /// <summary>
+    /// Viewers after seven days on all devices as a percentage of the UK population at the time of airing.
+    /// </summary>
+    public decimal? ExtendedPercentageOfPopulation => ((ExtendedRatings * 1000000) / Population) * 100;
 
     /// <summary>
     /// UK population at the time of airing.

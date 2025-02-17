@@ -62,7 +62,11 @@ public class EpisodeDataPoint
 
     public int Population { get; init; }
 
-    public decimal? PercentageOfPopulation { get; init; }
+    public decimal? OvernightPercentageOfPopulation { get; init; }
+
+    public decimal? ConsolidatedPercentageOfPopulation { get; init; }
+
+    public decimal? ExtendedPercentageOfPopulation { get; init; }
 
     public string? Note { get; init; }
 

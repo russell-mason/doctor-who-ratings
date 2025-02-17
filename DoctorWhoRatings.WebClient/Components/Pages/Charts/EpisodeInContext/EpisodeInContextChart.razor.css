@@ -69,6 +69,10 @@
     margin: 8px 0;
 }
 
+.block.break {
+    margin-top: 14px;
+}
+
 .highlighted-value {
     font-family: segoe-bold, sans-serif;
     color: #505050;

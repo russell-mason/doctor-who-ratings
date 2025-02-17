@@ -60,11 +60,22 @@
     <div class="block">
         Broadcast on <span class="highlighted-value">@Formatter.FormatDate(DataPoint.Episode.OriginalAirDate)</span>
     </div>
+    
+    <div class="block">
+        The UK population was 
+        <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.Population)</span>
+        at the time of broadcast
+    </div>
+
+    <div class="block break">
+        Ratings at the time of broadcast:
+    </div>
 
     @if (DataPoint.Episode.OvernightRatings != null)
     {
         <div class="block">
-            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.OvernightRatings)</span> million viewers overnight
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.OvernightRatings)</span> million overnight viewers
+            <span class="highlighted-value"> (@Formatter.FormatNumber(DataPoint.Episode.OvernightPercentageOfPopulation)</span><span>% of the UK population)</span>
         </div>
     }
 
@@ -72,6 +83,7 @@
     {
         <div class="block">
             <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.ConsolidatedRatings)</span> million viewers after seven days
+            <span class="highlighted-value"> (@Formatter.FormatNumber(DataPoint.Episode.ConsolidatedPercentageOfPopulation)</span><span>% of the UK population)</span>
         </div>
     }
 
@@ -79,10 +91,36 @@
     {
         <div class="block">
             <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.ExtendedRatings)</span> million viewers after seven days on all devices
+            <span class="highlighted-value"> (@Formatter.FormatNumber(DataPoint.Episode.ExtendedPercentageOfPopulation)</span><span>% of the UK population)</span>
         </div>
     }
 
-    <div class="block">
+    <div class="block break">
+        Adjusted for population changes since broadcast:
+    </div>
+
+    @if (DataPoint.Episode.PopulationAdjustedOvernightRatings != null)
+    {
+        <div class="block">
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.PopulationAdjustedOvernightRatings)</span> million overnight viewers
+        </div>
+    }
+
+    @if (DataPoint.Episode.PopulationAdjustedConsolidatedRatings != null)
+    {
+        <div class="block">
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.PopulationAdjustedConsolidatedRatings)</span> million viewers after seven days
+        </div>
+    }
+
+    @if (DataPoint.Episode.PopulationAdjustedExtendedRatings != null)
+    {
+        <div class="block">
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.Episode.PopulationAdjustedExtendedRatings)</span> million viewers after seven days on all devices
+        </div>
+    }
+
+    <div class="block break">
         Part of the <span class="highlighted-value">@DataPoint.Episode.EraDescription</span> era
     </div>
 
@@ -113,7 +151,7 @@
 
 @if (DataPoint.InSeasonContext != null)
 {
-    var title = DataPoint.InSeasonContext.IsSpecial 
+    var title = DataPoint.InSeasonContext.IsSpecial
         ? "Relative to other specials featuring the same doctor"
         : "Relative to other episodes in the same season";
 
