@@ -2,6 +2,9 @@
 
 /// <summary>
 /// Provides a general mechanism for reading data from an Excel spreadsheet.
+/// N.B. Excel can contain rounding errors in data when read through cell values.
+/// e.g. 4.4 may be read as 4.4000000000000004
+/// These values will be read into the model as is, so need to be corrected through formatting. 
 /// </summary>
 public partial class ExcelSpreadsheetReader() : IExcelSpreadsheetReader
 {

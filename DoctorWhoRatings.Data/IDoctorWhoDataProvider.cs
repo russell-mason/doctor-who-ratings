@@ -15,4 +15,9 @@ public interface IDoctorWhoDataProvider
     /// DoctorWhoData property is accessed.
     /// </summary>
     void Load();
+
+    /// <summary>
+    /// Saves the root dataset as JSON. Can be used to provide an API data source.
+    /// </summary>
+    void Save();
 }

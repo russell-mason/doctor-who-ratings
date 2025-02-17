@@ -11,7 +11,7 @@ public class DoctorWhoDataProvider : IDoctorWhoDataProvider
     public DoctorWhoDataProvider(IDoctorWhoDataReader doctorWhoDataReader)
     {
         _doctorWhoDataReader = doctorWhoDataReader;
-        _doctorWhoData = new Lazy<DoctorWhoData>(GetDoctorWhoData);
+        _doctorWhoData = new Lazy<DoctorWhoData>(ReadDoctorWhoData);
     }
 
     public DoctorWhoData DoctorWhoData => _doctorWhoData.Value;
@@ -21,11 +21,31 @@ public class DoctorWhoDataProvider : IDoctorWhoDataProvider
         _ = DoctorWhoData;  // Use consistent access to ensure lazy loading is invoked
     }
 
-    private DoctorWhoData GetDoctorWhoData()
+    public void Save()
+    {
+        WriteDoctorWhoData();
+    }
+
+    private DoctorWhoData ReadDoctorWhoData()
     {
         var excelFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data", "DoctorWhoRatings.xlsx");
         var doctorWhoData = _doctorWhoDataReader.Read(excelFilePath);
 
         return doctorWhoData;
+    }
+
+    private void WriteDoctorWhoData()
+    {
+        var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data", "doctor-who-ratings.json");
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        };
+
+        var json = JsonSerializer.Serialize(DoctorWhoData, options);
+
+        File.WriteAllText(jsonFilePath, json);
     }
 }

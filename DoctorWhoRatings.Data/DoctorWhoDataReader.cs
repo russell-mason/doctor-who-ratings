@@ -12,12 +12,20 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
 
         var episodes = ReadEpisodes().ToList().AsReadOnly();
         var doctors = ReadDoctors().ToList().AsReadOnly();
+        var seasonFormats = ReadSeasonFormats().ToList().AsReadOnly();
+        var episodeFormats = ReadEpisodeFormats().ToList().AsReadOnly();
+        var eras = ReadEras().ToList().AsReadOnly();
+        var wikiFormats = ReadWikiFormats().ToList().AsReadOnly();
         var populations = ReadPopulation().ToList().AsReadOnly();
 
         var doctorWhoData = new DoctorWhoData
         {
             Episodes = episodes,
             Doctors = doctors,
+            SeasonFormats = seasonFormats,
+            EpisodeFormats = episodeFormats,
+            Eras = eras,
+            WikiFormats = wikiFormats,
             Populations = populations
         };
 
@@ -96,6 +104,102 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         };
 
         return doctor;
+    }
+
+    private IEnumerable<SeasonFormat> ReadSeasonFormats()
+    {
+        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.SeasonFormats).ToList();
+        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
+        var seasonFormatRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
+
+        var seasonFormats = seasonFormatRows.Select(seasonFormatRow => CreateSeasonFormat(seasonFormatRow, columnMappings));
+
+        return seasonFormats;
+    }
+
+    private SeasonFormat CreateSeasonFormat(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
+    {
+        var cellReader = spreadsheetReader.CreateCellReader(row, columnMappings);
+
+        var seasonFormat = new SeasonFormat
+        {
+            Id = cellReader.Read<int>(nameof(SeasonFormat.Id)),
+            Description = cellReader.Read<string>(nameof(SeasonFormat.Description))
+        };
+
+        return seasonFormat;
+    }
+
+    private IEnumerable<EpisodeFormat> ReadEpisodeFormats()
+    {
+        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.EpisodeFormats).ToList();
+        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
+        var episodeFormatRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
+
+        var episodeFormats = episodeFormatRows.Select(episodeFormatRow => CreateEpisodeFormat(episodeFormatRow, columnMappings));
+
+        return episodeFormats;
+    }
+
+    private EpisodeFormat CreateEpisodeFormat(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
+    {
+        var cellReader = spreadsheetReader.CreateCellReader(row, columnMappings);
+
+        var episodeFormat = new EpisodeFormat
+        {
+            Id = cellReader.Read<int>(nameof(EpisodeFormat.Id)),
+            Description = cellReader.Read<string>(nameof(EpisodeFormat.Description))
+        };
+
+        return episodeFormat;
+    }
+
+    private IEnumerable<Era> ReadEras()
+    {
+        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Eras).ToList();
+        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
+        var eraRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
+
+        var eras = eraRows.Select(eraRow => CreateEra(eraRow, columnMappings));
+
+        return eras;
+    }
+
+    private Era CreateEra(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
+    {
+        var cellReader = spreadsheetReader.CreateCellReader(row, columnMappings);
+
+        var era = new Era
+        {
+            Id = cellReader.Read<int>(nameof(Era.Id)),
+            Description = cellReader.Read<string>(nameof(Era.Description))
+        };
+
+        return era;
+    }
+
+    private IEnumerable<WikiFormat> ReadWikiFormats()
+    {
+        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.WikiFormats).ToList();
+        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
+        var wikiFormatRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
+
+        var wikiFormats = wikiFormatRows.Select(eraRow => CreateWikiFormat(eraRow, columnMappings));
+
+        return wikiFormats;
+    }
+
+    private WikiFormat CreateWikiFormat(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
+    {
+        var cellReader = spreadsheetReader.CreateCellReader(row, columnMappings);
+
+        var wikiFormat = new WikiFormat
+        {
+            Id = cellReader.Read<int>(nameof(WikiFormat.Id)),
+            Description = cellReader.Read<string>(nameof(WikiFormat.Description))
+        };
+
+        return wikiFormat;
     }
 
     private IEnumerable<YearPopulation> ReadPopulation()
