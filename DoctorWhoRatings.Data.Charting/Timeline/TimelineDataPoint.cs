@@ -6,6 +6,8 @@ public class TimelineDataPoint
 
     public DateTime FirstEpisodeAirDate { get; init; }
 
+    public DateTime? LastEpisodeAirDate { get; init; }
+
     public required string Actor { get; init; }
 
     public int EpisodeCount { get; init; }

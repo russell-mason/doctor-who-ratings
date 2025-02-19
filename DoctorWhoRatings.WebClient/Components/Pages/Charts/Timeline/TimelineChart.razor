@@ -5,7 +5,7 @@
 
 <ChartHeading Title="@TimelineChartCaptions.Title"
               Description="@TimelineChartCaptions.Description" />
-              
+
 <div class="card">
     <div class="timeline">
         <div class="line"></div>
@@ -19,6 +19,18 @@
                 <div class="date">@Formatter.FormatDate(dataPoint.FirstEpisodeAirDate)</div>
                 <div class="marker"></div>
                 <div class="actor">@dataPoint.Actor</div>
+                <div class="dates">
+                    @Formatter.FormatDate(dataPoint.FirstEpisodeAirDate) to
+
+                    @if (dataPoint.LastEpisodeAirDate == null)
+                    {
+                        <span>current</span>
+                    }
+                    else
+                    {
+                        @Formatter.FormatDate(dataPoint.LastEpisodeAirDate)
+                    }
+                </div>
                 <div class="episodes">@episodeText</div>
             </div>
         }

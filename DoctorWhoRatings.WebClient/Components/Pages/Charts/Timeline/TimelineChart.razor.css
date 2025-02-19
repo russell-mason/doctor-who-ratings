@@ -14,7 +14,7 @@
     position: relative;
     width: 640px;
     display: grid;
-    grid-template-columns: 0.74fr 66px 1fr;
+    grid-template-columns: 224px 66px 350px;
     margin: 0 auto;
 }
 
@@ -36,7 +36,7 @@
 .line {
     position: absolute;
     top: 22px;
-    left: calc(((100% - 66px) * (74 / 174)) + 33px - 1px);
+    left: 257px;
     width: 2px;
     height: 100%;
     background-color: #808080;
@@ -67,10 +67,18 @@
     color: #507dd7;
 }
 
+.dates {
+    grid-column: 3 / 4;
+    font-family: segoe-light, sans-serif;
+    font-size: 1rem;
+    margin: 1px 0 0 0;
+    color: #505050;
+}
+
 .episodes {
     grid-column: 3 / 4;
     font-family: segoe-regular, sans-serif;
     font-size: 1rem;
-    margin: 2px 0 28px 0;
+    margin: 4px 0 28px 0;
     color: #ff5700;
 }

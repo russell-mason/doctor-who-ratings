@@ -11,21 +11,24 @@ public class TimelineDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
                                                                     .Where(episode => episode.Doctor == doctor.Number)
                                                                     .ToList();
 
-                                         return CreateDataPoint(doctor, episodes);
+                                         var isCurrent = doctor == dataProvider.DoctorWhoData.Doctors.Last();
+
+                                         return CreateDataPoint(doctor, isCurrent, episodes);
                                      })
                                      .ToList();
 
         return dataPoints;
     }
 
-    private static TimelineDataPoint CreateDataPoint(Doctor doctor, List<Episode> episodes)
+    private static TimelineDataPoint CreateDataPoint(Doctor doctor, bool isCurrent, List<Episode> episodes)
     {
         var dataPoint = new TimelineDataPoint
         {
             Number = doctor.Number,
             Actor = doctor.Actor,
             FirstEpisodeAirDate = episodes.First().OriginalAirDate,
-            EpisodeCount = episodes.Count()
+            LastEpisodeAirDate = isCurrent ? null : episodes.Last().OriginalAirDate,
+            EpisodeCount = episodes.Count
         };
 
         return dataPoint;
