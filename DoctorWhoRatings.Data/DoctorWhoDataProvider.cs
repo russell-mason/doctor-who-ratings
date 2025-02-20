@@ -11,7 +11,7 @@ public class DoctorWhoDataProvider : IDoctorWhoDataProvider
     public DoctorWhoDataProvider(IDoctorWhoDataReader doctorWhoDataReader)
     {
         _doctorWhoDataReader = doctorWhoDataReader;
-        _doctorWhoData = new Lazy<DoctorWhoData>(ReadDoctorWhoData);
+        _doctorWhoData = new Lazy<DoctorWhoData>(ReadDoctorWhoDataFromExcelFile);
     }
 
     public DoctorWhoData DoctorWhoData => _doctorWhoData.Value;
@@ -23,10 +23,13 @@ public class DoctorWhoDataProvider : IDoctorWhoDataProvider
 
     public void Save()
     {
-        WriteDoctorWhoData();
+        if (!DoctorWhoDataJsonFileExists())
+        {
+            WriteDoctorWhoDataToJsonFile();
+        }
     }
 
-    private DoctorWhoData ReadDoctorWhoData()
+    private DoctorWhoData ReadDoctorWhoDataFromExcelFile()
     {
         var excelFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data", "DoctorWhoRatings.xlsx");
         var doctorWhoData = _doctorWhoDataReader.Read(excelFilePath);
@@ -34,10 +37,8 @@ public class DoctorWhoDataProvider : IDoctorWhoDataProvider
         return doctorWhoData;
     }
 
-    private void WriteDoctorWhoData()
+    private void WriteDoctorWhoDataToJsonFile()
     {
-        var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data", "doctor-who-ratings.json");
-
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -46,6 +47,10 @@ public class DoctorWhoDataProvider : IDoctorWhoDataProvider
 
         var json = JsonSerializer.Serialize(DoctorWhoData, options);
 
-        File.WriteAllText(jsonFilePath, json);
+        File.WriteAllText(GetJsonFilePath(), json);
     }
+
+    private static bool DoctorWhoDataJsonFileExists() => File.Exists(GetJsonFilePath());
+
+    private static string GetJsonFilePath() => Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data", "doctor-who-ratings.json");
 }
