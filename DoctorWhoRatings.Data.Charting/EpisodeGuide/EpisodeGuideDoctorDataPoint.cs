@@ -6,5 +6,5 @@ public class EpisodeGuideDoctorDataPoint
 
     public required string Actor { get; init; }
 
-    public required List<EpisodeGuideDataPoint> Episodes { get; init; }
+    public required List<EpisodeGuideSeasonDataPoint> Seasons { get; init; }
 }

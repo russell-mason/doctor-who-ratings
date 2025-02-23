@@ -8,6 +8,7 @@ public interface IEpisodeGuideDataPointGenerator
     /// <summary>
     /// Generates the data source.
     /// </summary>
-    /// <returns>A specific structure containing a list of episodes.</returns>
-    List<EpisodeGuideDoctorDataPoint> Generate();
+    /// <param name="options">Options that determine how the episodes are filtered.</param>
+    /// <returns>A specific structure containing a list of episodes organised by doctor, season, story, episode.</returns>
+    EpisodeGuideDataPoint Generate(EpisodeGuideDataOptions options);
 }

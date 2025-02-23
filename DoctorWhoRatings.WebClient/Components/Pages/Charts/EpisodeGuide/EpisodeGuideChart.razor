@@ -6,91 +6,146 @@
 <ChartHeading Title="@EpisodeGuideChartCaptions.Title"
               Description="@EpisodeGuideChartCaptions.Description" />
 
-@foreach (var doctorDataPoint in DataPoints)
+<div class="filter">
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Filter" />
+
+            <ChartOptionsTextbox @ref="_filterReference"
+                                 @bind-Value="DataOptions.Filter"
+                                 Id="filter"
+                                 AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsTextbox>
+
+            <button type="button" class="clear" @onclick="ClearFilter">Clear</button>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</div>
+
+@foreach (var doctorDataPoint in DataPoint.Doctors)
 {
     <div id="doctor@(doctorDataPoint.Doctor)" class="doctor">
         <div class="doctor-number">@Formatter.FormatPosition(doctorDataPoint.Doctor) doctor</div>
         <div class="actor">@doctorDataPoint.Actor</div>
 
-        @foreach (var episodeDataPoint in doctorDataPoint.Episodes)
+        @foreach (var seasonDataPoint in doctorDataPoint.Seasons)
         {
-            var dataPointMetadata = episodeDataPoint.Metadata;
-            var episodeUrl = $"./charts/episodes/{episodeDataPoint.Slug}";
+            <div class="season">
+                @seasonDataPoint.SeasonFormatDescription
 
-
-            if (dataPointMetadata.ShowSeasonTitle)
-            {
-                <div class="season">@dataPointMetadata.SeasonTitle</div>
-            }
-
-            @if (dataPointMetadata.ShowStoryTitle)
-            {
-                <div class="story @dataPointMetadata.ConsecutiveSeasonStoryIndicator">
-                    <div class="story-title">@episodeDataPoint.StoryTitle</div>
-
-                    <div class="story-numbers">
-                        <div class="story-number">STORY @episodeDataPoint.Story</div>
-
-                        @if (dataPointMetadata.HasStoryWiki)
-                        {
-                            <div class="story-wiki">
-                                <a href="@episodeDataPoint.WikiUrl" target="_blank" title="Wikipedia - @episodeDataPoint.StoryTitle">
-                                    <img class="wiki" src="images/wikipedia.svg" alt="Wikipedia" />
-                                </a>
-                            </div>
-                        }
-                    </div>
-                </div>
-            }
-
-            <div class="episode @dataPointMetadata.EpisodeIndentIndicator">
-                <a href="@episodeUrl" target="@episodeDataPoint.Slug">
-                    <div class="episode-title">@dataPointMetadata.EpisodeTitle</div>
-                </a>
-
-                <div class="episode-numbers">
-                    @if (dataPointMetadata.ShowStoryNumber)
-                    {
-                        <div class="episode-story-number">STORY @episodeDataPoint.Story</div>
-                    }
-
-                    <div class="episode-number">EPISODE @episodeDataPoint.EpisodeNumber</div>
-
-                    @if (dataPointMetadata.HasEpisodeWiki)
-                    {
-                        <div class="episode-wiki">
-                            <a href="@episodeDataPoint.WikiUrl" target="_blank" title="Wikipedia - @episodeDataPoint.StoryTitle">
-                                <img class="wiki" src="images/wikipedia.svg" alt="Wikipedia" />
-                            </a>
-                        </div>
-                    }
-                </div>
-
-                <div class="date">@Formatter.FormatDate(episodeDataPoint.OriginalAirDate)</div>
-
-                <div class="ratings">
-                    <div class="value">@Formatter.FormatNumber(episodeDataPoint.OvernightRatings)</div>
-                    <div class="millions">million overnight</div>
-
-                    @if (episodeDataPoint.ConsolidatedRatings != null)
-                    {
-                        <div class="value">@Formatter.FormatNumber(episodeDataPoint.ConsolidatedRatings)</div>
-                        <div class="millions">million consolidated</div>
-                    }
-
-                    @if (episodeDataPoint.ExtendedRatings != null)
-                    {
-                        <div class="value">@Formatter.FormatNumber(episodeDataPoint.ExtendedRatings)</div>
-                        <div class="millions">million extended</div>
-                    }
-                </div>
+                @if (seasonDataPoint is { SeasonFormatId: SeasonFormats.Special, Stories.Count: > 1 })
+                {
+                    <span>s</span>
+                }
+                else
+                {
+                    <span>&nbsp;@seasonDataPoint.Season</span>
+                }
             </div>
+
+            @foreach (var storyDataPoint in seasonDataPoint.Stories)
+            {
+                @if (storyDataPoint.StoryTitle != null)
+                {
+                    <div class="story @(storyDataPoint == seasonDataPoint.Stories[0] ? "first" : "")">
+                        <div class="story-title">@storyDataPoint.StoryTitle</div>
+
+                        <div class="story-numbers">
+                            <div class="story-number">STORY @storyDataPoint.Story</div>
+
+                            @if (storyDataPoint.WikiUrl != null)
+                            {
+                                <div class="story-wiki">
+                                    <a href="@storyDataPoint.WikiUrl" target="_blank" title="Wikipedia - @storyDataPoint.StoryTitle">
+                                        <img class="wiki" src="images/wikipedia.svg" alt="Wikipedia" />
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @foreach (var episodeDataPoint in storyDataPoint.Episodes)
+                {
+                    var episodeUrl = $"./charts/episodes/{episodeDataPoint.Slug}";
+
+                    <div class="episode @(storyDataPoint.StoryTitle != null ? "indent" : "")">
+                        <a href="@episodeUrl" target="@episodeDataPoint.Slug">
+                            <div class="episode-title">@episodeDataPoint.PartTitle</div>
+                        </a>
+
+                        <div class="episode-numbers">
+                            @if (storyDataPoint.StoryTitle == null)
+                            {
+                                <div class="episode-story-number">STORY @storyDataPoint.Story</div>
+                            }
+
+                            <div class="episode-number">EPISODE @episodeDataPoint.EpisodeNumber</div>
+
+                            @if (episodeDataPoint.WikiUrl != null)
+                            {
+                                <div class="episode-wiki">
+                                    <a href="@episodeDataPoint.WikiUrl" target="_blank" title="Wikipedia - @episodeDataPoint.PartTitle">
+                                        <img class="wiki" src="images/wikipedia.svg" alt="Wikipedia" />
+                                    </a>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="date">@Formatter.FormatDate(episodeDataPoint.OriginalAirDate)</div>
+
+                        <div class="ratings">
+                            <div class="value">@Formatter.FormatNumber(episodeDataPoint.OvernightRatings)</div>
+                            <div class="millions">million overnight</div>
+
+                            @if (episodeDataPoint.ConsolidatedRatings != null)
+                            {
+                                <div class="value">@Formatter.FormatNumber(episodeDataPoint.ConsolidatedRatings)</div>
+                                <div class="millions">million consolidated</div>
+                            }
+
+                            @if (episodeDataPoint.ExtendedRatings != null)
+                            {
+                                <div class="value">@Formatter.FormatNumber(episodeDataPoint.ExtendedRatings)</div>
+                                <div class="millions">million extended</div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
         }
     </div>
 }
 
 @code {
-    private List<EpisodeGuideDoctorDataPoint> DataPoints { get; set; } = default!;
+    private ChartOptionsTextbox _filterReference = default!;
 
-    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate();
+    private EpisodeGuideDataPoint DataPoint { get; set; } = default!;
+
+    private EpisodeGuideDataOptions DataOptions { get; } = new();
+
+    protected override void OnInitialized()
+    {
+        DataPoint = DataPointGenerator.Generate(DataOptions);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _filterReference.FocusAsync();
+        }
+    }
+
+    private void AfterOptionChanged()
+    {
+        DataPoint = DataPointGenerator.Generate(DataOptions);
+    }
+
+    private void ClearFilter()
+    {
+        DataOptions.Filter = string.Empty;
+
+        DataPoint = DataPointGenerator.Generate(DataOptions);
+    }
 }

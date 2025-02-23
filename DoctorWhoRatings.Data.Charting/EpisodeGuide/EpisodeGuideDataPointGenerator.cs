@@ -2,111 +2,134 @@
 
 public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IEpisodeGuideDataPointGenerator
 {
-    public List<EpisodeGuideDoctorDataPoint> Generate()
+    public EpisodeGuideDataPoint Generate(EpisodeGuideDataOptions options)
     {
-        var dataPoints = dataProvider.DoctorWhoData.Episodes
-                                     .GroupBy(episode => (episode.Doctor, episode.Actor))
-                                     .Select(CreateDoctorDataPoint)
-                                     .ToList();
+        var doctorGroups = dataProvider.DoctorWhoData.Episodes.GroupBy(episode => new DoctorInfo(episode));
+        
+        var doctorDataPoints = doctorGroups
+                               .Select(group => CreateDoctorDataPoint(group, options))
+                               .Where(doctor => doctor.Seasons.Count > 0)
+                               .ToList();
 
-        return dataPoints;
+        var episodeGuideDataPoint = new EpisodeGuideDataPoint
+        {
+            Doctors = doctorDataPoints
+        };
+
+        return episodeGuideDataPoint;
     }
 
-    private static EpisodeGuideDoctorDataPoint CreateDoctorDataPoint(IGrouping<(int doctor, string actor), Episode> group)
+    private EpisodeGuideDoctorDataPoint CreateDoctorDataPoint(IGrouping<DoctorInfo, Episode> doctorEpisodes,
+                                                              EpisodeGuideDataOptions options)
     {
+        var seasonGroups = doctorEpisodes.GroupEpisodesBy(episode => new SeasonInfo(episode));
+        
+        var seasonDataPoints = CreateSeasonDataPoints(seasonGroups, options)
+                               .Where(season => season.Stories.Count > 0)
+                               .ToList();
+
         var doctorDataPoint = new EpisodeGuideDoctorDataPoint
         {
-            Doctor = group.Key.doctor,
-            Actor = group.Key.actor,
-            Episodes = CreateEpisodeGuideDataPoints(group.ToList())
+            Actor = doctorEpisodes.Key.Actor,
+            Doctor = doctorEpisodes.Key.Doctor,
+            Seasons = seasonDataPoints
         };
 
         return doctorDataPoint;
     }
 
-    private static List<EpisodeGuideDataPoint> CreateEpisodeGuideDataPoints(List<Episode> episodes) =>
-        episodes.Select((_, index) => CreateEpisodeGuideDataPoint(episodes, index)).ToList();
-
-    private static EpisodeGuideDataPoint CreateEpisodeGuideDataPoint(List<Episode> episodes, int index)
+    private List<EpisodeGuideSeasonDataPoint> CreateSeasonDataPoints(List<IGrouping<SeasonInfo, Episode>> seasonGroups,
+                                                                     EpisodeGuideDataOptions options)
     {
-        var currentEpisode = episodes[index];
+        var seasonDataPoints = seasonGroups
+                               .Select(seasonGroup =>
+                               {
+                                   // Need to include the story tile for Trial of a Time Lord which has multiple sub-stories in the same story
+                                   var storyGroups =
+                                       seasonGroup.GroupEpisodesBy(episode => (episode.Story, episode.StoryTitle), episode => new StoryInfo(episode));
+                                   var storyDataPoints = CreateStoryDataPoints(storyGroups, options);
 
-        var episodeDataPoint = new EpisodeGuideDataPoint
+                                   var seasonDataPoint = new EpisodeGuideSeasonDataPoint
+                                   {
+                                       Season = seasonGroup.Key.Season,
+                                       SeasonFormatId = seasonGroup.Key.SeasonFormatId,
+                                       SeasonFormatDescription = seasonGroup.Key.SeasonFormatDescription,
+                                       Stories = storyDataPoints
+                                   };
+
+                                   return seasonDataPoint;
+                               })
+                               .Where(season => season.Stories.Count > 0)
+                               .ToList();
+
+        return seasonDataPoints;
+    }
+
+    private List<EpisodeGuideStoryDataPoint> CreateStoryDataPoints(List<IGrouping<StoryInfo, Episode>> storyGroups,
+                                                                   EpisodeGuideDataOptions options)
+    {
+        var storyDataPoints = storyGroups
+                              .Select(storyGroup =>
+                              {
+                                  var episodeDataPoints = storyGroup
+                                                          .Where(episode => (episode.PartTitle ?? episode.StoryTitle)
+                                                                     .Contains(options.Filter, StringComparison.OrdinalIgnoreCase))
+                                                          .Select(episode => CreateEpisodeDataPoint(episode, options)).ToList();
+
+                                  var seasonDataPoint = new EpisodeGuideStoryDataPoint
+                                  {
+                                      Story = storyGroup.Key.Story,
+                                      StoryTitle = storyGroup.Key.StoryTitle,
+                                      StoryInSeason = storyGroup.Key.StoryInSeason,
+                                      WikiUrl = storyGroup.Key.StoryWikiUrl,
+                                      Episodes = episodeDataPoints
+                                  };
+
+                                  return seasonDataPoint;
+                              })
+                              .Where(story => ((story.StoryTitle ?? "").Contains(options.Filter, StringComparison.OrdinalIgnoreCase)) || 
+                                              story.Episodes.Count > 0)
+                              .ToList();
+
+        return storyDataPoints;
+    }
+
+    private EpisodeGuideEpisodeDataPoint CreateEpisodeDataPoint(Episode episode, EpisodeGuideDataOptions options)
+    {
+        var episodeDataPoint = new EpisodeGuideEpisodeDataPoint
         {
-            EpisodeFormatId = currentEpisode.EpisodeFormatId,
-            Season = currentEpisode.Season,
-            SeasonFormatDescription = currentEpisode.SeasonFormatDescription,
-            EpisodeNumber = currentEpisode.Id,
-            Story = currentEpisode.Story,
-            StoryTitle = currentEpisode.StoryTitle,
-            PartInStory = currentEpisode.PartInStory,
-            PartTitle = currentEpisode.PartTitle,
-            OriginalAirDate = currentEpisode.OriginalAirDate,
-            OvernightRatings = currentEpisode.OvernightRatings,
-            ConsolidatedRatings = currentEpisode.ConsolidatedRatings,
-            ExtendedRatings = currentEpisode.ExtendedRatings,
-            WikiUrl = currentEpisode.WikiUrl,
-            Slug = currentEpisode.Slug,
-            Metadata = CreateEpisodeGuideDataPointMetadata(episodes, index)
+            EpisodeFormatId = episode.EpisodeFormatId,
+            EpisodeNumber = episode.Id,
+            PartInStory = episode.PartInStory,
+            PartTitle = episode.PartTitle ?? episode.StoryTitle,
+            OriginalAirDate = episode.OriginalAirDate,
+            OvernightRatings = episode.OvernightRatings,
+            ConsolidatedRatings = episode.ConsolidatedRatings,
+            ExtendedRatings = episode.ExtendedRatings,
+            WikiUrl = episode.WikiFormatId == WikiFormats.Episode ? episode.WikiUrl : null,
+            Slug = episode.Slug
         };
 
         return episodeDataPoint;
     }
 
-    private static EpisodeGuideDataPointMetadata CreateEpisodeGuideDataPointMetadata(List<Episode> episodes, int index)
+    private record DoctorInfo(int Doctor, string Actor)
     {
-        var previousEpisode = index > 0 ? episodes[index - 1] : null;
-        var currentEpisode = episodes[index];
-        var nextEpisode = index < episodes.Count - 1 ? episodes[index + 1] : null;
+        public DoctorInfo(Episode episode) : this(episode.Doctor, episode.Actor) { }
+    }
 
-        var showSeasonTitle = (currentEpisode.Season != null &&
-                               currentEpisode.Season != previousEpisode?.Season) ||
-                              (currentEpisode.EpisodeFormatId == EpisodeFormats.Movie) ||
-                              (currentEpisode.EpisodeFormatId == EpisodeFormats.Special &&
-                               previousEpisode?.EpisodeFormatId != EpisodeFormats.Special);
+    private record SeasonInfo(int? Season, int SeasonFormatId, string SeasonFormatDescription)
+    {
+        public SeasonInfo(Episode episode) : this(episode.Season, episode.SeasonFormatId, episode.SeasonFormatDescription) { }
+    }
 
-        string? seasonTitle = null;
-
-        if (showSeasonTitle)
-        {
-            var plural = previousEpisode?.EpisodeFormatId != EpisodeFormats.Special &&
-                         currentEpisode.EpisodeFormatId == EpisodeFormats.Special &&
-                         nextEpisode is { EpisodeFormatId: EpisodeFormats.Special }
-                ? "s"
-                : "";
-
-            seasonTitle = $"{currentEpisode.SeasonFormatDescription}{plural} {currentEpisode.Season}";
-        }
-
-        var showStoryTitle = (currentEpisode.PartInStory == 1 || currentEpisode.StoryTitle != previousEpisode?.StoryTitle) &&
-                             nextEpisode?.PartInStory > 1 &&
-                             !string.IsNullOrWhiteSpace(currentEpisode.PartTitle);
-
-        var showStoryNumber = currentEpisode.PartTitle == null && currentEpisode.PartInStory == 1;
-
-        var hasStoryWiki = currentEpisode.WikiFormatId == WikiFormats.Story &&
-                           !string.IsNullOrWhiteSpace(currentEpisode.WikiUrl);
-
-        var hasEpisodeWiki = currentEpisode.WikiFormatId == WikiFormats.Episode &&
-                             !string.IsNullOrWhiteSpace(currentEpisode.WikiUrl);
-
-        var episodeIndentIndicator = currentEpisode.PartTitle != null ? "indent" : string.Empty;
-
-        var consecutiveSeasonStoryIndicator = showSeasonTitle && showStoryTitle ? "first" : string.Empty;
-
-        var metaData = new EpisodeGuideDataPointMetadata
-        {
-            ShowSeasonTitle = showSeasonTitle,
-            SeasonTitle = seasonTitle,
-            ShowStoryTitle = showStoryTitle,
-            ShowStoryNumber = showStoryNumber,
-            HasStoryWiki = hasStoryWiki,
-            EpisodeTitle = currentEpisode.PartTitle ?? currentEpisode.StoryTitle,
-            HasEpisodeWiki = hasEpisodeWiki,
-            EpisodeIndentIndicator = episodeIndentIndicator,
-            ConsecutiveSeasonStoryIndicator = consecutiveSeasonStoryIndicator
-        };
-
-        return metaData;
+    private record StoryInfo(int Story, int? StoryInSeason, string? StoryTitle, string? StoryWikiUrl)
+    {
+        public StoryInfo(Episode episode) :
+            this(episode.Story,
+                 episode.StoryInSeason,
+                 string.IsNullOrWhiteSpace(episode.PartTitle) ? null : episode.StoryTitle,
+                 episode.WikiFormatId == WikiFormats.Story ? episode.WikiUrl : null)
+        { }
     }
 }

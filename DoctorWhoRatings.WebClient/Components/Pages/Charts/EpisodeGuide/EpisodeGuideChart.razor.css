@@ -1,4 +1,17 @@
-﻿.doctor {
+﻿.filter {
+    position: sticky;
+    top: 52px;
+    z-index: 1;
+    margin-bottom: 16px;
+}
+
+button.clear {
+    padding: 1px 8px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+}
+
+.doctor {
     background: #ffffffca;
     backdrop-filter: blur(19px);
     color: #505050;
