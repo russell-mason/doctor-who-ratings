@@ -7,4 +7,6 @@ public class Top20EpisodesDataOptions
     public Top20EpisodesCalculationMethod CalculationMethod { get; set; } = Top20EpisodesCalculationMethod.Overnight;
 
     public bool IncludeSpecials { get; set; } = true;
+
+    public bool OnlyIncludeComparableRatings { get; set; } = false;
 }

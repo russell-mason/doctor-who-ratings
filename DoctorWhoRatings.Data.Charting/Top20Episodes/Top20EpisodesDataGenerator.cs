@@ -5,6 +5,7 @@ public class Top20EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider
     public List<Top20EpisodesDataPoint> Generate(Top20EpisodesDataOptions options)
     {
         var dataPoints = dataProvider.DoctorWhoData.Episodes
+                                     .Where(episode => IsComparableRatingIncluded(episode, options))
                                      .Where(episode => IsFormatIncluded(episode, options))
                                      .OrderByDescending(episode => SelectRating(episode, options))
                                      .Take(20)
@@ -45,6 +46,12 @@ public class Top20EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider
 
         return dataPoint;
     }
+
+    private static bool IsComparableRatingIncluded(Episode episode, Top20EpisodesDataOptions options) =>
+        !options.OnlyIncludeComparableRatings ||
+        (options.CalculationMethod == Top20EpisodesCalculationMethod.Overnight && episode.OvernightRatings != null) ||
+        (options.CalculationMethod == Top20EpisodesCalculationMethod.Consolidated && episode.ConsolidatedRatings != null) ||
+        (options.CalculationMethod == Top20EpisodesCalculationMethod.Extended && episode.ExtendedExcessRatings != null);
 
     private static bool IsFormatIncluded(Episode episode, Top20EpisodesDataOptions options) =>
         options.IncludeSpecials || episode.EpisodeFormatId == EpisodeFormats.Series;

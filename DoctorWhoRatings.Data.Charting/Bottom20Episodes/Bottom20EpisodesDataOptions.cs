@@ -7,4 +7,6 @@ public class Bottom20EpisodesDataOptions
     public Bottom20EpisodesCalculationMethod CalculationMethod { get; set; } = Bottom20EpisodesCalculationMethod.Overnight;
 
     public bool IncludeSpecials { get; set; } = true;
+
+    public bool OnlyIncludeComparableRatings { get; set; } = false;
 }

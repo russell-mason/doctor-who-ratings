@@ -79,6 +79,13 @@
                                   AfterValueChanged="AfterOptionChanged">
             </ChartOptionsCheckbox>
         </ChartOptionsGroup>
+        
+        <ChartOptionsGroup>
+            <ChartOptionsCheckbox @bind-Value="DataOptions.OnlyIncludeComparableRatings"
+                                  Id="comparable" Label="Only include comparable ratings"
+                                  AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsCheckbox>
+        </ChartOptionsGroup>
 
         <ChartOptionsGroup>
             <ChartOptionsCheckbox @bind-Value="DataOptions.AdjustForCurrentPopulation"
