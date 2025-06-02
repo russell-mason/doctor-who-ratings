@@ -11,7 +11,9 @@ public class TimelineDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
                                                                     .Where(episode => episode.Doctor == doctor.Number)
                                                                     .ToList();
 
-                                         var isCurrent = doctor == dataProvider.DoctorWhoData.Doctors.Last();
+                                         const bool isCurrent = false;
+                                         // Until the next doctor is actually confirmed assume there is no current doctor
+                                         // var isCurrent = doctor == dataProvider.DoctorWhoData.Doctors.Last();
 
                                          return CreateDataPoint(doctor, isCurrent, episodes);
                                      })
