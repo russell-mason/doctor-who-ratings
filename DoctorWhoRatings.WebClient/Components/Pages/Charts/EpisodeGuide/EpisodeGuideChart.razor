@@ -98,11 +98,19 @@
                             <div class="value">@Formatter.FormatNumber(episodeDataPoint.OvernightRatings)</div>
                             <div class="millions">million overnight</div>
 
-                            @if (episodeDataPoint.ConsolidatedRatings != null)
-                            {
-                                <div class="value">@Formatter.FormatNumber(episodeDataPoint.ConsolidatedRatings)</div>
-                                <div class="millions">million consolidated</div>
-                            }
+                            <div class="value">
+                                @if (episodeDataPoint.ConsolidatedRatings != null)
+                                {
+                                    @Formatter.FormatNumber(episodeDataPoint.ConsolidatedRatings)
+                                }
+                            </div>
+
+                            <div class="millions">
+                                @if (episodeDataPoint.ConsolidatedRatings != null)
+                                {
+                                    @("million consolidated")
+                                }
+                            </div>
 
                             @if (episodeDataPoint.ExtendedRatings != null)
                             {
