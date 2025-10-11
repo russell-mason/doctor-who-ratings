@@ -12,6 +12,8 @@ public class EpisodeGuideEpisodeDataPoint
 
     public DateTime OriginalAirDate { get; init; }
 
+    public bool IsMissing { get; init; }
+
     public decimal? OvernightRatings { get; init; }
 
     public decimal? ConsolidatedRatings { get; init; }

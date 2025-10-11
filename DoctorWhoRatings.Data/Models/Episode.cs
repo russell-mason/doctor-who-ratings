@@ -50,6 +50,8 @@ public record Episode
 
     public int Runtime { get; init; }
 
+    public bool IsMissing { get; init; }
+
     /// <summary>
     /// Overnight viewers (in millions).
     /// </summary>

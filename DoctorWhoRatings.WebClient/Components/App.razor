@@ -1,4 +1,4 @@
-﻿@inject IHostEnvironment Env
+﻿@inject IConfiguration Configuration
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @{
-        var baseHref = Env.IsDevelopment() ? "/" : "/doctor-who-ratings/";
+        var baseHref = Configuration.GetValue<string>("App:BaseHref");
     }
     <base href="@baseHref" />
     <link rel="stylesheet" href="styles/normalize.css" />

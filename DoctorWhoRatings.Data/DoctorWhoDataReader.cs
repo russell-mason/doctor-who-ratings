@@ -66,8 +66,9 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
             PartTitle = cellReader.Read<string>(nameof(Episode.PartTitle)),
             EpisodeInSeason = cellReader.Read<int?>(nameof(Episode.EpisodeInSeason)),
             OriginalAirDate = cellReader.Read<DateTime>(nameof(Episode.OriginalAirDate)),
-            // Missing episodes use an estimate, recorded as a negative value to distinguish them from known runtimes
+            // Unknown runtimes use an estimate, recorded as a negative value to distinguish them from known runtimes
             Runtime = Math.Abs(cellReader.Read<int>(nameof(Episode.Runtime))),
+            IsMissing = Convert.ToBoolean(cellReader.Read<int?>(nameof(Episode.IsMissing)) ?? 0),
             OvernightRatings = cellReader.Read<decimal?>(nameof(Episode.OvernightRatings)),
             ConsolidatedRatings = cellReader.Read<decimal?>(nameof(Episode.ConsolidatedRatings)),
             ExtendedRatings = cellReader.Read<decimal?>(nameof(Episode.ExtendedRatings)),

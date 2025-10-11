@@ -7,4 +7,6 @@ public class EpisodeGuideDoctorDataPoint
     public required string Actor { get; init; }
 
     public required List<EpisodeGuideSeasonDataPoint> Seasons { get; init; }
+
+    public bool HasMissingEpisodes { get; init; }
 }

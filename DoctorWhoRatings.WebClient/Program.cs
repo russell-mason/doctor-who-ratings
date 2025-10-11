@@ -17,8 +17,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Cert removed from website, currently only supports HTTP
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseStaticFiles()
    .UseAntiforgery()

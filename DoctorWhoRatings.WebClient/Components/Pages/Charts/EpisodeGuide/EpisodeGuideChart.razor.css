@@ -22,6 +22,12 @@ button.clear {
     margin: 0 auto 32px auto;
 }
 
+    .doctor .missing {
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-top: 48px;
+    }
+
 .doctor-number {
     font-family: segoe-light, sans-serif;
     font-size: 0.9rem;
@@ -63,6 +69,10 @@ button.clear {
     .episode a:hover {
         text-decoration: underline;
     }
+
+.episode .missing {
+    font-weight: bold;
+}
 
 .episode-story-number {
     font-size: 0.8rem;

@@ -5,7 +5,7 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
     public EpisodeGuideDataPoint Generate(EpisodeGuideDataOptions options)
     {
         var doctorGroups = dataProvider.DoctorWhoData.Episodes.GroupBy(episode => new DoctorInfo(episode));
-        
+
         var doctorDataPoints = doctorGroups
                                .Select(group => CreateDoctorDataPoint(group, options))
                                .Where(doctor => doctor.Seasons.Count > 0)
@@ -23,16 +23,21 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
                                                               EpisodeGuideDataOptions options)
     {
         var seasonGroups = doctorEpisodes.GroupEpisodesBy(episode => new SeasonInfo(episode));
-        
+
         var seasonDataPoints = CreateSeasonDataPoints(seasonGroups, options)
                                .Where(season => season.Stories.Count > 0)
                                .ToList();
+
+        var hasMissingEpisodes = seasonDataPoints
+            .Any(season => season.Stories
+                                 .Any(story => story.Episodes.Any(episode => episode.IsMissing)));
 
         var doctorDataPoint = new EpisodeGuideDoctorDataPoint
         {
             Actor = doctorEpisodes.Key.Actor,
             Doctor = doctorEpisodes.Key.Doctor,
-            Seasons = seasonDataPoints
+            Seasons = seasonDataPoints,
+            HasMissingEpisodes = hasMissingEpisodes
         };
 
         return doctorDataPoint;
@@ -87,7 +92,7 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
 
                                   return seasonDataPoint;
                               })
-                              .Where(story => ((story.StoryTitle ?? "").Contains(options.Filter, StringComparison.OrdinalIgnoreCase)) || 
+                              .Where(story => ((story.StoryTitle ?? "").Contains(options.Filter, StringComparison.OrdinalIgnoreCase)) ||
                                               story.Episodes.Count > 0)
                               .ToList();
 
@@ -102,6 +107,7 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
             EpisodeNumber = episode.Id,
             PartInStory = episode.PartInStory,
             PartTitle = episode.PartTitle ?? episode.StoryTitle,
+            IsMissing = episode.IsMissing,
             OriginalAirDate = episode.OriginalAirDate,
             OvernightRatings = episode.OvernightRatings,
             ConsolidatedRatings = episode.ConsolidatedRatings,

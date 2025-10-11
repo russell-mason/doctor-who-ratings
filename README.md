@@ -26,16 +26,11 @@ View live here: http://www.russellmason.com/doctor-who-ratings
 
 **Notes:**
 
-Two lines of code have been explicitly added to make local development and deployment to the live website easier: 
-
-1. Only HTTP is supported. You'll need to re-enable HTTPS redirection if you need it. 
-This can be done by uncommenting the following line in the Program.cs file:
+The local development and live websites use different application roots. This is taken from appsettings.json/appsettings.Development.json.
 ```
-// app.UseHttpsRedirection();
-```
-2. A different application root is used. This is selected based on local execution via the App.razor file.
-```
-@{
-    var baseHref = Env.IsDevelopment() ? "/" : "/doctor-who-ratings/";
-}
+...
+    "App": {
+        "BaseHref": "/doctor-who-ratings/"
+    }
+...
 ```
