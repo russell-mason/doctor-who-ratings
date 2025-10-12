@@ -52,6 +52,7 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
                                    // Need to include the story tile for Trial of a Time Lord which has multiple sub-stories in the same story
                                    var storyGroups =
                                        seasonGroup.GroupEpisodesBy(episode => (episode.Story, episode.StoryTitle), episode => new StoryInfo(episode));
+
                                    var storyDataPoints = CreateStoryDataPoints(storyGroups, options);
 
                                    var seasonDataPoint = new EpisodeGuideSeasonDataPoint
@@ -77,9 +78,9 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
                               .Select(storyGroup =>
                               {
                                   var episodeDataPoints = storyGroup
-                                                          .Where(episode => (episode.PartTitle ?? episode.StoryTitle)
-                                                                     .Contains(options.Filter, StringComparison.OrdinalIgnoreCase))
-                                                          .Select(episode => CreateEpisodeDataPoint(episode, options)).ToList();
+                                                          .Where(episode => EpisodeMatchesFilters(episode, options))
+                                                          .Select(episode => CreateEpisodeDataPoint(episode, options))
+                                                          .ToList();
 
                                   var seasonDataPoint = new EpisodeGuideStoryDataPoint
                                   {
@@ -92,12 +93,26 @@ public class EpisodeGuideDataPointGenerator(IDoctorWhoDataProvider dataProvider)
 
                                   return seasonDataPoint;
                               })
-                              .Where(story => ((story.StoryTitle ?? "").Contains(options.Filter, StringComparison.OrdinalIgnoreCase)) ||
-                                              story.Episodes.Count > 0)
+                              .Where(story => StoryMatchesFilters(story, options))
                               .ToList();
 
         return storyDataPoints;
     }
+
+    private static bool StoryMatchesFilters(EpisodeGuideStoryDataPoint story, EpisodeGuideDataOptions options) =>
+        (options.MissingEpisodeHandling != MissingEpisodeHandling.RestrictTo &&
+         (story.StoryTitle ?? "").Contains(options.Filter, StringComparison.OrdinalIgnoreCase)) ||
+         story.Episodes.Count > 0;
+
+    private static bool EpisodeMatchesFilters(Episode episode, EpisodeGuideDataOptions options) =>
+        (episode.PartTitle ?? episode.StoryTitle).Contains(options.Filter, StringComparison.OrdinalIgnoreCase) &&
+        options.MissingEpisodeHandling switch
+        {
+            MissingEpisodeHandling.Include => true,
+            MissingEpisodeHandling.Exclude => !episode.IsMissing,
+            MissingEpisodeHandling.RestrictTo => episode.IsMissing,
+            _ => false
+        };
 
     private EpisodeGuideEpisodeDataPoint CreateEpisodeDataPoint(Episode episode, EpisodeGuideDataOptions options)
     {

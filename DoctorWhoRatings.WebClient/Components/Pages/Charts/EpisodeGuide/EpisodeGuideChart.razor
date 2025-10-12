@@ -19,6 +19,29 @@
 
             <button type="button" class="clear" @onclick="ClearFilter">Clear</button>
         </ChartOptionsGroup>
+        
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Show missing episodes" />
+
+            <ChartOptionsRadio @bind-Value="DataOptions.MissingEpisodeHandling"
+                               Id="include" Group="missingEpisodesOption"
+                               CheckedValue="@MissingEpisodeHandling.Include"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.MissingEpisodeHandling"
+                               Id="exclude" Group="missingEpisodesOption"
+                               CheckedValue="@MissingEpisodeHandling.Exclude"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+            
+            <ChartOptionsRadio @bind-Value="DataOptions.MissingEpisodeHandling"
+                               Id="restrictTo" Group="missingEpisodesOption"
+                               Label="Only"
+                               CheckedValue="@MissingEpisodeHandling.RestrictTo"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
     </ChartOptions>
 </div>
 
