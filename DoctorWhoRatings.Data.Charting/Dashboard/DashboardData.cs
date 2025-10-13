@@ -16,6 +16,8 @@ public class DashboardData
 
     public int NumberOfSeriesEpisodes { get; set; }
 
+    public int NumberOfMissingEpisodes { get; set; }
+
     public int NumberOfSpecials { get; set; }
 
     public int NumberOfMovies { get; set; }

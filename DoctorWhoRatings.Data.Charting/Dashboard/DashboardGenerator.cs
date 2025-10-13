@@ -17,6 +17,7 @@ public class DashboardGenerator(IDoctorWhoDataProvider dataProvider) : IDashboar
             TotalNumberOfEpisodes = episodes.Count,
             NumberOfStories = episodes[^1].Story,
             NumberOfSeriesEpisodes = episodes.Count(episode => episode.EpisodeFormatId == EpisodeFormats.Series),
+            NumberOfMissingEpisodes = episodes.Count(episode => episode.IsMissing),
             NumberOfMovies =episodes.Count(episode => episode.EpisodeFormatId == EpisodeFormats.Movie),
             NumberOfSpecials = episodes.Count(episode => episode.EpisodeFormatId == EpisodeFormats.Special),
             TotalEpisodeHours = (decimal) episodes.Sum(episode => episode.Runtime) / minutesInHour,
