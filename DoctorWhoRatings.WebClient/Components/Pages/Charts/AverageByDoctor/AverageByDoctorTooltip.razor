@@ -1,14 +1,14 @@
 ﻿<ChartTooltip>
-    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
-                               EpisodeCount="@DataPoint.EpisodeCount" />
-    
+    <ChartTooltipEpisodeSection Actor="@DataPoint.Actor"
+                                EpisodeCount="@DataPoint.EpisodeCount" />
+
     <ChartTooltipBreak />
 
-    <ChartTooltipIconSection IconUrl="images/calculator.svg" 
+    <ChartTooltipIconSection IconUrl="images/calculator.svg"
                              IconAlt="Calculation method"
                              Title="@DataOptions.CalculationMethod.ToString()" />
     <ChartTooltipBreak />
-    
+
     <ChartTooltipRatingsSection TargetRatings="@TargetExcessRatings"
                                 OvernightRatings="@DataPoint.CalculatedOvernightRatings"
                                 ConsolidatedRatings="@DataPoint.CalculatedConsolidatedRatings"
@@ -22,7 +22,7 @@
                                     TargetRatings="@TargetPopulationAdjustedExcessRatings"
                                     OvernightRatings="@DataPoint.CalculatedPopulationAdjustedOvernightRatings"
                                     ConsolidatedRatings="@DataPoint.CalculatedPopulationAdjustedConsolidatedRatings"
-                                    ExtendedRatings="@DataPoint.CalculatedPopulationAdjustedExtendedRatings"/>
+                                    ExtendedRatings="@DataPoint.CalculatedPopulationAdjustedExtendedRatings" />
     </ChartSecondaryTooltip>
 }
 

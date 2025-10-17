@@ -1,9 +1,9 @@
 ﻿<ChartTooltip>
-    <ChartTooltipEpisodeSetion Actor="@DataPoint.Era"
-                               EpisodeCount="@DataPoint.EpisodeCount" />
+    <ChartTooltipEpisodeSection Actor="@DataPoint.Era"
+                                EpisodeCount="@DataPoint.EpisodeCount" />
 
     <ChartTooltipBreak />
-    
+
     <ChartTooltipIconSection IconUrl="images/pie-chart.svg"
                              IconAlt="Share">
         <div class="share">
@@ -11,10 +11,10 @@
             <span>% share of total ratings</span>
         </div>
     </ChartTooltipIconSection>
-    
+
     <ChartTooltipBreak />
-    
-    <ChartTooltipIconSection IconUrl="images/calculator.svg" 
+
+    <ChartTooltipIconSection IconUrl="images/calculator.svg"
                              IconAlt="Calculation method"
                              Title="@DataOptions.CalculationMethod.Humanize()" />
     <ChartTooltipBreak />

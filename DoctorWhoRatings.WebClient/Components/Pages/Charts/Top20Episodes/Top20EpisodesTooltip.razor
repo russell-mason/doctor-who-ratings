@@ -1,15 +1,15 @@
 ﻿<ChartTooltip>
-    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
-                               StoryTitle="@DataPoint.StoryTitle"
-                               PartTitle="@DataPoint.PartTitle"
-                               SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
-                               Season="@DataPoint.Season"
-                               OriginalAirDate="@DataPoint.OriginalAirDate" />
+    <ChartTooltipEpisodeSection Actor="@DataPoint.Actor"
+                                StoryTitle="@DataPoint.StoryTitle"
+                                PartTitle="@DataPoint.PartTitle"
+                                SeasonFormatDescription="@DataPoint.SeasonFormatDescription"
+                                Season="@DataPoint.Season"
+                                OriginalAirDate="@DataPoint.OriginalAirDate" />
 
     <ChartTooltipBreak />
-    
+
     <ChartTooltipRatingPositionSection Position="@(DataPointIndex + 1)" IsHighestRatings="@true" />
-    
+
     <ChartTooltipBreak />
 
     <ChartTooltipRatingsSection TargetRatings="@TargetExcessRatings"
@@ -25,7 +25,7 @@
                                     TargetRatings="@TargetPopulationAdjustedExcessRatings"
                                     OvernightRatings="@DataPoint.PopulationAdjustedOvernightRatings"
                                     ConsolidatedRatings="@DataPoint.PopulationAdjustedConsolidatedRatings"
-                                    ExtendedRatings="@DataPoint.PopulationAdjustedExtendedRatings"/>
+                                    ExtendedRatings="@DataPoint.PopulationAdjustedExtendedRatings" />
     </ChartSecondaryTooltip>
 }
 

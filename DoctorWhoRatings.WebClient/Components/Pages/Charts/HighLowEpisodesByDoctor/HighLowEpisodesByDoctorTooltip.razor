@@ -1,15 +1,15 @@
 ﻿<ChartTooltip>
-    <ChartTooltipEpisodeSetion Actor="@DataPoint.Actor"
-                               EpisodeCount="@DataPoint.EpisodeCount"
-                               StoryTitle="@HighLowDataPoint.StoryTitle"
-                               PartTitle="@HighLowDataPoint.StoryPartTitle" 
-                               SeasonFormatDescription="@HighLowDataPoint.SeasonFormatDescription"
-                               Season="@HighLowDataPoint.Season"
-                               HasHighestRating="@HasHighestRating"
-                               HasLowestRating="@HasLowestRating" />
+    <ChartTooltipEpisodeSection Actor="@DataPoint.Actor"
+                                EpisodeCount="@DataPoint.EpisodeCount"
+                                StoryTitle="@HighLowDataPoint.StoryTitle"
+                                PartTitle="@HighLowDataPoint.StoryPartTitle"
+                                SeasonFormatDescription="@HighLowDataPoint.SeasonFormatDescription"
+                                Season="@HighLowDataPoint.Season"
+                                HasHighestRating="@HasHighestRating"
+                                HasLowestRating="@HasLowestRating" />
 
     <ChartTooltipBreak />
-    
+
     <ChartTooltipRatingsSection TargetRatings="@TargetExcessRatings"
                                 OvernightRatings="@HighLowDataPoint.OvernightRatings"
                                 ConsolidatedRatings="@HighLowDataPoint.ConsolidatedRatings"
@@ -23,7 +23,7 @@
                                     TargetRatings="@TargetPopulationAdjustedExcessRatings"
                                     OvernightRatings="@HighLowDataPoint.PopulationAdjustedOvernightRatings"
                                     ConsolidatedRatings="@HighLowDataPoint.PopulationAdjustedConsolidatedRatings"
-                                    ExtendedRatings="@HighLowDataPoint.PopulationAdjustedExtendedRatings"/>
+                                    ExtendedRatings="@HighLowDataPoint.PopulationAdjustedExtendedRatings" />
     </ChartSecondaryTooltip>
 }
 
@@ -53,18 +53,18 @@
     private bool IsExtendedExcess => SeriesIndex % SeriesPerDataPoint == 2;
 
     private HighLowEpisodeByDoctorDataPoint HighLowDataPoint => HasHighestRating
-        ? DataPoint.HighEpisodeDataPoint 
+        ? DataPoint.HighEpisodeDataPoint
         : DataPoint.LowEpisodeDataPoint;
 
     private decimal? TargetExcessRatings => IsConsolidatedExcess
         ? HighLowDataPoint.ConsolidatedExcessRatings
-        : IsExtendedExcess 
-            ? HighLowDataPoint.ExtendedExcessRatings 
+        : IsExtendedExcess
+            ? HighLowDataPoint.ExtendedExcessRatings
             : null;
 
     private decimal? TargetPopulationAdjustedExcessRatings => IsConsolidatedExcess
         ? HighLowDataPoint.PopulationAdjustedConsolidatedExcessRatings
-        : IsExtendedExcess 
+        : IsExtendedExcess
             ? HighLowDataPoint.PopulationAdjustedExtendedExcessRatings
             : null;
 }
