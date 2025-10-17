@@ -71,6 +71,6 @@
     {
         DataPoints = DataPointGenerator.Generate(DataOptions);
 
-        await Chart.UpdateOptionsAsync(true, true, false);  // Updates chart too so no need to call Chart.UpdateSeriesAsync
+        await Chart.UpdateOptionsAsync(true, true, false);  // Also updates chart, so no need to call Chart.UpdateSeriesAsync
     }
 }
