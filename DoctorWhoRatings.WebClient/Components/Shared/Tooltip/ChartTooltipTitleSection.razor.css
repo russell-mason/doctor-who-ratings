@@ -1,0 +1,10 @@
+﻿.title-section {
+    padding: 13px 16px;
+}
+
+.title {
+    text-transform: uppercase;
+    font-family: segoe-bold, sans-serif;
+    font-size: 0.8rem;
+    color: #507dd7;
+}

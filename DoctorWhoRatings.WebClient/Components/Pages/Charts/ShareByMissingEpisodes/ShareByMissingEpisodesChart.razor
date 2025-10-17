@@ -1,0 +1,76 @@
+﻿@page "/charts/by-missing-episodes"
+@inject IShareByMissingEpisodesDataPointGenerator DataPointGenerator
+
+<PageTitle>@ShareByMissingEpisodesChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@ShareByMissingEpisodesChartCaptions.Title"
+              Description="@ShareByMissingEpisodesChartCaptions.Description" />
+
+<FullScreenZone>
+    <Chart>
+        <ApexChart @ref="Chart"
+                   TItem="ShareByMissingEpisodesDataPoint"
+                   Title="@ShareByMissingEpisodesChartCaptions.Title"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
+
+            <ApexPointTooltip>
+                <ShareByMissingEpisodesTooltip DataPoint="@context.DataPoint.Items.First()"
+                                               DataOptions="DataOptions" />
+            </ApexPointTooltip>
+
+            <ChildContent>
+                <ApexPointSeries TItem="ShareByMissingEpisodesDataPoint"
+                                 Items="DataPoints"
+                                 SeriesType="SeriesType.Pie"
+                                 XValue="dataPoint => dataPoint.Description"
+                                 YValue="dataPoint => dataPoint.CalculatedContextPercentageShare"
+                                 ShowDataLabels />
+            </ChildContent>
+        </ApexChart>
+    </Chart>
+
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Calculate by" />
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="all" Group="groupOption"
+                               CheckedValue="@ShareByMissingEpisodesCalculationMethod.All"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="doctor" Group="groupOption"
+                               CheckedValue="@ShareByMissingEpisodesCalculationMethod.Doctor"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="season" Group="groupOption"
+                               CheckedValue="@ShareByMissingEpisodesCalculationMethod.Season"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
+
+@code {
+    private ApexChart<ShareByMissingEpisodesDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<ShareByMissingEpisodesDataPoint> ChartOptions { get; } = ShareByMissingEpisodesChartOptions.Defaults;
+
+    private ShareByMissingEpisodesDataOptions DataOptions { get; } = new();
+
+    private List<ShareByMissingEpisodesDataPoint> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
+
+    private async Task AfterOptionChanged()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+
+        await Chart.UpdateOptionsAsync(true, true, false);  // Updates chart too so no need to call Chart.UpdateSeriesAsync
+    }
+}

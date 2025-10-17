@@ -1,0 +1,18 @@
+﻿<div class="title-section">
+    <div>
+        <div class="title">@Title</div>
+
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

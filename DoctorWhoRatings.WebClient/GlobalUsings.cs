@@ -21,6 +21,7 @@ global using DoctorWhoRatings.Data.Charting.PremierFinaleEpisodesBySeason;
 global using DoctorWhoRatings.Data.Charting.ShareByContent;
 global using DoctorWhoRatings.Data.Charting.ShareByEra;
 global using DoctorWhoRatings.Data.Charting.ShareByHoursWatched;
+global using DoctorWhoRatings.Data.Charting.ShareByMissingEpisodes;
 global using DoctorWhoRatings.Data.Charting.SpecialsOnly;
 global using DoctorWhoRatings.Data.Charting.Timeline;
 global using DoctorWhoRatings.Data.Charting.Top20Episodes;

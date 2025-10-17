@@ -1,0 +1,57 @@
+﻿<ChartTooltip>
+    @{
+        var totalDescription = DataOptions.CalculationMethod == ShareByMissingEpisodesCalculationMethod.All ? string.Empty : "missing ";
+        var categoryDescription = DataOptions.CalculationMethod == ShareByMissingEpisodesCalculationMethod.All ? "all" : DataPoint.Description;
+    }
+
+    <ChartTooltipTitleSection Title="@DataPoint.Description">
+        <div class="missing-episodes">
+            <span class="highlighted-value">@DataPoint.EpisodeCount</span>
+            <span> from a total of </span>
+            <span class="highlighted-value">@DataPoint.TotalEpisodeCount</span>
+            <span> @totalDescription episodes</span>
+        </div>
+
+        @if (DataPoint.CalculatedTotalPercentageShare != 100)
+        {
+            <div class="missing-episodes-context">
+                <span class="highlighted-value">@DataPoint.EpisodeCount</span>
+                <span> from a total of </span>
+                <span class="highlighted-value">@DataPoint.ContextEpisodeCount</span>
+                <span> @DataPoint.Description episodes</span>
+            </div>
+        }
+    </ChartTooltipTitleSection>
+
+    @if (DataPoint.CalculatedTotalPercentageShare != 100)
+    {
+        <ChartTooltipBreak />
+
+        <ChartTooltipIconSection IconUrl="images/pie-chart.svg"
+                                 IconAlt="Share">
+            <div class="share">
+                <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.CalculatedTotalPercentageShare)</span>
+                <span>% of all missing episodes</span>
+            </div>
+        </ChartTooltipIconSection>
+    }
+
+    <ChartTooltipBreak />
+
+    <ChartTooltipIconSection IconUrl="images/pie-chart.svg"
+                             IconAlt="Share">
+        <div class="share">
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.CalculatedContextPercentageShare)</span>
+            <span>% of @categoryDescription episodes</span>
+
+        </div>
+    </ChartTooltipIconSection>
+</ChartTooltip>
+
+@code {
+    [Parameter]
+    public required ShareByMissingEpisodesDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required ShareByMissingEpisodesDataOptions DataOptions { get; set; }
+}

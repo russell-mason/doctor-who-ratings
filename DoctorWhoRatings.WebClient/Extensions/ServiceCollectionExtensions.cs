@@ -24,6 +24,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IEpisodeInContextDataPointGenerator, EpisodeInContextDataPointGenerator>();
         services.AddSingleton<ITrendDataPointGenerator, TrendDataPointGenerator>();
         services.AddSingleton<IShareByContentDataPointGenerator, ShareByContentDataPointGenerator>();
+        services.AddSingleton<IShareByMissingEpisodesDataPointGenerator, ShareByMissingEpisodesDataPointGenerator>();
 
         services.AddScoped<IEpisodeContextDrillDown, EpisodeContextDrillDown>();
 
