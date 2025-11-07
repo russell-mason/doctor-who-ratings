@@ -40,6 +40,12 @@ public class EpisodeDataPoint
 
     public int Runtime { get; init; }
 
+    public bool IsMissing { get; init; }
+
+    public string[] Writers { get; init; } = [];
+
+    public string? WriterAlias { get; init; }
+
     public decimal? OvernightRatings { get; init; }
 
     public decimal? ConsolidatedRatings { get; init; }

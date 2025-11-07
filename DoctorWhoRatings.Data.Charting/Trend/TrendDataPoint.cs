@@ -18,7 +18,7 @@ public class TrendDataPoint : EpisodeDataPoint
 
     // EpisodeDataPoint uses init fields so this can't use a constructor
     private static TrendDataPoint CreateTrendDataPoint(int id, decimal? value, TrendContext? context = null) =>
-        new TrendDataPoint
+        new()
         {
             // The TrendDataPoint needs to mimic the EpisodeDataPoint because the chart requires the same data point type for
             // all series. Only requires the matching first/last episode IDs and overnights to create the line 

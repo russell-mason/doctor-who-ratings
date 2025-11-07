@@ -13,6 +13,15 @@
         @DataPoint.Episode.FullTitle
     </div>
 
+    <div class="writer">
+        <span>Written by @string.Join(" and ", DataPoint.Episode.Writers)</span>
+
+        @if (DataPoint.Episode.WriterAlias != null)
+        {
+            <span> using the alias @DataPoint.Episode.WriterAlias</span>
+        }
+    </div>
+
     @if (DataPoint.InStoryContext?.EpisodeCount > 1)
     {
         <div class="part-number">
@@ -129,6 +138,13 @@
         <span class="highlighted-value">@Formatter.FormatPosition(@DataPoint.Episode.Story)</span> story across all stories and the
         <span class="highlighted-value">@Formatter.FormatPosition(DataPoint.Episode.Id)</span> episode across all episodes
     </div>
+    
+    @if (DataPoint.Episode.IsMissing)
+    {
+        <div class="block">
+            This is one of the <span class="highlighted-value">@DataPoint.InFullContext.MissingEpisodeCount</span> missing episodes.
+        </div>
+    }
 
     @if (DataPoint.Episode.WikiUrl != null)
     {

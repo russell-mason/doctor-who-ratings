@@ -15,6 +15,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         var seasonFormats = ReadSeasonFormats().ToList().AsReadOnly();
         var episodeFormats = ReadEpisodeFormats().ToList().AsReadOnly();
         var eras = ReadEras().ToList().AsReadOnly();
+        var writers = ReadWriters().ToList().AsReadOnly();
         var wikiFormats = ReadWikiFormats().ToList().AsReadOnly();
         var populations = ReadPopulation().ToList().AsReadOnly();
 
@@ -25,6 +26,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
             SeasonFormats = seasonFormats,
             EpisodeFormats = episodeFormats,
             Eras = eras,
+            Writers = writers,
             WikiFormats = wikiFormats,
             Populations = populations
         };
@@ -69,6 +71,10 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
             // Unknown runtimes use an estimate, recorded as a negative value to distinguish them from known runtimes
             Runtime = Math.Abs(cellReader.Read<int>(nameof(Episode.Runtime))),
             IsMissing = Convert.ToBoolean(cellReader.Read<int?>(nameof(Episode.IsMissing)) ?? 0),
+            WriterIds = [.. cellReader.Read<string>(nameof(Episode.WriterIds)).Split(",").Select(id => Convert.ToInt32(id))],
+            Writers = cellReader.Read<string>(nameof(Episode.Writers)).Split(","),
+            WriterAliasId = cellReader.Read<int?>(nameof(Episode.WriterAliasId)),
+            WriterAlias = cellReader.Read<string>(nameof(Episode.WriterAlias)),
             OvernightRatings = cellReader.Read<decimal?>(nameof(Episode.OvernightRatings)),
             ConsolidatedRatings = cellReader.Read<decimal?>(nameof(Episode.ConsolidatedRatings)),
             ExtendedRatings = cellReader.Read<decimal?>(nameof(Episode.ExtendedRatings)),
@@ -177,6 +183,32 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         };
 
         return era;
+    }
+
+    private IEnumerable<Writer> ReadWriters()
+    {
+        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Writers).ToList();
+        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
+        var writersRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
+
+        var writers = writersRows.Select(writerRow => CreateWriter(writerRow, columnMappings));
+
+        return writers;
+    }
+
+    private Writer CreateWriter(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
+    {
+        var cellReader = spreadsheetReader.CreateCellReader(row, columnMappings);
+
+        var writer = new Writer
+        {
+            Id = cellReader.Read<int>(nameof(Writer.Id)),
+            Name = cellReader.Read<string>(nameof(Writer.Name)),
+            IsAlias = Convert.ToBoolean(cellReader.Read<int?>(nameof(Writer.IsAlias)) ?? 0),
+            Note = cellReader.Read<string>(nameof(Writer.Note))
+        };
+
+        return writer;
     }
 
     private IEnumerable<WikiFormat> ReadWikiFormats()

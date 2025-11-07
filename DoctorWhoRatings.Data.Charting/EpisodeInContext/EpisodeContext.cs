@@ -16,6 +16,8 @@ public class EpisodeContext
 
     public int EpisodeCount { get; init; }
 
+    public int MissingEpisodeCount { get; init; }
+
     public int StoryCount { get; init; }
 
     public int EpisodeIndex { get; set; }

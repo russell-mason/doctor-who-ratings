@@ -12,6 +12,8 @@ public static class DoctorWhoExcelSheetNames
 
     public const string Eras = "Eras";
 
+    public const string Writers = "Writers";
+
     public const string WikiFormats = "WikiFormats";
 
     public const string Populations = "Populations";

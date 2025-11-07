@@ -54,6 +54,7 @@ public class EpisodeInContextDataPointGenerator(IEpisodesDataPointGenerator data
             PositionFromTop = positionFromTop,
             PositionFromBottom = positionFromBottom,
             EpisodeCount = contextEpisodes.Count,
+            MissingEpisodeCount = contextEpisodes.Count(episode => episode.IsMissing),
             StoryCount = contextEpisodes.Max(episode => episode.Story) - contextEpisodes.Min(episode => episode.Story) + 1,
             RelativeToHighestRatings = relativeToHighestRatings,
             RelativeToAverageRatings = relativeToAverageRatings,

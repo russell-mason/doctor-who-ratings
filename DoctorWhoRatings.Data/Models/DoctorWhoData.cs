@@ -31,6 +31,11 @@ public record DoctorWhoData
     public IReadOnlyList<Era> Eras { get; init; } = [];
 
     /// <summary>
+    /// Gets a collection of all writers.
+    /// </summary>
+    public IReadOnlyList<Writer> Writers { get; init; } = [];
+
+    /// <summary>
     /// Gets a collection of all wiki formats.
     /// </summary>
     public IReadOnlyList<WikiFormat> WikiFormats { get; init; } = [];

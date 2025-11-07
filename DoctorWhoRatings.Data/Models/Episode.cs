@@ -52,6 +52,14 @@ public record Episode
 
     public bool IsMissing { get; init; }
 
+    public int[] WriterIds { get; init; } = [];
+
+    public string[] Writers { get; init; } = [];
+
+    public int? WriterAliasId { get; init; }
+
+    public string? WriterAlias { get; init; }
+
     /// <summary>
     /// Overnight viewers (in millions).
     /// </summary>

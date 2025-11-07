@@ -12,7 +12,7 @@ public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
     public EpisodeDataPoint Generate(Episode episode) => CreateDataPoint(episode);
 
     public List<Episode> Filter(EpisodesDataOptions options) =>
-        dataProvider.DoctorWhoData.Episodes.Where(episode => MatchesFilter(episode, options)).ToList();
+        [.. dataProvider.DoctorWhoData.Episodes.Where(episode => MatchesFilter(episode, options))];
 
     private static bool MatchesFilter(Episode episode, EpisodesDataOptions options)
     {
@@ -47,6 +47,9 @@ public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
             Slug = episode.Slug,
             OriginalAirDate = episode.OriginalAirDate,
             Runtime = episode.Runtime,
+            IsMissing = episode.IsMissing,
+            Writers = episode.Writers,
+            WriterAlias = episode.WriterAlias,
             OvernightRatings = episode.OvernightRatings,
             ConsolidatedRatings = episode.ConsolidatedRatings,
             ConsolidatedExcessRatings = episode.ConsolidatedExcessRatings,
