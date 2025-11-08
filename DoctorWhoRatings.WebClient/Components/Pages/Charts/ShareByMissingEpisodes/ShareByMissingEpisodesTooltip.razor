@@ -23,27 +23,21 @@
         }
     </ChartTooltipTitleSection>
 
-    @if (DataPoint.CalculatedTotalPercentageShare != 100)
-    {
-        <ChartTooltipBreak />
-
-        <ChartTooltipIconSection IconUrl="images/pie-chart.svg"
-                                 IconAlt="Share">
-            <div class="share">
-                <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.CalculatedTotalPercentageShare)</span>
-                <span>% of all missing episodes</span>
-            </div>
-        </ChartTooltipIconSection>
-    }
-
     <ChartTooltipBreak />
 
     <ChartTooltipIconSection IconUrl="images/pie-chart.svg"
                              IconAlt="Share">
+        @if (DataPoint.CalculatedTotalPercentageShare != 100)
+        {
+            <div class="share first">
+                <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.CalculatedTotalPercentageShare)</span>
+                <span>% of all missing episodes</span>
+            </div>
+        }
+
         <div class="share">
             <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.CalculatedContextPercentageShare)</span>
             <span>% of @categoryDescription episodes</span>
-
         </div>
     </ChartTooltipIconSection>
 </ChartTooltip>
