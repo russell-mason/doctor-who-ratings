@@ -2,7 +2,7 @@
 
 public class EpisodeGuideChartCaptions
 {
-    public const string Title = "Episode Guide";
+    public const string Title = "Episodes Timeline";
 
-    public const string Description = "Shows all episodes in order of appearence.";
+    public const string Description = "Shows the timeline of when each episode aired.";
 }
