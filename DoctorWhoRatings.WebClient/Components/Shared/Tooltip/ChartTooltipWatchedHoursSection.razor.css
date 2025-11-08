@@ -6,6 +6,10 @@
         margin-top: 5px;
     }
 
+.hours-watched-target {
+    margin-bottom: -11px;
+}
+
 .highlighted-value {
     font-family: segoe-bold, sans-serif;
     color: #505050;

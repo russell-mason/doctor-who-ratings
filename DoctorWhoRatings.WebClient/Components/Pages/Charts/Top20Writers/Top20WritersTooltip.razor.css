@@ -1,0 +1,23 @@
+﻿.writer {
+    padding: 13px 16px;
+}
+
+.name {
+    text-transform: uppercase;
+    font-family: segoe-bold, sans-serif;
+    font-size: 0.8rem;
+    color: #507dd7;
+}
+
+.episodes {
+    margin-top: 5px;
+}
+
+.total-episode-hours {
+    margin-top: 4px;
+}
+
+.highlighted-value {
+    font-family: segoe-bold, sans-serif;
+    color: #505050;
+}

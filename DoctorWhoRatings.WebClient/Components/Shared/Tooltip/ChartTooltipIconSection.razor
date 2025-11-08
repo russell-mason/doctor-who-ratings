@@ -1,6 +1,7 @@
-﻿<div class="icon-section">
+﻿<div class="icon-section @(IsConsecutive ? "consecutive" : "")">
     <ChartTooltipIconBlock IconUrl="@IconUrl" 
-                           IconAlt="@IconAlt">
+                           IconAlt="@IconAlt"
+                           IconSize="@IconSize">
         <div>
             @if (Title != null)
             {
@@ -23,7 +24,13 @@
     public string? IconAlt { get; set; }
 
     [Parameter]
+    public IconSize IconSize { get; set; } = IconSize.Regular;
+
+    [Parameter]
     public string? Title { get; set; }
+
+    [Parameter]
+    public bool IsConsecutive { get; set; }
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

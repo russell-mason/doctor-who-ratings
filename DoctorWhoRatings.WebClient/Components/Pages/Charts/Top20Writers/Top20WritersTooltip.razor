@@ -1,0 +1,83 @@
+﻿<ChartTooltip>
+    <div class="writer">
+        <div class="name">@DataPoint.Name</div>
+
+        @{
+            var episodeText = DataPoint.EpisodeCount == 1 ? "episode" : "episodes";
+
+            <div class="episodes">
+                <span class="highlighted-value">@DataPoint.EpisodeCount</span>
+                <span>@episodeText</span>
+            </div>
+
+            var totalEpisodeHours = Formatter.ToTimeSpan(DataPoint.TotalEpisodeHours);
+            var hours = (int) totalEpisodeHours.TotalHours;
+            var minutes = totalEpisodeHours.Minutes;
+            var hoursText = hours == 1 ? "hour" : "hours";
+            var minutesText = minutes == 1 ? "minute" : "minutes";
+
+            <div class="total-episode-hours">
+                <span class="highlighted-value">@hours</span>
+                <span> @hoursText</span>
+                <span class="highlighted-value">@minutes</span>
+                <span> @minutesText</span>
+            </div>
+        }
+    </div>
+
+    <ChartTooltipBreak />
+
+    <ChartTooltipWatchedHoursSection TargetRatings="@TargetExcessRatings"
+                                     OvernightHoursWatched="@DataPoint.TotalOvernightHoursWatched"
+                                     ConsolidatedHoursWatched="@NullWhenMatchesOvernight(DataPoint.TotalConsolidatedHoursWatched)"
+                                     ExtendedHoursWatched="@NullWhenMatchesOvernight(DataPoint.TotalExtendedHoursWatched)" />
+
+    <ChartTooltipBreak />
+
+    <ChartTooltipIconSection IconUrl="images/high.svg"
+                             IconAlt="Highest/lowest Ratings"
+                             IconSize="IconSize.Small">
+        <div>
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.HighestOvernightRating)</span>
+            <span> @Formatter.NumberRepresentationText(DataPoint.HighestOvernightRating) overnight viewers</span>
+        </div>
+    </ChartTooltipIconSection>
+
+    <ChartTooltipIconSection IconUrl="images/low.svg"
+                             IconAlt="Highest/lowest Ratings"
+                             IconSize="IconSize.Small"
+                             IsConsecutive>
+        <div>
+            <span class="highlighted-value">@Formatter.FormatNumber(DataPoint.LowestOvernightRating)</span>
+            <span> @Formatter.NumberRepresentationText(DataPoint.LowestOvernightRating) overnight viewers</span>
+        </div>
+    </ChartTooltipIconSection>
+</ChartTooltip>
+
+
+@code {
+    private const int ConsolidatedSeriesIndex = 1;
+    private const int ExtendedSeriesIndex = 2;
+
+    [Parameter]
+    public required Top20WritersDataPoint DataPoint { get; set; }
+
+    [Parameter]
+    public required int SeriesIndex { get; set; }
+
+    [Parameter]
+    public required int DataPointIndex { get; set; }
+
+    [Parameter]
+    public required Top20WritersDataOptions DataOptions { get; set; }
+
+    private decimal? TargetExcessRatings => SeriesIndex switch
+    {
+        ConsolidatedSeriesIndex => DataPoint.TotalConsolidatedExcessHoursWatched,
+        ExtendedSeriesIndex => DataPoint.TotalExtendedExcessHoursWatched,
+        _ => null
+    };
+
+    private decimal? NullWhenMatchesOvernight(decimal? value) => value == DataPoint.TotalOvernightHoursWatched ? null : value;
+
+}

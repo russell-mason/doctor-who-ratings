@@ -1,5 +1,20 @@
-﻿<div class="watched-hours-section">
-    <ChartTooltipIconSection IconUrl="images/view.svg" 
+﻿<div class="hours-watched-section">
+    @if (TargetRatings != null)
+    {
+        <div class="hours-watched-target">
+            <ChartTooltipIconSection IconUrl="images/target.svg"
+                                     IconAlt="Target Ratings">
+                <div class="hours-watched">
+                    <div class="hours">
+                        <span class="highlighted-value">@Formatter.FormatNumber(TargetRatings)</span>
+                        <span> @Formatter.NumberRepresentationText(TargetRatings) additional hours watched</span>
+                    </div>
+                </div>
+            </ChartTooltipIconSection>
+        </div>
+    }
+
+    <ChartTooltipIconSection IconUrl="images/view.svg"
                              IconAlt="Ratings">
         <div class="hours-watched">
             @if (OvernightHoursWatched != null)
@@ -30,6 +45,9 @@
 </div>
 
 @code {
+    [Parameter]
+    public decimal? TargetRatings { get; set; }
+
     [Parameter]
     public decimal? OvernightHoursWatched { get; set; }
 

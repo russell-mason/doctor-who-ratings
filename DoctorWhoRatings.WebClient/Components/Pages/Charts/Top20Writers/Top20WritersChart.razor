@@ -1,0 +1,160 @@
+﻿@page "/charts/top-20-writers"
+@inject ITop20WritersDataPointGenerator DataPointGenerator
+
+<PageTitle>@Top20WritersChartCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@Top20WritersChartCaptions.Title"
+              Description="@Top20WritersChartCaptions.Description" />
+
+<FullScreenZone>
+    <Chart>
+        <ApexChart @ref="Chart"
+                   TItem="Top20WritersDataPoint"
+                   Title="@Top20WritersChartCaptions.Title"
+                   Options="ChartOptions"
+                   Height="@("100%")"
+                   Width="@("100%")">
+
+            <ApexPointTooltip>
+                <Top20WritersTooltip DataPoint="@context.DataPoint.Items.First()"
+                                     SeriesIndex="@context.SeriesIndex"
+                                     DataPointIndex="@context.DataPointIndex"
+                                     DataOptions="DataOptions"/>
+            </ApexPointTooltip>
+
+            <ChildContent>
+                @switch (DataOptions.CalculationMethod)
+                {
+                    case Top20WritersCalculationMethod.NumberOfEpisodes:
+                        <ApexPointSeries TItem="Top20WritersDataPoint"
+                                         Items="DataPoints"
+                                         Name="@("Episodes")"
+                                         SeriesType="SeriesType.Bar"
+                                         XValue="dataPoint => dataPoint.Name"
+                                         YValue="dataPoint => dataPoint.EpisodeCount"/>
+                        break;
+
+                    case Top20WritersCalculationMethod.ScriptHours:
+                        <ApexPointSeries TItem="Top20WritersDataPoint"
+                                         Items="DataPoints"
+                                         Name="@("Runtime")"
+                                         SeriesType="SeriesType.Bar"
+                                         XValue="dataPoint => dataPoint.Name"
+                                         YValue="dataPoint => dataPoint.TotalEpisodeHours"/>
+                        break;
+
+                    default:
+                        <ApexPointSeries TItem="Top20WritersDataPoint"
+                                         Items="DataPoints"
+                                         Name="@("Overnight hours watched")"
+                                         SeriesType="SeriesType.Bar"
+                                         XValue="dataPoint => dataPoint.Name"
+                                         YValue="dataPoint => dataPoint.TotalOvernightHoursWatched"/>
+
+                        <ApexPointSeries TItem="Top20WritersDataPoint"
+                                         Items="DataPoints"
+                                         Name="@("Additional hours watched after seven days")"
+                                         SeriesType="SeriesType.Bar"
+                                         XValue="dataPoint => dataPoint.Name"
+                                         YValue="dataPoint => dataPoint.TotalConsolidatedExcessHoursWatched"/>
+
+                        <ApexPointSeries TItem="Top20WritersDataPoint"
+                                         Items="DataPoints"
+                                         Name="@("Additional hours watched on all devices")"
+                                         SeriesType="SeriesType.Bar"
+                                         XValue="dataPoint => dataPoint.Name"
+                                         YValue="dataPoint => dataPoint.TotalExtendedExcessHoursWatched"/>
+                        break;
+                }
+            </ChildContent>
+        </ApexChart>
+    </Chart>
+
+    <ChartOptions>
+        <ChartOptionsGroup>
+            <ChartOptionsText Label="Calculate using" />
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="episodes" Group="calculationOption" Label="@Top20WritersCalculationMethod.NumberOfEpisodes.Humanize()"
+                               CheckedValue="@Top20WritersCalculationMethod.NumberOfEpisodes"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="hours" Group="calculationOption" Label="@Top20WritersCalculationMethod.ScriptHours.Humanize()"
+                               CheckedValue="@Top20WritersCalculationMethod.ScriptHours"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="overnight" Group="calculationOption" Label="@Top20WritersCalculationMethod.OvernightHoursWatched.Humanize()"
+                               CheckedValue="@Top20WritersCalculationMethod.OvernightHoursWatched"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="consolidated" Group="calculationOption" Label="@Top20WritersCalculationMethod.ConsolidatedHoursWatched.Humanize()"
+                               CheckedValue="@Top20WritersCalculationMethod.ConsolidatedHoursWatched"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+
+            <ChartOptionsRadio @bind-Value="DataOptions.CalculationMethod"
+                               Id="extended" Group="calculationOption" Label="@Top20WritersCalculationMethod.ExtendedHoursWatched.Humanize()"
+                               CheckedValue="@Top20WritersCalculationMethod.ExtendedHoursWatched"
+                               AfterValueChanged="AfterOptionChanged">
+            </ChartOptionsRadio>
+        </ChartOptionsGroup>
+    </ChartOptions>
+</FullScreenZone>
+
+@code {
+    private ApexChart<Top20WritersDataPoint> Chart { get; set; } = default!;
+
+    private ApexChartOptions<Top20WritersDataPoint> ChartOptions { get; } = Top20WritersChartOptions.Defaults;
+
+    private Top20WritersDataOptions DataOptions { get; } = new();
+
+    private List<Top20WritersDataPoint> DataPoints { get; set; } = default!;
+
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
+
+    private async Task AfterOptionChanged()
+    {
+        DataPoints = DataPointGenerator.Generate(DataOptions);
+
+        SetChartOptions();
+
+        await Chart.UpdateOptionsAsync(true, true, false);
+    }
+
+    private void SetChartOptions()
+    {
+        var yAxisText = DataOptions.CalculationMethod switch
+
+        {
+            Top20WritersCalculationMethod.NumberOfEpisodes => "Number of episodes",
+            Top20WritersCalculationMethod.ScriptHours => "Script hours",
+            Top20WritersCalculationMethod.OvernightHoursWatched => "Hours watched (millions)",
+            Top20WritersCalculationMethod.ConsolidatedHoursWatched => "Hours watched (millions)",
+            Top20WritersCalculationMethod.ExtendedHoursWatched => "Hours watched (millions)"
+        };
+
+        var yAxisLabelFormatter = DataOptions.CalculationMethod switch
+
+        {
+            Top20WritersCalculationMethod.NumberOfEpisodes => "function(value) { return value; }",
+            Top20WritersCalculationMethod.ScriptHours => "function(value) { return value; }",
+            Top20WritersCalculationMethod.OvernightHoursWatched => "function(value) { return value.toFixed(2); }",
+            Top20WritersCalculationMethod.ConsolidatedHoursWatched => "function(value) { return value.toFixed(2); }",
+            Top20WritersCalculationMethod.ExtendedHoursWatched => "function(value) { return value.toFixed(2); }"
+        };
+
+        //Labels = new YAxisLabels
+        //{
+        //    //Formatter = "function(value) { return value.toFixed(2); }"
+        //},
+
+        Chart.Options.Yaxis[0].Title.Text = yAxisText;
+        Chart.Options.Yaxis[0].Labels.Formatter = yAxisLabelFormatter;
+    }
+}
