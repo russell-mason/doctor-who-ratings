@@ -1,0 +1,50 @@
+﻿.card {
+    display: flex;
+    background-color: #ffffffca;
+    backdrop-filter: blur(19px);
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 8px 8px #00000066;
+    color: #505050;
+    margin-bottom: 32px;
+}
+
+.episode {
+    flex-grow: 1;
+}
+
+.title {
+    display: inline-block;
+    font-family: segoe-bold, sans-serif;
+    font-size: 1.5rem;
+    color: #505050;
+    margin-bottom: 2px;
+}
+
+.writer {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.date {
+    margin-top: 12px;
+}
+
+a {
+    color: #505050;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+.highlighted-value {
+    font-family: segoe-bold, sans-serif;
+    color: #505050;
+}
+
+.wiki {
+    width: 28px;
+    height: 28px;
+}

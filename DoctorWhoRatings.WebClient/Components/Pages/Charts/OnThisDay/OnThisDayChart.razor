@@ -1,0 +1,63 @@
+﻿@page "/charts/on-this-day"
+@inject IEpisodesDataPointGenerator DataPointGenerator
+
+<PageTitle>@OnThisDayCaptions.Title - @Application.Name</PageTitle>
+
+<ChartHeading Title="@OnThisDayCaptions.Title"
+              Description="@OnThisDayCaptions.Description" />
+
+@foreach (var dataPoint in DataPoints)
+{
+    var episodeUrl = $"./charts/episodes/{dataPoint.Slug}";
+
+    <div class="card">
+        <div class="episode">
+            <a href="@episodeUrl" target="@dataPoint.Slug">
+                <div class="title">@dataPoint.FullTitle</div>
+            </a>
+
+            <div class="writer">
+                <span>Written by @string.Join(" and ", dataPoint.Writers)</span>
+
+                @if (dataPoint.WriterAlias != null)
+                {
+                    <span> using the alias @dataPoint.WriterAlias</span>
+                }
+            </div>
+
+            <div class="date">Broadcast on <span class="highlighted-value">@Formatter.FormatDate(dataPoint.OriginalAirDate)</span></div>
+        </div>
+
+        @if (dataPoint.WikiUrl != null)
+        {
+            <div class="episode-wiki">
+                <a href="@dataPoint.WikiUrl" target="_blank" title="Wikipedia - @dataPoint.StoryTitle">
+                    <img class="wiki" src="images/wikipedia.svg" alt="Wikipedia" />
+                </a>
+            </div>
+        }
+    </div>
+}
+
+@if (DataPoints.Count == 0)
+{
+    <div class="card">
+        <div>There were no episodes aired on <span class="highlighted-value">@Date.Day @Date.ToString("MMMM")</span></div>
+    </div>
+}
+
+@code {
+    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
+
+    private DateTime Date => DateTime.UtcNow;
+
+    protected override void OnInitialized()
+    {
+        var options = new EpisodesDataOptions
+        {
+            CustomFilter = episode => episode.OriginalAirDate.Month == Date.Month && episode.OriginalAirDate.Day == Date.Day,
+        };
+
+        DataPoints = DataPointGenerator.Generate(options);
+    }
+}

@@ -36,4 +36,5 @@ global using Humanizer;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.JSInterop;
 global using System.Diagnostics;
+global using DoctorWhoRatings.Data.Charting.OnThisDay;
 global using DoctorWhoRatings.Data.Charting.Top20Writers;
