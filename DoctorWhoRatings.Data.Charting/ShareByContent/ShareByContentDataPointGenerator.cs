@@ -2,15 +2,11 @@
 
 public class ShareByContentDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IShareByContentDataPointGenerator
 {
-    public List<ShareByContentDataPoint> Generate(ShareByContentDataOptions options)
-    {
-        var dataPoints = dataProvider.DoctorWhoData.Episodes
-                                     .GroupBy(episode => episode.Doctor)
-                                     .Select(group => CreateDataPoint(group, options))
-                                     .ToList();
-
-        return dataPoints;
-    }
+    public List<ShareByContentDataPoint> Generate(ShareByContentDataOptions options) =>
+        dataProvider.DoctorWhoData.Episodes
+                    .GroupBy(episode => episode.Doctor)
+                    .Select(group => CreateDataPoint(group, options))
+                    .ToList();
 
     private ShareByContentDataPoint CreateDataPoint(IGrouping<int, Episode> group, ShareByContentDataOptions options)
     {
@@ -35,8 +31,10 @@ public class ShareByContentDataPointGenerator(IDoctorWhoDataProvider dataProvide
             CalculatedPercentageShare = options.CalculationMethod switch
             {
                 ShareByContentCalculationMethod.Episodes => ((decimal) episodeCount/ totalEpisodeCount) * 100,
+
                 ShareByContentCalculationMethod.Hours => (runtimeHours / totalRuntimeHours) * 100,
-                _ => throw new InvalidOperationException(nameof(options.CalculationMethod))
+                
+                _ => throw new ArgumentOutOfRangeException(nameof(options))
             }
         };
 

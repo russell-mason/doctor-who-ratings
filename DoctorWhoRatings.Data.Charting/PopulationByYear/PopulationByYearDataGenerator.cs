@@ -2,24 +2,15 @@
 
 public class PopulationByYearDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IPopulationByYearDataPointGenerator
 {
-    public List<PopulationByYearDataPoint> Generate()
-    {
-        var dataPoints = dataProvider.DoctorWhoData.Populations
-                                     .Select(CreateDataPoint)
-                                     .ToList();
+    public List<PopulationByYearDataPoint> Generate() => dataProvider.DoctorWhoData.Populations
+                                                                     .Select(CreateDataPoint)
+                                                                     .ToList();
 
-        return dataPoints;
-    }
-
-    private static PopulationByYearDataPoint CreateDataPoint(YearPopulation yearPopulation)
-    {
-        var dataPoint = new PopulationByYearDataPoint
+    private static PopulationByYearDataPoint CreateDataPoint(YearPopulation yearPopulation) =>
+        new()
         {
             Year = yearPopulation.Year.ToString(),
             Population = yearPopulation.Population,
             Note = yearPopulation.Note
         };
-
-        return dataPoint;
-    }
 }

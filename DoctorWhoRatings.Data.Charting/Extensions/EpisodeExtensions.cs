@@ -2,53 +2,54 @@
 
 public static class EpisodeExtensions
 {
-    public static string DisambiguateActor(this Episode referenceEpisode, IReadOnlyList<Doctor> doctors)
+    extension(Episode referenceEpisode)
     {
-        var isRepeatingActor = doctors.Count(doctor => doctor.Actor == referenceEpisode.Actor) > 1;
-
-        return isRepeatingActor ? $"{referenceEpisode.Actor} ({referenceEpisode.Doctor})" : referenceEpisode.Actor;
+        public string DisambiguateActor(IReadOnlyList<Doctor> doctors) =>
+            doctors.Count(doctor => doctor.Actor == referenceEpisode.Actor) > 1
+                ? $"{referenceEpisode.Actor} ({referenceEpisode.Doctor})"
+                : referenceEpisode.Actor;
     }
 
-    public static List<IGrouping<TKey, Episode>> GroupEpisodesBy<TKey>(this IEnumerable<Episode> episodes,
-                                                                       Func<Episode, TKey> keySelector) =>
-        episodes.GroupEpisodesBy(keySelector, keySelector);
-
-
-    public static List<IGrouping<TKey, Episode>> GroupEpisodesBy<TGroup, TKey>(this IEnumerable<Episode> episodes,
-                                                                               Func<Episode, TGroup> groupSelector,
-                                                                               Func<Episode, TKey> keySelector)
+    extension(IEnumerable<Episode> episodes)
     {
-        List<IGrouping<TKey, Episode>> groups = [];
-        TGroup? lastGroupValue = default;
-        TKey? lastKey = default;
-        List<Episode> currentGroupEpisodes = [];
+        public List<IGrouping<TKey, Episode>> GroupEpisodesBy<TKey>(Func<Episode, TKey> keySelector) =>
+            episodes.GroupEpisodesBy(keySelector, keySelector);
 
-        foreach (var episode in episodes)
+        public List<IGrouping<TKey, Episode>> GroupEpisodesBy<TGroup, TKey>(Func<Episode, TGroup> groupSelector,
+                                                                            Func<Episode, TKey> keySelector)
         {
-            var groupValue = groupSelector(episode);
-            var key = keySelector(episode);
+            List<IGrouping<TKey, Episode>> groups = [];
+            TGroup? lastGroupValue = default;
+            TKey? lastKey = default;
+            List<Episode> currentGroupEpisodes = [];
 
-            if (!EqualityComparer<TGroup>.Default.Equals(groupValue, lastGroupValue))
+            foreach (var episode in episodes)
             {
-                if (currentGroupEpisodes.Count > 0)
+                var groupValue = groupSelector(episode);
+                var key = keySelector(episode);
+
+                if (!EqualityComparer<TGroup>.Default.Equals(groupValue, lastGroupValue))
                 {
-                    groups.Add(new Grouping<TKey, Episode>(lastKey!, currentGroupEpisodes));
-                    currentGroupEpisodes = [];
+                    if (currentGroupEpisodes.Count > 0)
+                    {
+                        groups.Add(new Grouping<TKey, Episode>(lastKey!, currentGroupEpisodes));
+                        currentGroupEpisodes = [];
+                    }
+
+                    lastGroupValue = groupValue;
+                    lastKey = key;
                 }
 
-                lastGroupValue = groupValue;
-                lastKey = key;
+                currentGroupEpisodes.Add(episode);
             }
 
-            currentGroupEpisodes.Add(episode);
-        }
+            if (currentGroupEpisodes.Count > 0)
+            {
+                groups.Add(new Grouping<TKey, Episode>(lastKey!, currentGroupEpisodes));
+            }
 
-        if (currentGroupEpisodes.Count > 0)
-        {
-            groups.Add(new Grouping<TKey, Episode>(lastKey!, currentGroupEpisodes));
+            return groups;
         }
-
-        return groups;
     }
 
     private class Grouping<TKey, TElement>(TKey key, IEnumerable<TElement> elements) : IGrouping<TKey, TElement>

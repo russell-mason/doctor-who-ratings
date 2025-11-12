@@ -2,21 +2,21 @@
 
 public class EpisodesDataOptions
 {
-    public int? IdFilter { get; set; }
+    public int? IdFilter { get; set; } = null;
 
-    public string? SlugFilter { get; set; }
+    public string? SlugFilter { get; set; } = null;
 
-    public int? EraId { get; set; }
+    public int? EraId { get; set; } = null;
 
-    public int? DoctorFilter { get; set; }
+    public int? DoctorFilter { get; set; } = null;
 
-    public int? SeasonFilter { get; set; }
+    public int? SeasonFilter { get; set; } = null;
 
-    public int? StoryFilter { get; set; }
+    public int? StoryFilter { get; set; } = null;
 
-    public int? EpisodeFormatIdFilter { get; set; }
+    public int? EpisodeFormatIdFilter { get; set; } = null;
 
-    public Predicate<Episode>? CustomFilter { get; set; }
+    public Predicate<Episode>? CustomFilter { get; set; } = null;
 
     public bool AdjustForCurrentPopulation { get; set; } = false;
 }

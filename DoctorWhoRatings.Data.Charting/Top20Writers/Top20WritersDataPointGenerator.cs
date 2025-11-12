@@ -9,10 +9,10 @@ public class Top20WritersDataPointGenerator(IDoctorWhoDataProvider dataProvider)
         var dataPoints = dataProvider.DoctorWhoData.Episodes
                                      .SelectMany(episode => episode.WriterIds
                                                                    .Select(writerId => new
-                                                                   {
-                                                                       Writer = writers.First(writer => writer.Id == writerId),
-                                                                       Episode = episode
-                                                                   }))
+                                                                                       {
+                                                                                           Writer = writers.First(writer => writer.Id == writerId),
+                                                                                           Episode = episode
+                                                                                       }))
                                      .GroupBy(writerEpisode => writerEpisode.Writer, writerEpisode => writerEpisode.Episode)
                                      .Select(group => CreateDataPoint(group.Key, group.ToList(), options))
                                      .OrderByDescending(dataPoint => dataPoint.CalculatedByOptions)
@@ -37,10 +37,15 @@ public class Top20WritersDataPointGenerator(IDoctorWhoDataProvider dataProvider)
         var calculatedByOptions = options.CalculationMethod switch
         {
             Top20WritersCalculationMethod.NumberOfEpisodes => episodes.Count,
+
             Top20WritersCalculationMethod.ScriptHours => totalEpisodeHours,
+
             Top20WritersCalculationMethod.OvernightHoursWatched => totalOvernightHours,
+
             Top20WritersCalculationMethod.ConsolidatedHoursWatched => totalConsolidatedHours,
+
             Top20WritersCalculationMethod.ExtendedHoursWatched => totalExtendedHours,
+
             _ => 0
         };
 

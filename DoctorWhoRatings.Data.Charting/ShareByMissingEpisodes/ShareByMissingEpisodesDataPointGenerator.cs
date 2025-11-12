@@ -9,9 +9,12 @@ public class ShareByMissingEpisodesDataPointGenerator(IDoctorWhoDataProvider dat
         var dataPoints = options.CalculationMethod switch
         {
             ShareByMissingEpisodesCalculationMethod.All => CreateAllDataPoints(episodes),
+
             ShareByMissingEpisodesCalculationMethod.Doctor => CreateDoctorDataPoints(episodes),
+
             ShareByMissingEpisodesCalculationMethod.Season => CreateSeasonDataPoints(episodes),
-            _ => throw new InvalidOperationException(nameof(options.CalculationMethod))
+
+            _ => throw new ArgumentOutOfRangeException(nameof(options.CalculationMethod))
         };
 
         return dataPoints;

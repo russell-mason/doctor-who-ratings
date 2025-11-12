@@ -2,19 +2,15 @@
 
 public class PremierFinaleEpisodesBySeasonDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IPremierFinaleEpisodesBySeasonDataPointGenerator
 {
-    public Dictionary<string, List<PremierFinaleEpisodeBySeasonDataPoint>> Generate(PremierFinaleEpisodesBySeasonDataOptions options)
-    {
-        var dataPoints = dataProvider.DoctorWhoData.Episodes
-                                     .Where(episode => episode.Season.HasValue)
-                                     .GroupBy(episode => episode.SeasonDescription)
-                                     .Select(group => CreateDataPoints(group, options))
-                                     .ToDictionary();
+    public Dictionary<string, List<PremierFinaleEpisodeBySeasonDataPoint>> Generate(PremierFinaleEpisodesBySeasonDataOptions options) =>
+        dataProvider.DoctorWhoData.Episodes
+                    .Where(episode => episode.Season.HasValue)
+                    .GroupBy(episode => episode.SeasonDescription)
+                    .Select(group => CreateDataPoints(group, options))
+                    .ToDictionary();
 
-        return dataPoints;
-    }
-
-    private static (string, List<PremierFinaleEpisodeBySeasonDataPoint>)
-        CreateDataPoints(IGrouping<string, Episode> group, PremierFinaleEpisodesBySeasonDataOptions options)
+    private static (string, List<PremierFinaleEpisodeBySeasonDataPoint>) CreateDataPoints(IGrouping<string, Episode> group,
+                                                                                          PremierFinaleEpisodesBySeasonDataOptions options)
     {
         var premierDataPoint = CreateDataPoint(true, group.First(), group.Count(), options);
         var finaleDataPoint = CreateDataPoint(false, group.Last(), group.Count(), options);
@@ -27,9 +23,8 @@ public class PremierFinaleEpisodesBySeasonDataPointGenerator(IDoctorWhoDataProvi
     private static PremierFinaleEpisodeBySeasonDataPoint CreateDataPoint(bool isPremier,
                                                                          Episode episode,
                                                                          int episodeCount,
-                                                                         PremierFinaleEpisodesBySeasonDataOptions options)
-    {
-        var dataPoint = new PremierFinaleEpisodeBySeasonDataPoint
+                                                                         PremierFinaleEpisodesBySeasonDataOptions options) =>
+        new()
         {
             IsPremier = isPremier,
             EpisodePosition = isPremier ? "Premier" : "Finale",
@@ -53,9 +48,6 @@ public class PremierFinaleEpisodesBySeasonDataPointGenerator(IDoctorWhoDataProvi
             PopulationAdjustedExtendedExcessRatings = episode.PopulationAdjustedExtendedExcessRatings,
             CalculatedRatings = SelectRatings(episode, options)
         };
-
-        return dataPoint;
-    }
 
     private static decimal? SelectRatings(Episode episode, PremierFinaleEpisodesBySeasonDataOptions options)
     {

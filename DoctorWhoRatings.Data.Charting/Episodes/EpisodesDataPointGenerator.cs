@@ -2,33 +2,24 @@
 
 public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IEpisodesDataPointGenerator
 {
-    public List<EpisodeDataPoint> Generate(EpisodesDataOptions options)
-    {
-        var dataPoints = Filter(options).Select(CreateDataPoint).ToList();
-
-        return dataPoints;
-    }
+    public List<EpisodeDataPoint> Generate(EpisodesDataOptions options) => Filter(options).Select(CreateDataPoint).ToList();
 
     public EpisodeDataPoint Generate(Episode episode) => CreateDataPoint(episode);
 
-    public List<Episode> Filter(EpisodesDataOptions options) =>
-        [.. dataProvider.DoctorWhoData.Episodes.Where(episode => MatchesFilter(episode, options))];
+    public List<Episode> Filter(EpisodesDataOptions options) => [.. dataProvider.DoctorWhoData.Episodes.Where(episode => MatchesFilter(episode, options))];
 
-    private static bool MatchesFilter(Episode episode, EpisodesDataOptions options)
-    {
-        return (options.IdFilter == null || episode.Id == options.IdFilter) &&
-               (options.SlugFilter == null || episode.Slug == options.SlugFilter) &&
-               (options.EraId == null || episode.EraId == options.EraId) &&
-               (options.DoctorFilter == null || episode.Doctor == options.DoctorFilter) &&
-               (options.SeasonFilter == null || episode.Season == options.SeasonFilter) &&
-               (options.StoryFilter == null || episode.Story == options.StoryFilter) &&
-               (options.EpisodeFormatIdFilter == null || episode.EpisodeFormatId == options.EpisodeFormatIdFilter) &&
-               (options.CustomFilter == null || options.CustomFilter(episode));
-    }
+    private static bool MatchesFilter(Episode episode, EpisodesDataOptions options) =>
+        (options.IdFilter == null || episode.Id == options.IdFilter) &&
+        (options.SlugFilter == null || episode.Slug == options.SlugFilter) &&
+        (options.EraId == null || episode.EraId == options.EraId) &&
+        (options.DoctorFilter == null || episode.Doctor == options.DoctorFilter) &&
+        (options.SeasonFilter == null || episode.Season == options.SeasonFilter) &&
+        (options.StoryFilter == null || episode.Story == options.StoryFilter) &&
+        (options.EpisodeFormatIdFilter == null || episode.EpisodeFormatId == options.EpisodeFormatIdFilter) &&
+        (options.CustomFilter == null || options.CustomFilter(episode));
 
-    private static EpisodeDataPoint CreateDataPoint(Episode episode)
-    {
-        var dataPoint = new EpisodeDataPoint
+    private static EpisodeDataPoint CreateDataPoint(Episode episode) =>
+        new()
         {
             Id = episode.Id,
             EraDescription = episode.EraDescription,
@@ -67,7 +58,4 @@ public class EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : I
             Note = episode.Note,
             WikiUrl = episode.WikiUrl
         };
-
-        return dataPoint;
-    }
 }

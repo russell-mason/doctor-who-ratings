@@ -20,7 +20,7 @@ public interface ITrendDataPointGenerator
     /// Generates the data source as two alternating data sets.
     /// <para>
     /// Due to charting limitations, it may not be possible to display dozens of trendlines, e.g. for all seasons.
-    /// In this case two series can be used that alternate tendline pairs with null values for the missing alternate values.
+    /// In this case two series can be used that alternate trendline pairs with null values for the missing alternate values.
     /// This means that only two series are required rather than dozens.
     /// </para>
     /// </summary>

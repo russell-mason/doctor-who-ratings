@@ -2,15 +2,11 @@
 
 public class HighLowEpisodesByDoctorDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IHighLowEpisodesByDoctorDataPointGenerator
 {
-    public List<HighLowEpisodesByDoctorDataPoint> Generate(HighLowEpisodesByDoctorDataOptions options)
-    {
-        var dataPoints = dataProvider.DoctorWhoData.Episodes
-                                     .GroupBy(episode => episode.Doctor)
-                                     .Select(group => CreateDataPoint(group, options))
-                                     .ToList();
-
-        return dataPoints;
-    }
+    public List<HighLowEpisodesByDoctorDataPoint> Generate(HighLowEpisodesByDoctorDataOptions options) =>
+        dataProvider.DoctorWhoData.Episodes
+                    .GroupBy(episode => episode.Doctor)
+                    .Select(group => CreateDataPoint(group, options))
+                    .ToList();
 
     private static HighLowEpisodesByDoctorDataPoint CreateDataPoint(IGrouping<int, Episode> group,
                                                                     HighLowEpisodesByDoctorDataOptions options)
@@ -88,9 +84,12 @@ public class HighLowEpisodesByDoctorDataPointGenerator(IDoctorWhoDataProvider da
         options.CalculationMethod switch
         {
             HighLowEpisodesCalculationMethod.Overnight => SelectEpisodeByOvernight(group, options, highest),
+
             HighLowEpisodesCalculationMethod.Consolidated => SelectEpisodeByConsolidated(group, options, highest),
+            
             HighLowEpisodesCalculationMethod.Extended => SelectEpisodeByExtended(group, options, highest),
-            _ => throw new InvalidOperationException(nameof(options.CalculationMethod))
+            
+            _ => throw new ArgumentOutOfRangeException(nameof(options))
         };
 
     private static Episode SelectEpisode(IGrouping<int, Episode> group, Func<Episode, decimal?> selector, bool descending)
@@ -101,29 +100,30 @@ public class HighLowEpisodesByDoctorDataPointGenerator(IDoctorWhoDataProvider da
             ? nonNulls.OrderByDescending(selector)
             : nonNulls.OrderBy(selector);
 
-        var result = orderedEpisodes.First();
-        return result;
+        return orderedEpisodes.First();
     }
 
     private static Episode SelectEpisodeByOvernight(IGrouping<int, Episode> group, HighLowEpisodesByDoctorDataOptions options, bool descending) =>
         SelectEpisode(group,
-            episode => options.AdjustForCurrentPopulation
-                ? episode.PopulationAdjustedOvernightRatings
-                : episode.OvernightRatings, descending);
+                      episode => options.AdjustForCurrentPopulation
+                          ? episode.PopulationAdjustedOvernightRatings
+                          : episode.OvernightRatings, descending);
 
     private static Episode SelectEpisodeByConsolidated(IGrouping<int, Episode> group, HighLowEpisodesByDoctorDataOptions options, bool descending) =>
         SelectEpisode(group,
-            episode => options.AdjustForCurrentPopulation
-                ? episode.PopulationAdjustedConsolidatedExcessRatings ?? episode.PopulationAdjustedOvernightRatings
-                : episode.ConsolidatedRatings ?? episode.OvernightRatings,
-            descending);
+                      episode => options.AdjustForCurrentPopulation
+                          ? episode.PopulationAdjustedConsolidatedExcessRatings ?? episode.PopulationAdjustedOvernightRatings
+                          : episode.ConsolidatedRatings ?? episode.OvernightRatings,
+                      descending);
 
     private static Episode SelectEpisodeByExtended(IGrouping<int, Episode> group, HighLowEpisodesByDoctorDataOptions options, bool descending) =>
         SelectEpisode(group,
-            episode => options.AdjustForCurrentPopulation
-                ? episode.PopulationAdjustedExtendedRatings ?? episode.PopulationAdjustedConsolidatedRatings ?? episode.PopulationAdjustedOvernightRatings
-                : episode.ExtendedRatings ?? episode.ConsolidatedRatings ?? episode.OvernightRatings,
-            descending);
+                      episode => options.AdjustForCurrentPopulation
+                          ? episode.PopulationAdjustedExtendedRatings ??
+                            episode.PopulationAdjustedConsolidatedRatings ??
+                            episode.PopulationAdjustedOvernightRatings
+                          : episode.ExtendedRatings ?? episode.ConsolidatedRatings ?? episode.OvernightRatings,
+                      descending);
 
     private static decimal? SelectOvernightRatings(Episode episode, HighLowEpisodesByDoctorDataOptions options) =>
         options.AdjustForCurrentPopulation ? episode.PopulationAdjustedOvernightRatings : episode.OvernightRatings;

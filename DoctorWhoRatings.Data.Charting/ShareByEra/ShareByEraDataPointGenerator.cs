@@ -2,15 +2,11 @@
 
 public class ShareByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IShareByEraDataPointGenerator
 {
-    public List<ShareByEraDataPoint> Generate(ShareByEraDataOptions options)
-    {
-        var dataPoints = dataProvider.DoctorWhoData.Episodes
-                                     .GroupBy(episode => episode.EraDescription)
-                                     .Select(group => CreateDataPoint(group, options))
-                                     .ToList();
-
-        return dataPoints;
-    }
+    public List<ShareByEraDataPoint> Generate(ShareByEraDataOptions options) =>
+        dataProvider.DoctorWhoData.Episodes
+                    .GroupBy(episode => episode.EraDescription)
+                    .Select(group => CreateDataPoint(group, options))
+                    .ToList();
 
     private static ShareByEraDataPoint CreateDataPoint(IGrouping<string, Episode> group, ShareByEraDataOptions options)
     {
@@ -21,9 +17,12 @@ public class ShareByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) :
         var calculatedRatings = options.OverCalculationMethod switch
         {
             ShareByEraOverCalculationMethod.Overnight => calculatedOvernightRatings,
+
             ShareByEraOverCalculationMethod.Consolidated => calculatedConsolidatedRatings,
+
             ShareByEraOverCalculationMethod.Extended => calculatedExtendedRatings,
-            _ => throw new InvalidOperationException(nameof(options.OverCalculationMethod))
+
+            _ => throw new ArgumentOutOfRangeException(nameof(options.OverCalculationMethod))
         };
 
         // Normally we can use a null result to naturally eliminate values used by the tooltip, but because
@@ -36,7 +35,7 @@ public class ShareByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) :
             ? null : calculatedExtendedRatings;
 
         var dataPoint = new ShareByEraDataPoint
-        {
+                        {
                             Era = group.Key,
                             EpisodeCount = group.Count(),
                             CalculatedOvernightRatings = calculatedOvernightRatings,
@@ -55,9 +54,12 @@ public class ShareByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) :
         var calculatedOvernightRatings = options.CalculationMethod switch
         {
             ShareByEraCalculationMethod.Sum => SumRatings(group, method),
+
             ShareByEraCalculationMethod.MeanPerEpisode => MeanPerEpisode(group, method),
+
             ShareByEraCalculationMethod.MeanPerHour => MeanPerHour(group, method),
-            _ => throw new InvalidOperationException(nameof(options.CalculationMethod))
+
+            _ => throw new ArgumentOutOfRangeException(nameof(options.CalculationMethod))
         };
 
         return calculatedOvernightRatings;
@@ -83,8 +85,11 @@ public class ShareByEraDataPointGenerator(IDoctorWhoDataProvider dataProvider) :
         method switch
         {
             ShareByEraOverCalculationMethod.Overnight => episode.OvernightRatings ?? 0,
+
             ShareByEraOverCalculationMethod.Consolidated => episode.ConsolidatedRatings ?? episode.OvernightRatings ?? 0,
+
             ShareByEraOverCalculationMethod.Extended => episode.ExtendedRatings ?? episode.ConsolidatedRatings ?? episode.OvernightRatings ?? 0,
-            _ => throw new InvalidOperationException(nameof(method))
+
+            _ => throw new ArgumentOutOfRangeException(nameof(method))
         };
 }

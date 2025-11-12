@@ -38,13 +38,13 @@ public class Top20EpisodesDataPoint
 
     public decimal? PopulationAdjustedExtendedExcessRatings { get; init; }
 
-    public decimal? CalculatedOvernightRatings { get; set; }
+    public decimal? CalculatedOvernightRatings { get; init; }
 
-    public decimal? CalculatedConsolidatedRatings { get; set; }
+    public decimal? CalculatedConsolidatedRatings { get; init; }
 
     public decimal? CalculatedConsolidatedExcessRatings { get; init; }
 
-    public decimal? CalculatedExtendedRatings { get; set; }
+    public decimal? CalculatedExtendedRatings { get; init; }
 
     public decimal? CalculatedExtendedExcessRatings { get; init; }
 }

@@ -4,7 +4,7 @@ public class EpisodeGuideEpisodeDataPoint
 {
     public int? EpisodeFormatId { get; init; }
 
-    public required int EpisodeNumber { get; init; }
+    public int EpisodeNumber { get; init; }
 
     public int PartInStory { get; init; }
 

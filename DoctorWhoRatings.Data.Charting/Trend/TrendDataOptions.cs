@@ -4,5 +4,5 @@ public class TrendDataOptions
 {
     public TrendRange Range { get; set; } = TrendRange.None;
 
-    public bool Sequential { get; set; }
+    public bool Sequential { get; set; } = false;
 }

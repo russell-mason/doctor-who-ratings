@@ -7,8 +7,8 @@ public class TrendDataPointGenerator : ITrendDataPointGenerator
         var groupedByRange = GroupByRange(dataPoints, trendOptions);
 
         var trendLineDataPoints = groupedByRange
-                .SelectMany(group => CreateTrendDataPoints(group, CreateContext(group.First(), trendOptions)))
-                .ToList();
+                                  .SelectMany(group => CreateTrendDataPoints(group, CreateContext(group.First(), trendOptions)))
+                                  .ToList();
 
         if (trendOptions.Sequential)
         {

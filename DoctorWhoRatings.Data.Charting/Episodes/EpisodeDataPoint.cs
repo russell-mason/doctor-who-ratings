@@ -2,7 +2,7 @@
 
 public class EpisodeDataPoint
 {
-    private int? _index = null;
+    private int? _index;
 
     public int Index => _index ?? Id;
 
@@ -10,7 +10,7 @@ public class EpisodeDataPoint
 
     public required string EraDescription { get; init; }
 
-    public required int Doctor { get; init; }
+    public int Doctor { get; init; }
 
     public required string Actor { get; init; }
 
@@ -78,8 +78,5 @@ public class EpisodeDataPoint
 
     public string? WikiUrl { get; init; }
 
-    public void SetIndex(int index)
-    {
-        _index = index;
-    }
+    public void SetIndex(int index) => _index = index;
 }

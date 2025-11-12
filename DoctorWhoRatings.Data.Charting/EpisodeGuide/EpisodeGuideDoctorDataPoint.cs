@@ -2,7 +2,7 @@
 
 public class EpisodeGuideDoctorDataPoint
 {
-    public required int Doctor { get; init; }
+    public int Doctor { get; init; }
 
     public required string Actor { get; init; }
 

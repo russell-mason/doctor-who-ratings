@@ -2,18 +2,13 @@
 
 public class ShareByHoursWatchedDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IShareByHoursWatchedDataPointGenerator
 {
-    public List<ShareByHoursWatchedDataPoint> Generate(ShareByHoursWatchedDataOptions options)
-    {
-        var dataPoints = dataProvider.DoctorWhoData.Episodes
-                                     .GroupBy(episode => episode.Doctor)
-                                     .Select(group => CreateDataPoint(group, options))
-                                     .ToList();
-
-        return dataPoints;
-    }
+    public List<ShareByHoursWatchedDataPoint> Generate(ShareByHoursWatchedDataOptions options) => dataProvider.DoctorWhoData.Episodes
+        .GroupBy(episode => episode.Doctor)
+        .Select(group => CreateDataPoint(group, options))
+        .ToList();
 
     private ShareByHoursWatchedDataPoint CreateDataPoint(IGrouping<int, Episode> group,
-                                                               ShareByHoursWatchedDataOptions options)
+                                                         ShareByHoursWatchedDataOptions options)
     {
         const int minutesInHour = 60;
 
@@ -25,24 +20,27 @@ public class ShareByHoursWatchedDataPointGenerator(IDoctorWhoDataProvider dataPr
         var calculatedTotalMinutesWatched = options.CalculationMethod switch
         {
             ShareByHoursWatchedCalculationMethod.Overnight => totalOvernightMinutes,
+
             ShareByHoursWatchedCalculationMethod.Consolidated => totalConsolidatedMinutes ?? totalOvernightMinutes,
+
             ShareByHoursWatchedCalculationMethod.Extended => totalExtendedMinutes ?? totalConsolidatedMinutes ?? totalOvernightMinutes,
-            _ => throw new InvalidOperationException(nameof(options.CalculationMethod))
+
+            _ => throw new ArgumentOutOfRangeException(nameof(options.CalculationMethod))
         };
 
         var referenceEpisode = group.First();
 
         var dataPoint = new ShareByHoursWatchedDataPoint
-        {
-            Actor = referenceEpisode.Actor,
-            UnambiguousActor = referenceEpisode.DisambiguateActor(dataProvider.DoctorWhoData.Doctors),
-            EpisodeCount = group.Count(),
-            TotalEpisodeHours = (decimal) totalEpisodeMinutes / minutesInHour,
-            TotalOvernightHoursWatched = totalOvernightMinutes / minutesInHour,
-            TotalConsolidatedHoursWatched = totalConsolidatedMinutes / minutesInHour,
-            TotalExtendedHoursWatched = totalExtendedMinutes / minutesInHour,
-            CalculatedTotalHoursWatched = (calculatedTotalMinutesWatched ?? 0) / minutesInHour
-        };
+                        {
+                            Actor = referenceEpisode.Actor,
+                            UnambiguousActor = referenceEpisode.DisambiguateActor(dataProvider.DoctorWhoData.Doctors),
+                            EpisodeCount = group.Count(),
+                            TotalEpisodeHours = (decimal) totalEpisodeMinutes / minutesInHour,
+                            TotalOvernightHoursWatched = totalOvernightMinutes / minutesInHour,
+                            TotalConsolidatedHoursWatched = totalConsolidatedMinutes / minutesInHour,
+                            TotalExtendedHoursWatched = totalExtendedMinutes / minutesInHour,
+                            CalculatedTotalHoursWatched = (calculatedTotalMinutesWatched ?? 0) / minutesInHour
+                        };
 
         return dataPoint;
     }

@@ -2,22 +2,17 @@
 
 public class Bottom20EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvider) : IBottom20EpisodesDataPointGenerator
 {
-    public List<Bottom20EpisodesDataPoint> Generate(Bottom20EpisodesDataOptions options)
-    {
-        var dataPoints = dataProvider.DoctorWhoData.Episodes
-                                     .Where(episode => IsComparableRatingIncluded(episode, options))
-                                     .Where(episode => IsFormatIncluded(episode, options))
-                                     .OrderBy(episode => SelectRating(episode, options))
-                                     .Take(20)
-                                     .Select(episode => CreateDataPoint(episode, options))
-                                     .ToList();
+    public List<Bottom20EpisodesDataPoint> Generate(Bottom20EpisodesDataOptions options) =>
+        dataProvider.DoctorWhoData.Episodes
+                    .Where(episode => IsComparableRatingIncluded(episode, options))
+                    .Where(episode => IsFormatIncluded(episode, options))
+                    .OrderBy(episode => SelectRating(episode, options))
+                    .Take(20)
+                    .Select(episode => CreateDataPoint(episode, options))
+                    .ToList();
 
-        return dataPoints;
-    }
-
-    private static Bottom20EpisodesDataPoint CreateDataPoint(Episode episode, Bottom20EpisodesDataOptions options)
-    {
-        var dataPoint = new Bottom20EpisodesDataPoint
+    private static Bottom20EpisodesDataPoint CreateDataPoint(Episode episode, Bottom20EpisodesDataOptions options) =>
+        new()
         {
             Id = episode.Id,
             Actor = episode.Actor,
@@ -44,9 +39,6 @@ public class Bottom20EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvi
             CalculatedExtendedExcessRatings = SelectExtendedExcessRatings(episode, options)
         };
 
-        return dataPoint;
-    }
-
     private static bool IsComparableRatingIncluded(Episode episode, Bottom20EpisodesDataOptions options) =>
         !options.OnlyIncludeComparableRatings ||
         (options.CalculationMethod == Bottom20EpisodesCalculationMethod.Overnight && episode.OvernightRatings != null) ||
@@ -56,21 +48,20 @@ public class Bottom20EpisodesDataPointGenerator(IDoctorWhoDataProvider dataProvi
     private static bool IsFormatIncluded(Episode episode, Bottom20EpisodesDataOptions options) =>
         options.IncludeSpecials || episode.EpisodeFormatId == EpisodeFormats.Series;
 
-    private static decimal? SelectRating(Episode episode, Bottom20EpisodesDataOptions options)
-    {
-        var result = options.CalculationMethod switch
+    private static decimal? SelectRating(Episode episode, Bottom20EpisodesDataOptions options) =>
+        options.CalculationMethod switch
         {
             Bottom20EpisodesCalculationMethod.Overnight => SelectOvernightRatings(episode, options),
+
             Bottom20EpisodesCalculationMethod.Consolidated => SelectConsolidatedRatings(episode, options)
                                                               ?? SelectOvernightRatings(episode, options),
+
             Bottom20EpisodesCalculationMethod.Extended => SelectExtendedRatings(episode, options)
                                                           ?? SelectConsolidatedRatings(episode, options)
                                                           ?? SelectOvernightRatings(episode, options),
+
             _ => throw new ArgumentOutOfRangeException(nameof(options))
         };
-
-        return result;
-    }
 
     private static decimal? SelectOvernightRatings(Episode episode, Bottom20EpisodesDataOptions options) =>
         options.AdjustForCurrentPopulation ? episode.PopulationAdjustedOvernightRatings : episode.OvernightRatings;

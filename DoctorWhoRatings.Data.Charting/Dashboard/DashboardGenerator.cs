@@ -33,6 +33,4 @@ public class DashboardGenerator(IDoctorWhoDataProvider dataProvider) : IDashboar
 
     private static decimal? CalculateMinutesWatched(IEnumerable<Episode> episodes) =>
         episodes.Sum(episode => (episode.Runtime * (episode.ExtendedRatings ?? episode.ConsolidatedRatings ?? episode.OvernightRatings)));
-
-     
 }

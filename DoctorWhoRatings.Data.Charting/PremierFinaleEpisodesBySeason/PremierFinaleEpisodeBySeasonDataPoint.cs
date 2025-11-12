@@ -16,21 +16,21 @@ public class PremierFinaleEpisodeBySeasonDataPoint
 
     public required string SeasonDescription { get; init; }
 
-    public required string StoryTitle { get; set; }
+    public required string StoryTitle { get; init; }
 
-    public string? StoryPartTitle { get; set; }
+    public string? StoryPartTitle { get; init; }
 
-    public string? Slug { get; set; }
+    public string? Slug { get; init; }
 
-    public decimal? OvernightRatings { get; set; }
+    public decimal? OvernightRatings { get; init; }
 
-    public decimal? ConsolidatedRatings { get; set; }
+    public decimal? ConsolidatedRatings { get; init; }
 
     public decimal? ConsolidatedExcessRatings { get; init; }
 
-    public decimal? ExtendedRatings { get; set; }
+    public decimal? ExtendedRatings { get; init; }
 
-    public decimal? ExtendedExcessRatings { get; set; }
+    public decimal? ExtendedExcessRatings { get; init; }
 
     public decimal? PopulationAdjustedOvernightRatings { get; init; }
 
@@ -42,5 +42,5 @@ public class PremierFinaleEpisodeBySeasonDataPoint
 
     public decimal? PopulationAdjustedExtendedExcessRatings { get; init; }
 
-    public decimal? CalculatedRatings { get; set; }
+    public decimal? CalculatedRatings { get; init; }
 }
