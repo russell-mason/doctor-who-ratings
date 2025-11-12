@@ -8,10 +8,5 @@
 /// <param name="columnMappings">All mappings between header keys and column references.</param>
 public class ExcelCellReader(IExcelSpreadsheetReader spreadsheetReader, Row row, IEnumerable<ExcelColumnMapping> columnMappings)
 {
-    public T Read<T>(string key)
-    {
-        var value = spreadsheetReader.GetCellValue<T>(row, columnMappings, key);
-
-        return value;
-    }
+    public T Read<T>(string key) => spreadsheetReader.GetCellValue<T>(row, columnMappings, key);
 }

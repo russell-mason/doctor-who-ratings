@@ -53,22 +53,9 @@ public partial class ExcelSpreadsheetReader() : IExcelSpreadsheetReader
         return rows;
     }
 
-    public IEnumerable<ExcelColumnMapping> ReadColumnHeaders(Row? row)
-    {
-        List<ExcelColumnMapping> columnMappings = [];
+    public IEnumerable<ExcelColumnMapping> ReadColumnHeaders(Row? row) => row?.Elements<Cell>().Select(GetColumnMapping).ToList() ?? [];
 
-        if (row != null)
-        {
-            columnMappings = row.Elements<Cell>().Select(GetColumnMapping).ToList();
-        }
-
-        return columnMappings;
-    }
-
-    public IEnumerable<Row> FilterOutEmptyRows(IEnumerable<Row> rows)
-    {
-        return rows.Where(row => !IsEmpty(row));
-    }
+    public IEnumerable<Row> FilterOutEmptyRows(IEnumerable<Row> rows) => rows.Where(row => !IsEmpty(row));
 
     public T GetCellValue<T>(Row row, IEnumerable<ExcelColumnMapping> columnMappings, string key)
     {
@@ -86,12 +73,7 @@ public partial class ExcelSpreadsheetReader() : IExcelSpreadsheetReader
         return value;
     }
 
-    public ExcelCellReader CreateCellReader(Row episodeRow, IReadOnlyList<ExcelColumnMapping> columnMappings)
-    {
-        var cellReader = new ExcelCellReader(this, episodeRow, columnMappings);
-
-        return cellReader;
-    }
+    public ExcelCellReader CreateCellReader(Row episodeRow, IReadOnlyList<ExcelColumnMapping> columnMappings) => new (this, episodeRow, columnMappings);
 
     private string? GetCellText(Cell? cell)
     {

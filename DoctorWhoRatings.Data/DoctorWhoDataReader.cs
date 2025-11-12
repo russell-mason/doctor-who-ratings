@@ -34,16 +34,18 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         return doctorWhoData;
     }
 
-    private IEnumerable<Episode> ReadEpisodes()
+    private IEnumerable<T> ReadRows<T>(string sheetName, Func<Row, IReadOnlyList<ExcelColumnMapping>, T> creationCallback) where T : class
     {
-        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Episodes).ToList();
+        var rows = spreadsheetReader.ReadRows(sheetName).ToList();
         var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
-        var episodeRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
+        var filteredRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
 
-        var episodes = episodeRows.Select(episodeRow => CreateEpisode(episodeRow, columnMappings));
+        var createdItems = filteredRows.Select(episodeRow => creationCallback(episodeRow, columnMappings));
 
-        return episodes;
+        return createdItems;
     }
+
+    private IEnumerable<Episode> ReadEpisodes() => ReadRows(DoctorWhoExcelSheetNames.Episodes, CreateEpisode);
 
     private Episode CreateEpisode(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
     {
@@ -89,16 +91,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         return episode;
     }
 
-    private IEnumerable<Doctor> ReadDoctors()
-    {
-        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Doctors).ToList();
-        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
-        var doctorRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
-
-        var doctors = doctorRows.Select(doctorRow => CreateDoctor(doctorRow, columnMappings));
-
-        return doctors;
-    }
+    private IEnumerable<Doctor> ReadDoctors() => ReadRows(DoctorWhoExcelSheetNames.Doctors, CreateDoctor);
 
     private Doctor CreateDoctor(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
     {
@@ -113,16 +106,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         return doctor;
     }
 
-    private IEnumerable<SeasonFormat> ReadSeasonFormats()
-    {
-        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.SeasonFormats).ToList();
-        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
-        var seasonFormatRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
-
-        var seasonFormats = seasonFormatRows.Select(seasonFormatRow => CreateSeasonFormat(seasonFormatRow, columnMappings));
-
-        return seasonFormats;
-    }
+    private IEnumerable<SeasonFormat> ReadSeasonFormats() => ReadRows(DoctorWhoExcelSheetNames.SeasonFormats, CreateSeasonFormat);
 
     private SeasonFormat CreateSeasonFormat(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
     {
@@ -137,16 +121,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         return seasonFormat;
     }
 
-    private IEnumerable<EpisodeFormat> ReadEpisodeFormats()
-    {
-        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.EpisodeFormats).ToList();
-        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
-        var episodeFormatRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
-
-        var episodeFormats = episodeFormatRows.Select(episodeFormatRow => CreateEpisodeFormat(episodeFormatRow, columnMappings));
-
-        return episodeFormats;
-    }
+    private IEnumerable<EpisodeFormat> ReadEpisodeFormats() => ReadRows(DoctorWhoExcelSheetNames.EpisodeFormats, CreateEpisodeFormat);
 
     private EpisodeFormat CreateEpisodeFormat(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
     {
@@ -161,16 +136,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         return episodeFormat;
     }
 
-    private IEnumerable<Era> ReadEras()
-    {
-        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Eras).ToList();
-        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
-        var eraRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
-
-        var eras = eraRows.Select(eraRow => CreateEra(eraRow, columnMappings));
-
-        return eras;
-    }
+    private IEnumerable<Era> ReadEras() => ReadRows(DoctorWhoExcelSheetNames.Eras, CreateEra);
 
     private Era CreateEra(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
     {
@@ -185,16 +151,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         return era;
     }
 
-    private IEnumerable<Writer> ReadWriters()
-    {
-        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Writers).ToList();
-        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
-        var writersRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
-
-        var writers = writersRows.Select(writerRow => CreateWriter(writerRow, columnMappings));
-
-        return writers;
-    }
+    private IEnumerable<Writer> ReadWriters() => ReadRows(DoctorWhoExcelSheetNames.Writers, CreateWriter);
 
     private Writer CreateWriter(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
     {
@@ -211,16 +168,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         return writer;
     }
 
-    private IEnumerable<WikiFormat> ReadWikiFormats()
-    {
-        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.WikiFormats).ToList();
-        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
-        var wikiFormatRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
-
-        var wikiFormats = wikiFormatRows.Select(eraRow => CreateWikiFormat(eraRow, columnMappings));
-
-        return wikiFormats;
-    }
+    private IEnumerable<WikiFormat> ReadWikiFormats() => ReadRows(DoctorWhoExcelSheetNames.WikiFormats, CreateWikiFormat);
 
     private WikiFormat CreateWikiFormat(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
     {
@@ -235,16 +183,7 @@ public class DoctorWhoDataReader(IExcelSpreadsheetReader spreadsheetReader) : ID
         return wikiFormat;
     }
 
-    private IEnumerable<YearPopulation> ReadPopulation()
-    {
-        var rows = spreadsheetReader.ReadRows(DoctorWhoExcelSheetNames.Populations).ToList();
-        var columnMappings = spreadsheetReader.ReadColumnHeaders(rows.FirstOrDefault()).ToList().AsReadOnly();
-        var populationRows = spreadsheetReader.FilterOutEmptyRows(rows.Skip(1));
-
-        var populations = populationRows.Select(populationRow => CreateYearPopulation(populationRow, columnMappings));
-
-        return populations;
-    }
+    private IEnumerable<YearPopulation> ReadPopulation() => ReadRows(DoctorWhoExcelSheetNames.Populations, CreateYearPopulation);
 
     private YearPopulation CreateYearPopulation(Row row, IReadOnlyList<ExcelColumnMapping> columnMappings)
     {
