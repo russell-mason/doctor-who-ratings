@@ -187,7 +187,7 @@
 @code {
     private EpisodeInContextDataOptions DataOptions { get; } = new();
 
-    private EpisodeInContextDataPoint DataPoint { get; set; } = default!;
+    private EpisodeInContextDataPoint DataPoint { get; set; } = null!;
 
     [Parameter]
     public string Slug { get; set; } = string.Empty;

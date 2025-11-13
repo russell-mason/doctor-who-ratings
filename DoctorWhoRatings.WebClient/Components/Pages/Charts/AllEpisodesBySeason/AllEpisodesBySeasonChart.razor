@@ -68,15 +68,13 @@ Description="@(AllEpisodesBySeasonChartCaptions.Description + " The Movie and sp
 <DrillDownTip />
 
 @code {
-    private int _selectedValue = KeyFromValues(1, 1);
-
-    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; set; } = AllEpisodesBySeasonChartOptions.Defaults;
 
     private EpisodesDataOptions DataOptions { get; } = new() { DoctorFilter = 1, SeasonFilter = 1 };  // Default to the first season
 
-    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
+    private List<EpisodeDataPoint> DataPoints { get; set; } = null!;
 
     /// <summary>
     /// The underlying options filter allows null, meaning do not filter. For this chart, there will always be a
@@ -84,17 +82,17 @@ Description="@(AllEpisodesBySeasonChartCaptions.Description + " The Movie and sp
     /// </summary>
     private int DataOptionsSeasonFilter
     {
-        get => _selectedValue;
+        get;
         set
         {
-            _selectedValue = value;
+            field = value;
 
-            var values = ValuesFromKey(_selectedValue);
+            var values = ValuesFromKey(field);
 
-            DataOptions.DoctorFilter = values.doctor; 
-            DataOptions.SeasonFilter = values.seson; 
+            DataOptions.DoctorFilter = values.doctor;
+            DataOptions.SeasonFilter = values.seson;
         }
-    }
+    } = KeyFromValues(1, 1);
 
     private IEnumerable<(int, string)> SeasonsDataSource =>
         DataProvider.DoctorWhoData.Episodes
@@ -102,10 +100,7 @@ Description="@(AllEpisodesBySeasonChartCaptions.Description + " The Movie and sp
                     .DistinctBy(episode => (episode.Doctor, episode.Season))
                     .Select(episode => (KeyFromValues(episode.Doctor, episode.Season), $"{episode.Actor} - {episode.SeasonDescription}"));
 
-    protected override void OnInitialized()
-    {
-        DataPoints = DataPointGenerator.Generate(DataOptions);
-    }
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 
     private async Task AfterOptionChanged()
     {

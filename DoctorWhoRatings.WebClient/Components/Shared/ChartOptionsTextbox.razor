@@ -15,10 +15,7 @@
     [Parameter]
     public EventCallback AfterValueChanged { get; set; }
 
-    public async Task FocusAsync()
-    {
-        await _inputReference.FocusAsync();
-    }
+    public async Task FocusAsync() => await _inputReference.FocusAsync();
 
     private async Task OnAfterValueChanged()
     {

@@ -15,8 +15,5 @@
     [Parameter, EditorRequired]
     public required string WaitOnCssSelector { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        await JsRuntime.InvokeVoidAsync("Overlay.pollForContent", Id, WaitOnCssSelector);
-    }
+    protected override async Task OnInitializedAsync() => await JsRuntime.InvokeVoidAsync("Overlay.pollForContent", Id, WaitOnCssSelector);
 }

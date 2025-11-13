@@ -55,9 +55,8 @@ public static class AverageBySeasonChartOptions
 
     public static Annotations CreateAnnotations(List<AverageBySeasonDataPoint> dataPoints)
     {
-        var xAxis = dataPoints
-                    .GroupBy(dataPoint => new { dataPoint.Actor })
-                    .Select(group => (group.First().Id, group.First().Actor));
+        var xAxis = dataPoints.GroupBy(dataPoint => new { dataPoint.Actor })
+                              .Select(group => (group.First().Id, group.First().Actor));
 
         var annotations = new Annotations
         {

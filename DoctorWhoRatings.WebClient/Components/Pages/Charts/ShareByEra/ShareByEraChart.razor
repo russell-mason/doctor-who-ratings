@@ -80,13 +80,13 @@
 </FullScreenZone>
 
 @code {
-    private ApexChart<ShareByEraDataPoint> Chart { get; set; } = default!;
+    private ApexChart<ShareByEraDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<ShareByEraDataPoint> ChartOptions { get; } = ShareByEraChartOptions.Defaults;
 
     private ShareByEraDataOptions DataOptions { get; } = new();
 
-    private List<ShareByEraDataPoint> DataPoints { get; set; } = default!;
+    private List<ShareByEraDataPoint> DataPoints { get; set; } = null!;
 
     private decimal GetPercentageShare(ShareByEraDataPoint currentDataPoint)
     {

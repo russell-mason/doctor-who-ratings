@@ -1,6 +1,5 @@
 ﻿@page "/charts/all-episodes-by-popularity"
 @inject IEpisodesDataPointGenerator DataPointGenerator
-@inject ITrendDataPointGenerator TrendDataPointGenerator;
 @inject IEpisodeContextDrillDown EpisodeContextDrillDown
 
 <PageTitle>@AllEpisodesChartCaptions.Title - @Application.Name</PageTitle>
@@ -38,21 +37,23 @@
 <DrillDownTip />
 
 @code {
-    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesByPopularityChartOptions.Defaults;
 
     private EpisodesDataOptions DataOptions { get; } = new();
 
-    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
+    private List<EpisodeDataPoint> DataPoints { get; set; } = null!;
 
-    protected override void OnInitialized()
-    {
-        DataPoints = DataPointGenerator.Generate(DataOptions)
-                                       .OrderByDescending(episode => episode.OvernightRatings)
-                                       .Select((dataPoint, index) => { dataPoint.SetIndex(index); return dataPoint; })
-                                       .ToList();
-    }
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions)
+                                                                              .OrderByDescending(episode => episode.OvernightRatings)
+                                                                              .Select((dataPoint, index) =>
+                                                                              {
+                                                                                  dataPoint.SetIndex(index);
+
+                                                                                  return dataPoint;
+                                                                              })
+                                                                              .ToList();
 
     private void OnDataPointSelection(SelectedData<EpisodeDataPoint> selectedData) =>
         InvokeAsync(async () => await EpisodeContextDrillDown.DrillDownAsync(selectedData, selectedData.DataPoint.Items.First().Slug));

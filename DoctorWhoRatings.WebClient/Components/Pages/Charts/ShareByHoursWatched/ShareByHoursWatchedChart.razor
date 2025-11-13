@@ -65,13 +65,13 @@
 </Info>
 
 @code {
-    private ApexChart<ShareByHoursWatchedDataPoint> Chart { get; set; } = default!;
+    private ApexChart<ShareByHoursWatchedDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<ShareByHoursWatchedDataPoint> ChartOptions { get; } = ShareByHoursWatchedChartOptions.Defaults;
 
     private ShareByHoursWatchedDataOptions DataOptions { get; } = new();
 
-    private List<ShareByHoursWatchedDataPoint> DataPoints { get; set; } = default!;
+    private List<ShareByHoursWatchedDataPoint> DataPoints { get; set; } = null!;
 
     private decimal GetPercentageShare(ShareByHoursWatchedDataPoint currentDataPoint)
     {

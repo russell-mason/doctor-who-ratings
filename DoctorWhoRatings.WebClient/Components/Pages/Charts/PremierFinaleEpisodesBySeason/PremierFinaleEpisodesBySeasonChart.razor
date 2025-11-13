@@ -79,13 +79,13 @@
 <DrillDownTip />
 
 @code {
-    private ApexChart<PremierFinaleEpisodeBySeasonDataPoint> Chart { get; set; } = default!;
+    private ApexChart<PremierFinaleEpisodeBySeasonDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<PremierFinaleEpisodeBySeasonDataPoint> ChartOptions { get; } = PremierFinaleEpisodesBySeasonChartOptions.Defaults;
 
     private PremierFinaleEpisodesBySeasonDataOptions DataOptions { get; } = new();
 
-    private Dictionary<string, List<PremierFinaleEpisodeBySeasonDataPoint>> DataPoints { get; set; } = default!;
+    private Dictionary<string, List<PremierFinaleEpisodeBySeasonDataPoint>> DataPoints { get; set; } = null!;
 
     protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 

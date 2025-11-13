@@ -42,18 +42,15 @@
 </FullScreenZone>
 
 @code {
-    private ApexChart<AverageByStoryDataPoint> Chart { get; set; } = default!;
+    private ApexChart<AverageByStoryDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<AverageByStoryDataPoint> ChartOptions { get; } = AverageByStoryChartOptions.Defaults;
 
     private AverageByStoryDataOptions DataOptions { get; } = new();
 
-    private List<AverageByStoryDataPoint> DataPoints { get; set; } = default!;
+    private List<AverageByStoryDataPoint> DataPoints { get; set; } = null!;
 
-    protected override void OnInitialized()
-    {
-        DataPoints = DataPointGenerator.Generate();
-    }
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -63,8 +60,5 @@
         }
     }
 
-    private async Task AfterOptionChanged()
-    {
-        await Chart.UpdateSeriesAsync();
-    }
+    private async Task AfterOptionChanged() => await Chart.UpdateSeriesAsync();
 }

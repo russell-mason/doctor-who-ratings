@@ -73,18 +73,15 @@
 </FullScreenZone>
 
 @code {
-    private ApexChart<AverageBySeasonDataPoint> Chart { get; set; } = default!;
+    private ApexChart<AverageBySeasonDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<AverageBySeasonDataPoint> ChartOptions { get; } = AverageBySeasonChartOptions.Defaults;
 
     private AverageBySeasonDataOptions DataOptions { get; } = new();
 
-    private List<AverageBySeasonDataPoint> DataPoints { get; set; } = default!;
+    private List<AverageBySeasonDataPoint> DataPoints { get; set; } = null!;
 
-    protected override void OnInitialized()
-    {
-        DataPoints = DataPointGenerator.Generate(DataOptions);
-    }
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

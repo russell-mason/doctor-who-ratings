@@ -119,15 +119,9 @@
 </Info>
 
 @code {
-    public DashboardData Data { get; set; } = default!;
+    public DashboardData Data { get; set; } = null!;
 
-    protected override void OnInitialized()
-    {
-        Data = DataGenerator.Generate();
-    }
+    protected override void OnInitialized() => Data = DataGenerator.Generate();
 
-    private static string Pluralize(int value, string word)
-    {
-        return value == 1 ? word : $"{word}s";
-    }
+    private static string Pluralize(int value, string word) => value == 1 ? word : $"{word}s";
 }

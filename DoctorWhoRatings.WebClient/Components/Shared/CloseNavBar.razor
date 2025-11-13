@@ -7,8 +7,5 @@
 </nav>
 
 @code {
-    private async Task CloseTab()
-    {
-        await JsRuntime.InvokeVoidAsync("Browser.closeCurrentTab");
-    }
+    private async Task CloseTab() => await JsRuntime.InvokeVoidAsync("Browser.closeCurrentTab");
 }

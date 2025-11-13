@@ -40,17 +40,23 @@
     [Parameter]
     public bool ShowPopulationAdjusted { get; set; }
 
-    private decimal? TargetExcessRatings => SeriesIndex switch
-    {
-        ConsolidatedSeriesIndex => DataPoint.ConsolidatedExcessRatings,
-        ExtendedSeriesIndex => DataPoint.ExtendedExcessRatings,
-        _ => null
-    };
+    private decimal? TargetExcessRatings =>
+        SeriesIndex switch
+        {
+            ConsolidatedSeriesIndex => DataPoint.ConsolidatedExcessRatings,
 
-    private decimal? TargetPopulationAdjustedExcessRatings => SeriesIndex switch
-    {
-        ConsolidatedSeriesIndex => DataPoint.PopulationAdjustedConsolidatedExcessRatings,
-        ExtendedSeriesIndex => DataPoint.PopulationAdjustedExtendedExcessRatings,
-        _ => null
-    };
+            ExtendedSeriesIndex => DataPoint.ExtendedExcessRatings,
+
+            _ => null
+        };
+
+    private decimal? TargetPopulationAdjustedExcessRatings =>
+        SeriesIndex switch
+        {
+            ConsolidatedSeriesIndex => DataPoint.PopulationAdjustedConsolidatedExcessRatings,
+
+            ExtendedSeriesIndex => DataPoint.PopulationAdjustedExtendedExcessRatings,
+
+            _ => null
+        };
 }

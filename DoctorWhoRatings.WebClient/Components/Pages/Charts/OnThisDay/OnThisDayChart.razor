@@ -47,9 +47,9 @@
 }
 
 @code {
-    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
+    private static DateTime Date => DateTime.UtcNow;
 
-    private DateTime Date => DateTime.UtcNow;
+    private List<EpisodeDataPoint> DataPoints { get; set; } = null!;
 
     protected override void OnInitialized()
     {

@@ -94,7 +94,7 @@
 </div>
 
 @code {
-    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = EpisodeInContextChartOptions.Defaults;
 
@@ -104,15 +104,15 @@
     [Parameter, EditorRequired]
     public required EpisodeContext Context { get; set; }
 
-    private string GetPosition(int position) => position == 0 ? "no" : position.ToString();
-
-    private string[] GetDisplayTitle(string fullTitle) => fullTitle.Split(":");
-
-    private string GetPlural(int count, string singular, string plural) => count == 1 ? singular : plural;
-
     private async Task OnRendered()
     {
         await JsRuntime.InvokeVoidAsync("ApexChartExtensions.selectDataPoint", Chart.ChartId, Context.EpisodeIndex);
         await JsRuntime.InvokeVoidAsync("ApexChartExtensions.disableDataPointSelection", Chart.ChartId);
     }
+
+    private static string GetPosition(int position) => position == 0 ? "no" : position.ToString();
+
+    private static string[] GetDisplayTitle(string fullTitle) => fullTitle.Split(":");
+
+    private static string GetPlural(int count, string singular, string plural) => count == 1 ? singular : plural;
 }

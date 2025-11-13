@@ -51,13 +51,13 @@
 </FullScreenZone>
 
 @code {
-    private ApexChart<ShareByContentDataPoint> Chart { get; set; } = default!;
+    private ApexChart<ShareByContentDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<ShareByContentDataPoint> ChartOptions { get; } = ShareByContentChartOptions.Defaults;
 
     private ShareByContentDataOptions DataOptions { get; } = new();
 
-    private List<ShareByContentDataPoint> DataPoints { get; set; } = default!;
+    private List<ShareByContentDataPoint> DataPoints { get; set; } = null!;
 
     protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 

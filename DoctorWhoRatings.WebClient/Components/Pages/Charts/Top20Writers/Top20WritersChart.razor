@@ -43,7 +43,9 @@
                                          YValue="dataPoint => dataPoint.TotalEpisodeHours"/>
                         break;
 
-                    default:
+                    case Top20WritersCalculationMethod.OvernightHoursWatched:
+                    case Top20WritersCalculationMethod.ConsolidatedHoursWatched:
+                    case Top20WritersCalculationMethod.ExtendedHoursWatched:
                         <ApexPointSeries TItem="Top20WritersDataPoint"
                                          Items="DataPoints"
                                          Name="@("Overnight hours watched")"
@@ -65,6 +67,9 @@
                                          XValue="dataPoint => dataPoint.Name"
                                          YValue="dataPoint => dataPoint.TotalExtendedExcessHoursWatched"/>
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(Top20WritersCalculationMethod));
                 }
             </ChildContent>
         </ApexChart>
@@ -107,14 +112,27 @@
     </ChartOptions>
 </FullScreenZone>
 
+@if (DataOptions.CalculationMethod is
+     Top20WritersCalculationMethod.OvernightHoursWatched or
+     Top20WritersCalculationMethod.ConsolidatedHoursWatched or
+     Top20WritersCalculationMethod.ExtendedHoursWatched)
+{
+    <Info>
+        * Ratings are based on "views", which can be as little as
+        <a href="https://www.radiotimes.com/tv/entertainment/how-do-uk-tv-viewing-figures-and-overnight-ratings-work/" target="_blank">3 minutes</a>.
+        Beyond that, it's impossible to know how much of an episode someone actually watched, so this is a simple
+        calculation based on <strong>ratings * episode length</strong>.
+    </Info>
+}
+
 @code {
-    private ApexChart<Top20WritersDataPoint> Chart { get; set; } = default!;
+    private ApexChart<Top20WritersDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<Top20WritersDataPoint> ChartOptions { get; } = Top20WritersChartOptions.Defaults;
 
     private Top20WritersDataOptions DataOptions { get; } = new();
 
-    private List<Top20WritersDataPoint> DataPoints { get; set; } = default!;
+    private List<Top20WritersDataPoint> DataPoints { get; set; } = null!;
 
     protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 
@@ -129,30 +147,21 @@
 
     private void SetChartOptions()
     {
-        var yAxisText = DataOptions.CalculationMethod switch
+        var (yAxisText, yAxisLabelFormatter) = DataOptions.CalculationMethod switch
 
         {
-            Top20WritersCalculationMethod.NumberOfEpisodes => "Number of episodes",
-            Top20WritersCalculationMethod.ScriptHours => "Script hours",
-            Top20WritersCalculationMethod.OvernightHoursWatched => "Hours watched (millions)",
-            Top20WritersCalculationMethod.ConsolidatedHoursWatched => "Hours watched (millions)",
-            Top20WritersCalculationMethod.ExtendedHoursWatched => "Hours watched (millions)"
+            Top20WritersCalculationMethod.NumberOfEpisodes => ("Number of episodes", "function(value) { return value; }"),
+
+            Top20WritersCalculationMethod.ScriptHours => ("Script hours", "function(value) { return value; }"),
+
+            Top20WritersCalculationMethod.OvernightHoursWatched => ("Hours watched (millions)", "function(value) { return value.toFixed(2); }"),
+
+            Top20WritersCalculationMethod.ConsolidatedHoursWatched => ("Hours watched (millions)", "function(value) { return value.toFixed(2); }"),
+
+            Top20WritersCalculationMethod.ExtendedHoursWatched => ("Hours watched (millions)", "function(value) { return value.toFixed(2); }"),
+
+            _ => throw new ArgumentOutOfRangeException(nameof(Top20WritersCalculationMethod))
         };
-
-        var yAxisLabelFormatter = DataOptions.CalculationMethod switch
-
-        {
-            Top20WritersCalculationMethod.NumberOfEpisodes => "function(value) { return value; }",
-            Top20WritersCalculationMethod.ScriptHours => "function(value) { return value; }",
-            Top20WritersCalculationMethod.OvernightHoursWatched => "function(value) { return value.toFixed(2); }",
-            Top20WritersCalculationMethod.ConsolidatedHoursWatched => "function(value) { return value.toFixed(2); }",
-            Top20WritersCalculationMethod.ExtendedHoursWatched => "function(value) { return value.toFixed(2); }"
-        };
-
-        //Labels = new YAxisLabels
-        //{
-        //    //Formatter = "function(value) { return value.toFixed(2); }"
-        //},
 
         Chart.Options.Yaxis[0].Title.Text = yAxisText;
         Chart.Options.Yaxis[0].Labels.Formatter = yAxisLabelFormatter;

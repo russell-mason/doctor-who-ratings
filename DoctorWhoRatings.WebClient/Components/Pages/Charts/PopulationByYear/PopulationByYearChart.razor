@@ -32,7 +32,7 @@
 @code {
     private ApexChartOptions<PopulationByYearDataPoint> ChartOptions { get; } = PopulationByYearChartOptions.Defaults;
 
-    private List<PopulationByYearDataPoint> DataPoints { get; set; } = default!;
+    private List<PopulationByYearDataPoint> DataPoints { get; set; } = null!;
 
     protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate();
 }

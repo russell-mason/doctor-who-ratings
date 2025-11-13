@@ -111,13 +111,13 @@
 <DrillDownTip />
 
 @code {
-    private ApexChart<HighLowEpisodesByDoctorDataPoint> Chart { get; set; } = default!;
+    private ApexChart<HighLowEpisodesByDoctorDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<HighLowEpisodesByDoctorDataPoint> ChartOptions { get; } = HighLowEpisodesByDoctorChartOptions.Defaults;
 
     private HighLowEpisodesByDoctorDataOptions DataOptions { get; } = new();
 
-    private List<HighLowEpisodesByDoctorDataPoint> DataPoints { get; set; } = default!;
+    private List<HighLowEpisodesByDoctorDataPoint> DataPoints { get; set; } = null!;
 
     protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 

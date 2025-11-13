@@ -99,13 +99,13 @@
 <DrillDownTip />
 
 @code {
-    private ApexChart<Top20EpisodesDataPoint> Chart { get; set; } = default!;
+    private ApexChart<Top20EpisodesDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<Top20EpisodesDataPoint> ChartOptions { get; } = Top20EpisodesChartOptions.Defaults;
 
     private Top20EpisodesDataOptions DataOptions { get; } = new();
 
-    private List<Top20EpisodesDataPoint> DataPoints { get; set; } = default!;
+    private List<Top20EpisodesDataPoint> DataPoints { get; set; } = null!;
 
     protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 

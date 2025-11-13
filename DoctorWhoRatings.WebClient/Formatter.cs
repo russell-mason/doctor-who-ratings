@@ -20,13 +20,6 @@ public static class Formatter
     public static MarkupString FormatNote(string note) =>
         new(string.Join("<br />", note.Split("*", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)));
 
-    public static string FormatPosition(int? position, bool includeFirst = true)
-    {
-        if (position is null || (!includeFirst && position == 1))
-        {
-            return string.Empty;
-        }
-
-        return $"{position.Value.Ordinalize()}";
-    }
+    public static string FormatPosition(int? position, bool includeFirst = true) =>
+        (position is null || (!includeFirst && position == 1)) ? string.Empty : $"{position.Value.Ordinalize()}";
 }

@@ -61,26 +61,26 @@ public static class AllEpisodesTrendsChartOptions
             }
         };
 
-    public static Annotations CreateAnnotations(List<EpisodeDataPoint> dataPoints, TrendRange range)
-    {
-        return range switch
+    public static Annotations CreateAnnotations(List<EpisodeDataPoint> dataPoints, TrendRange range) =>
+        range switch
         {
-            TrendRange.Season => AllEpisodesTrendsChartOptions.CreateSeasonAnnotations(dataPoints),
-            TrendRange.Doctor => AllEpisodesTrendsChartOptions.CreateDoctorAnnotations(dataPoints),
-            TrendRange.Era => AllEpisodesTrendsChartOptions.CreateEraAnnotations(dataPoints),
+            TrendRange.Season => CreateSeasonAnnotations(dataPoints),
+
+            TrendRange.Doctor => CreateDoctorAnnotations(dataPoints),
+
+            TrendRange.Era => CreateEraAnnotations(dataPoints),
+
             _ => throw new NotSupportedException("Range not supported")
         };
-    }
 
     private static Annotations CreateSeasonAnnotations(List<EpisodeDataPoint> dataPoints)
     {
         var counter = 1;
 
-        var annotations = dataPoints
-                          .Where(x => x.Season != null)
-                          .GroupBy(dataPoint => new { dataPoint.Actor, dataPoint.SeasonDescription })
-                          .Select(group => (index: counter++, text: group.Key.SeasonDescription))
-                          .ToList();
+        var annotations = dataPoints.Where(x => x.Season != null)
+                                    .GroupBy(dataPoint => new { dataPoint.Actor, dataPoint.SeasonDescription })
+                                    .Select(group => (index: counter++, text: group.Key.SeasonDescription))
+                                    .ToList();
 
         return CreateAnnotations(annotations);
     }
@@ -89,10 +89,9 @@ public static class AllEpisodesTrendsChartOptions
     {
         var counter = 1;
 
-        var annotations = dataPoints
-                          .GroupBy(dataPoint => new { dataPoint.Actor, dataPoint.Doctor })
-                          .Select(group => (index: counter++, text: group.Key.Actor))
-                          .ToList();
+        var annotations = dataPoints.GroupBy(dataPoint => new { dataPoint.Actor, dataPoint.Doctor })
+                                    .Select(group => (index: counter++, text: group.Key.Actor))
+                                    .ToList();
 
         return CreateAnnotations(annotations);
     }
@@ -101,10 +100,9 @@ public static class AllEpisodesTrendsChartOptions
     {
         var counter = 1;
 
-        var annotations = dataPoints
-                          .GroupBy(dataPoint => dataPoint.EraDescription)
-                          .Select(group => (index: counter++, text: group.Key ))
-                          .ToList();
+        var annotations = dataPoints.GroupBy(dataPoint => dataPoint.EraDescription)
+                                    .Select(group => (index: counter++, text: group.Key))
+                                    .ToList();
 
         return CreateAnnotations(annotations);
     }

@@ -7,7 +7,6 @@ public class EpisodeContextDrillDown(IJSRuntime jsRuntime) : IEpisodeContextDril
     public async Task DeselectAsync<T>(ApexChart<T> chart) where T : class
     {
         await chart.ToggleDataPointSelectionAsync(Selection.seriesIndex, Selection.dataPointIndex);
-
     }
 
     public async Task DrillDownAsync<T>(SelectedData<T> selectedData, string? slug) where T : class

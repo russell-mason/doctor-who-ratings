@@ -39,17 +39,24 @@
     [Parameter]
     public required AverageByDoctorDataOptions DataOptions { get; set; }
 
-    private decimal? TargetExcessRatings => SeriesIndex switch
-    {
-        ConsolidatedSeriesIndex => DataPoint.CalculatedConsolidatedExcessRatings,
-        ExtendedSeriesIndex => DataPoint.CalculatedExtendedExcessRatings,
-        _ => null
-    };
+    private decimal? TargetExcessRatings =>
+        SeriesIndex switch
+        {
+            ConsolidatedSeriesIndex => DataPoint.CalculatedConsolidatedExcessRatings,
 
-    private decimal? TargetPopulationAdjustedExcessRatings => SeriesIndex switch
-    {
-        ConsolidatedSeriesIndex => DataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings,
-        ExtendedSeriesIndex => DataPoint.CalculatedPopulationAdjustedExtendedExcessRatings,
-        _ => null
-    };
+            ExtendedSeriesIndex => DataPoint.CalculatedExtendedExcessRatings,
+
+            _ => null
+        };
+
+    private decimal? TargetPopulationAdjustedExcessRatings =>
+        SeriesIndex switch
+        {
+            ConsolidatedSeriesIndex => DataPoint.CalculatedPopulationAdjustedConsolidatedExcessRatings,
+
+            ExtendedSeriesIndex => DataPoint.CalculatedPopulationAdjustedExtendedExcessRatings,
+
+            _ => null
+        };
+
 }

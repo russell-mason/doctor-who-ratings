@@ -68,13 +68,13 @@
 <DrillDownTip />
 
 @code {
-    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; set; } = AllEpisodesByDoctorChartOptions.Defaults;
 
     private EpisodesDataOptions DataOptions { get; } = new() { DoctorFilter = 1 };  // Default to the first Doctor
 
-    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
+    private List<EpisodeDataPoint> DataPoints { get; set; } = null!;
 
     /// <summary>
     /// The underlying options filter allows null, meaning do not filter. For this chart, there will always be a
@@ -82,18 +82,14 @@
     /// </summary>
     private int DataOptionsDoctorFilter
     {
-        get => DataOptions.DoctorFilter ?? default;
+        get => DataOptions.DoctorFilter ?? 0;
         set => DataOptions.DoctorFilter = value;
     }
 
-    private IEnumerable<(int, string)> DoctorsDataSource =>
-        DataProvider.DoctorWhoData.Doctors.Select(doctor => (doctor.Number, doctor.Actor));
+    private IEnumerable<(int, string)> DoctorsDataSource => DataProvider.DoctorWhoData.Doctors.Select(doctor => (doctor.Number, doctor.Actor));
 
-    protected override void OnInitialized()
-    {
-        DataPoints = DataPointGenerator.Generate(DataOptions);
-    }
-
+    protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

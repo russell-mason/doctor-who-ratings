@@ -57,13 +57,13 @@
 </FullScreenZone>
 
 @code {
-    private ApexChart<ShareByMissingEpisodesDataPoint> Chart { get; set; } = default!;
+    private ApexChart<ShareByMissingEpisodesDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<ShareByMissingEpisodesDataPoint> ChartOptions { get; } = ShareByMissingEpisodesChartOptions.Defaults;
 
     private ShareByMissingEpisodesDataOptions DataOptions { get; } = new();
 
-    private List<ShareByMissingEpisodesDataPoint> DataPoints { get; set; } = default!;
+    private List<ShareByMissingEpisodesDataPoint> DataPoints { get; set; } = null!;
 
     protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate(DataOptions);
 

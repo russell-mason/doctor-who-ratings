@@ -38,7 +38,7 @@
 </div>
 
 @code {
-    private List<TimelineDataPoint> DataPoints { get; set; } = default!;
+    private List<TimelineDataPoint> DataPoints { get; set; } = null!;
 
     protected override void OnInitialized() => DataPoints = DataPointGenerator.Generate();
 }

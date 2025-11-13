@@ -68,13 +68,13 @@
 </FullScreenZone>
 
 @code {
-    private ApexChart<EpisodeDataPoint> Chart { get; set; } = default!;
+    private ApexChart<EpisodeDataPoint> Chart { get; set; } = null!;
 
     private ApexChartOptions<EpisodeDataPoint> ChartOptions { get; } = AllEpisodesTrendsChartOptions.Defaults;
 
     private EpisodesDataOptions DataOptions { get; } = new();
 
-    private List<EpisodeDataPoint> DataPoints { get; set; } = default!;
+    private List<EpisodeDataPoint> DataPoints { get; set; } = null!;
 
     private TrendDataOptions TrendDataOptions { get; } = new() { Range = TrendRange.Season, Sequential = true };
 
