@@ -44,7 +44,13 @@ a {
     color: #505050;
 }
 
-.wiki {
+.wiki,
+.guide {
     width: 28px;
     height: 28px;
+    margin-left: 8px;
+}
+
+img.guide {
+    filter: invert(100%);
 }

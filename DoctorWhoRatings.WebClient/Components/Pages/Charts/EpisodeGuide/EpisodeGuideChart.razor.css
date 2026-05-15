@@ -56,6 +56,11 @@ button.clear {
     vertical-align: bottom;
 }
 
+[id^="S"],
+[id^="E"] {
+    scroll-margin-top: 150px;
+}
+
 .story-number {
     font-size: 0.8rem;
     color: #ff5700;

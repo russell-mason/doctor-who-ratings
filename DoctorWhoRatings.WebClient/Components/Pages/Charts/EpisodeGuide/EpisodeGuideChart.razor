@@ -70,7 +70,7 @@
             {
                 @if (storyDataPoint.StoryTitle != null)
                 {
-                    <div class="story @(storyDataPoint == seasonDataPoint.Stories[0] ? "first" : "")">
+                    <div id="S@(storyDataPoint.Story)" class="story @(storyDataPoint == seasonDataPoint.Stories[0] ? "first" : "")">
                         <div class="story-title">@storyDataPoint.StoryTitle</div>
 
                         <div class="story-numbers">
@@ -92,7 +92,7 @@
                 {
                     var episodeUrl = $"./charts/episodes/{episodeDataPoint.Slug}";
 
-                    <div class="episode @(storyDataPoint.StoryTitle != null ? "indent" : "")">
+                    <div id="E@(episodeDataPoint.EpisodeNumber)" class="episode @(storyDataPoint.StoryTitle != null ? "indent" : "")">
                         <a href="@episodeUrl" target="@episodeDataPoint.Slug">
                             <div class="episode-title">
                                 @episodeDataPoint.PartTitle

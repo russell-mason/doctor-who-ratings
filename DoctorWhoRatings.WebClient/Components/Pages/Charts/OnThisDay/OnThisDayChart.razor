@@ -30,6 +30,15 @@
 
         @if (dataPoint.WikiUrl != null)
         {
+            var episodeGuideUrl = dataPoint.PartTitle == null
+                ? $"./charts/episodes#E{dataPoint.Id}"
+                : $"./charts/episodes#S{dataPoint.Story}";
+
+            <div class="episode-guide">
+                <a href="@episodeGuideUrl" title="Episode Guide - @dataPoint.StoryTitle">
+                    <img class="guide" src="images/timeline.svg" alt="Episode Guide" />
+                </a>
+            </div>
             <div class="episode-wiki">
                 <a href="@dataPoint.WikiUrl" target="_blank" title="Wikipedia - @dataPoint.StoryTitle">
                     <img class="wiki" src="images/wikipedia.svg" alt="Wikipedia" />
