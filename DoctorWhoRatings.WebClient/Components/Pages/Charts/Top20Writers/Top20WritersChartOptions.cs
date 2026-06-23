@@ -26,7 +26,7 @@ public static class Top20WritersChartOptions
                 {
                     Labels = new YAxisLabels
                     {
-                        Formatter = "function(value) { value; }"
+                        Formatter = "function(value) { return value; }"
                     },
                     Title = new AxisTitle
                     {
