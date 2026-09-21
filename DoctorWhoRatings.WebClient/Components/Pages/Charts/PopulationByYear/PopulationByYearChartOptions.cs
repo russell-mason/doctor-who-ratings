@@ -45,7 +45,9 @@ public static class PopulationByYearChartOptions
             ],
             Tooltip = new Tooltip
             {
-                FollowCursor = true
+                FollowCursor = true,
+                Shared = false,
+                Intersect = true
             }
         };
 }

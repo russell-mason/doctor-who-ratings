@@ -57,7 +57,9 @@ public static class AllEpisodesByPopulationPercentageChartOptions
             ],
             Tooltip = new Tooltip
             {
-                FollowCursor = true
+                FollowCursor = true,
+                Shared = false,
+                Intersect = true
             }
         };
 

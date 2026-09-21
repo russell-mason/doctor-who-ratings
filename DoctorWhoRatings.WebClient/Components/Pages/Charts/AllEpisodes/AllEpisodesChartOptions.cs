@@ -53,7 +53,9 @@ public static class AllEpisodesChartOptions
             ],
             Tooltip = new Tooltip
             {
-                FollowCursor = true
+                FollowCursor = true,
+                Shared = false,
+                Intersect = true
             },
             Legend = new Legend
             {
