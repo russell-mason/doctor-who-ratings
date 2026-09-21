@@ -37,7 +37,7 @@ public partial class ExcelSpreadsheetReader() : IExcelSpreadsheetReader
             throw new InvalidOperationException("SpreadsheetDocument is not open");
         }
 
-        var sheet = SpreadsheetDocument.WorkbookPart!.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name == sheetName)
+        var sheet = SpreadsheetDocument.WorkbookPart!.Workbook!.Descendants<Sheet>().FirstOrDefault(s => s.Name == sheetName)
                     ?? throw new ArgumentException($"Sheet '{sheetName}' not found", nameof(sheetName));
 
         var sheetId = sheet.Id?.Value
@@ -48,7 +48,7 @@ public partial class ExcelSpreadsheetReader() : IExcelSpreadsheetReader
             throw new InvalidOperationException($"Sheet '{sheetName}' does not contain the required WorksheetPart");
         }
 
-        var rows = worksheetPart.Worksheet.Descendants<Row>();
+        var rows = worksheetPart.Worksheet!.Descendants<Row>();
 
         return rows;
     }
@@ -88,7 +88,7 @@ public partial class ExcelSpreadsheetReader() : IExcelSpreadsheetReader
         }
 
         var sharedStringId = int.Parse(cell.CellValue.Text);
-        var text = SpreadsheetDocument?.WorkbookPart?.SharedStringTablePart?.SharedStringTable.ChildElements[sharedStringId].InnerText;
+        var text = SpreadsheetDocument?.WorkbookPart?.SharedStringTablePart?.SharedStringTable?.ChildElements[sharedStringId].InnerText;
 
         return text;
     }
