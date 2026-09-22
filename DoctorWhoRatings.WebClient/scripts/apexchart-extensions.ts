@@ -2,16 +2,28 @@
 
 class ApexChartExtensions {
     public static selectDataPoint(chartId: string, index: number): void {
-        let chart = ApexCharts.getChartByID(chartId);
+        const chart = ApexCharts.getChartByID(chartId);
 
         chart.toggleDataPointSelection(0, index);
     }
 
     public static disableDataPointSelection(chartId: string): void {
-        let chartElement = document.getElementById(chartId);
+        const chartElement = document.getElementById(chartId);
 
-        chartElement.addEventListener("mousedown", function (event) {
-            event.stopPropagation();
-        }, true);
+        if (chartElement) {
+            chartElement.addEventListener("mousedown", function (event) {
+                event.stopPropagation();
+            }, true);
+        }
     }
 }
+
+declare global {
+    interface Window {
+        ApexChartExtensions: typeof ApexChartExtensions;
+    }
+}
+
+window.ApexChartExtensions = ApexChartExtensions;
+
+export { };

@@ -8,7 +8,11 @@
                 const hostElement = document.querySelector(pollSelector);
 
                 if (hostElement && hostElement.innerHTML.trim() !== "") {
-                    document.getElementById(overlayId).style.display = 'none';
+                    const overlayElement = document.getElementById(overlayId);
+
+                    if (overlayElement) {
+                        overlayElement.style.display = 'none';
+                    }
 
                     Overlay.reset(intervalId, timeoutId);
                 }
@@ -31,3 +35,13 @@
         clearTimeout(timeoutId);
     }
 }
+
+declare global {
+    interface Window {
+        Overlay: typeof Overlay;
+    }
+}
+
+window.Overlay = Overlay;
+
+export { };

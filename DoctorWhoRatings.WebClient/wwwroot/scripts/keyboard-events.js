@@ -1,30 +1,28 @@
-window.addEventListener('focus', function () {
+window.addEventListener('focus', () => {
     KeyboardEvents.track();
 });
-document.addEventListener('keydown', function (event) {
+document.addEventListener('keydown', (event) => {
     KeyboardEvents.setKeyState(event);
 });
-document.addEventListener('keyup', function (event) {
+document.addEventListener('keyup', (event) => {
     KeyboardEvents.setKeyState(event);
 });
-var KeyboardEvents = /** @class */ (function () {
-    function KeyboardEvents() {
-    }
-    KeyboardEvents.isShiftKeyDown = function () {
+class KeyboardEvents {
+    static isShiftKeyDown() {
         return KeyboardEvents.shiftKeyState;
-    };
-    KeyboardEvents.setKeyState = function (event) {
+    }
+    static setKeyState(event) {
         KeyboardEvents.setTrackingState(event.shiftKey);
-    };
-    KeyboardEvents.track = function () {
+    }
+    static track() {
         KeyboardEvents.tracking = true;
         KeyboardEvents.setTrackingState(false);
-    };
-    KeyboardEvents.untrack = function () {
+    }
+    static untrack() {
         KeyboardEvents.tracking = false;
         KeyboardEvents.setTrackingState(false);
-    };
-    KeyboardEvents.setTrackingState = function (on) {
+    }
+    static setTrackingState(on) {
         KeyboardEvents.shiftKeyState = on;
         if (on) {
             document.body.classList.add('shift-on');
@@ -32,8 +30,9 @@ var KeyboardEvents = /** @class */ (function () {
         else {
             document.body.classList.remove('shift-on');
         }
-    };
-    KeyboardEvents.tracking = true;
-    return KeyboardEvents;
-}());
+    }
+}
+KeyboardEvents.tracking = true;
+window.KeyboardEvents = KeyboardEvents;
+export {};
 //# sourceMappingURL=keyboard-events.js.map

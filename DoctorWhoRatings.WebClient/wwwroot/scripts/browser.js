@@ -1,47 +1,46 @@
-document.addEventListener('fullscreenchange', function () {
+document.addEventListener('fullscreenchange', () => {
     Browser.trackFullScreen();
 });
-var Browser = /** @class */ (function () {
-    function Browser() {
-    }
-    Browser.openTab = function (url, target) {
+class Browser {
+    static openTab(url, target) {
         window.open(url, target);
-    };
-    Browser.closeCurrentTab = function () {
+    }
+    static closeCurrentTab() {
         window.close();
-    };
-    Browser.isFullScreenSupported = function () {
-        var element = document.getElementById('fullScreenZone');
+    }
+    static isFullScreenSupported() {
+        const element = document.getElementById('fullScreenZone');
         if (!element)
             return;
         return element.requestFullscreen;
-    };
-    Browser.enterFullScreen = function () {
-        var element = document.getElementById('fullScreenZone');
+    }
+    static enterFullScreen() {
+        const element = document.getElementById('fullScreenZone');
         if (!element)
             return;
         if (element.requestFullscreen) {
             element.requestFullscreen();
         }
-    };
-    Browser.exitFullScreen = function () {
+    }
+    static exitFullScreen() {
         if (document.exitFullscreen) {
             document.exitFullscreen();
         }
-    };
-    Browser.hasFullScreenZone = function () {
+    }
+    static hasFullScreenZone() {
         if (!Browser.isFullScreenSupported())
             return false;
         return document.getElementById('fullScreenZone') != null;
-    };
-    Browser.trackFullScreen = function () {
+    }
+    static trackFullScreen() {
         if (document.fullscreenElement) {
             document.body.classList.add('full-screen-on');
         }
         else {
             document.body.classList.remove('full-screen-on');
         }
-    };
-    return Browser;
-}());
+    }
+}
+window.Browser = Browser;
+export {};
 //# sourceMappingURL=browser.js.map

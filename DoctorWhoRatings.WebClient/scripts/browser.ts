@@ -12,7 +12,7 @@ class Browser {
     }
 
     public static isFullScreenSupported() {
-        let element: any = document.getElementById('fullScreenZone');
+        const element: any = document.getElementById('fullScreenZone');
 
         if (!element) return;
 
@@ -20,7 +20,7 @@ class Browser {
     }
 
     public static enterFullScreen() {
-        let element = document.getElementById('fullScreenZone');
+        const element = document.getElementById('fullScreenZone');
 
         if (!element) return;
 
@@ -49,3 +49,13 @@ class Browser {
         }
     }
 }
+
+declare global {
+    interface Window {
+        Browser: typeof Browser;
+    }
+}
+
+window.Browser = Browser;
+
+export { };

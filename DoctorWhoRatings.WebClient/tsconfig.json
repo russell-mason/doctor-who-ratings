@@ -5,7 +5,7 @@
         "noEmitOnError": true,
         "removeComments": false,
         "sourceMap": true,
-        "target": "es5",
+        "rootDir": "scripts",
         "outDir": "wwwroot/scripts"
     },
     "include": [

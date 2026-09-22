@@ -42,3 +42,13 @@ class KeyboardEvents {
         }
     }
 }
+
+declare global {
+    interface Window {
+        KeyboardEvents: typeof KeyboardEvents;
+    }
+}
+
+window.KeyboardEvents = KeyboardEvents;
+
+export { };

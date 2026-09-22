@@ -1,16 +1,17 @@
-var ApexChartExtensions = /** @class */ (function () {
-    function ApexChartExtensions() {
-    }
-    ApexChartExtensions.selectDataPoint = function (chartId, index) {
-        var chart = ApexCharts.getChartByID(chartId);
+class ApexChartExtensions {
+    static selectDataPoint(chartId, index) {
+        const chart = ApexCharts.getChartByID(chartId);
         chart.toggleDataPointSelection(0, index);
-    };
-    ApexChartExtensions.disableDataPointSelection = function (chartId) {
-        var chartElement = document.getElementById(chartId);
-        chartElement.addEventListener("mousedown", function (event) {
-            event.stopPropagation();
-        }, true);
-    };
-    return ApexChartExtensions;
-}());
+    }
+    static disableDataPointSelection(chartId) {
+        const chartElement = document.getElementById(chartId);
+        if (chartElement) {
+            chartElement.addEventListener("mousedown", function (event) {
+                event.stopPropagation();
+            }, true);
+        }
+    }
+}
+window.ApexChartExtensions = ApexChartExtensions;
+export {};
 //# sourceMappingURL=apexchart-extensions.js.map
